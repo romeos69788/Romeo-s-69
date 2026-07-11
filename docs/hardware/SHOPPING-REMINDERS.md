@@ -4,53 +4,58 @@
 
 ---
 
-## AliExpress — item 1005010806316629 (~€9,08)
+## AliExpress — item 1005010806316629 (~€9,08) ✓ επιβεβαιώθηκε
 
 **Link:** https://www.aliexpress.com/item/1005010806316629.html
 
-**Γιατί μπήκε στο καλάθι (πιθανό — επιβεβαίωσε τίτλο στο καλάθι):**
+**Προϊόν:** **AMS1117-3.3V LDO module** (5 τεμάχια / πακέτο ~€9,08)  
+**Pins:** VIN · VOUT (3,3 V) · GND · ~800 mA max
 
-| Πιθανό προϊόν | Σχέση με ROMEOS 69 Alpha |
-|---------------|--------------------------|
-| **SparkFun QwiicBus EndPoint (COM-16988)** ή clone | **CN5 OUTDOOR-I2C** — I2C SHT40 outdoor μέσω Cat5/RJ45 |
-| DS3231 RTC module (6P) | **U1 DIGITAL CLOCK** — αν δεν έχεις ήδη module |
-| SHT40/41 I2C breakout | Outdoor θερμοκρασία/υγρασία (δεύτερο EndPoint + sensor) |
+### Γιατί μπήκε στο καλάθι
 
-**Πιο πιθανό** (από docs): **Qwiic EndPoint COM-16988** — σημειωμένο ως **«⏳ λείπει»** στο review πριν συναρμολόγηση.
+**3,3 V τροφοδοσία** για κυκλώματα ROMEOS — **δεν** είναι Qwiic EndPoint.
 
-### CN5 — τι χρειάζεσαι
+| Χρήση | Σχέση Alpha rev A |
+|-------|-------------------|
+| **Bench / πρωτότυπο** | DS18, CN5, CN_DEFROST δοκιμές πριν έρθει PCB |
+| **Outdoor κουτί αισθητήρα** | SHT40 / EndPoint: **5 V → AMS1117 → 3,3 V** τοπικά (μακριά καλώδιο) |
+| **Εφεδρικό 3,3 V rail** | Αν το DevKit 3,3 V (H2-1) «σέρνεται» με πολλά DS18 + SHT40 |
+| **Γενικό stock** | DIY · daughterboards · fan spoofer zone |
 
-```
-Alpha PCB (CN5) ── EndPoint #1 ── Cat5/RJ45 ── EndPoint #2 (outdoor) ── SHT40
-```
+### Στη μητρική Alpha rev A (PCB)
 
-| Τεμάχιο | Ποσότητα | Σημείωση |
-|---------|----------|----------|
-| **QwiicBus EndPoint** | **2×** | 1 onboard κοντά CN5 · 1 outdoor |
-| **SHT40/41** Qwiic | **1×** | 0x44 στο I2C bus |
-| Cat5 / RJ45 | καλώδιο | outdoor run |
+**Κύριο 3,3 V:** από **ESP32 DevKit H2-1** → CN5 · CN_DEFROST · CN3/4/10 (3V3 pin).
 
-**EN:** hardwire **3V3** στο EndPoint (όχι pin στο CN5 κλέμα).
+Τα **AMS1117 modules δεν τοποθετούνται υποχρεωτικά πάνω στο PCB** — είναι **εξωτερικά/bench/outdoor**.
 
-### Επιβεβαίωση πριν checkout
+**Αν χρειάζεσαι ξεχωριστό rail:** VIN ← **5V_ESP** ή **5V_PRE** (μετά fuse) · VOUT → 3,3 V bus · **κοινό GND**.
 
-1. Άνοιξε καλάθι → **copy τίτλο προϊόντος** (αν δεν ταιριάζει με EndPoint/DS3231/SHT40 → ρώτα ξανά)
-2. Αν είναι **1× EndPoint** → πρόσθεσε **2η** μονάδα (χρειάζεσαι 2 για CN5)
-3. **Όχι** SCT-013 CT — rule ROMEOS 69 (kWh HP από WiFi μετρητή)
+### Ποσότητα
+
+**5 τεμάχια** — OK για stock (1 bench · 1 outdoor · 2 spare).
+
+### ⚠️ Δεν αντικαθιστά
+
+| Item | Σημείωση |
+|------|----------|
+| **Qwiic EndPoint COM-16988** | Ξεχωστή παραγγελία — **2×** για CN5 |
+| **SHT40** | Ξεχωστή παραγγελία |
+| **SCT-013 CT** | **Όχι** — rule ROMEOS 69 |
 
 ---
 
-## Άλλα parts (όχι AliExpress link — checklist συναρμολόγησης Alpha)
+## Άλλα parts — checklist συναρμολόγησης Alpha
 
 | Part | Για |
 |------|-----|
 | ESP32 DevKit 38pin | H1/H2 |
-| MCP41050 | U2 · CN1 ROOM-NTC spoof |
+| MCP41050 | U2 · CN1 ROOM-NTC |
 | DS3231 module | U1 |
 | DS18B20 probes | CN3/4/10 |
+| **Qwiic EndPoint ×2** | CN5 outdoor I2C |
+| **SHT40/41** | outdoor θερμοκρασία/υγρασία |
 | Viewe 7″ panel | CN_PANEL |
 | Buzzer KY-012 | U2 |
 | 12V→5V buck module | MODULE zone |
-| Fan spoofer daughterboard | AC FAN SPOOFER zone |
 
-**Φάση 2 (Alpha/Beta):** ρελέ K1–K6 · F2 · CN_BETA — **όχι** σε αυτή την παραγγελία PCB Alpha.
+**Φάση 2:** ρελέ K1–K6 · F2 · CN_BETA
