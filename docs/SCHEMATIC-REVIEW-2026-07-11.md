@@ -27,6 +27,8 @@
 
 **Verdict: OK για fab** — μητρική Alpha rev A (connectors).
 
+**Τελικός έλεγχος πριν κλείδωμα:** [`ALPHA-REV-A-FINAL-LOCK-2026-07-11.md`](ALPHA-REV-A-FINAL-LOCK-2026-07-11.md)
+
 ---
 
 ## CN5 — τελική σειρά pin (PCB 4P)
