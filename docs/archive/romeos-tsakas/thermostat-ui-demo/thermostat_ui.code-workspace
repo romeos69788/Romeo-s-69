@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"name": "thermostat_ui",
+			"path": "C:/ESP32/thermostat_ui"
+		},
+		{
+			"name": "Othoni",
+			"path": "C:/ESP32/Othoni"
+		},
+		{
+			"name": "Thermostat",
+			"path": "../../Thermostat"
+		},
+		{
+			"name": "Romi_THerm.",
+			"path": "../../Romi_THerm."
+		},
+		{
+			"name": "ROMEOS",
+			"path": "C:/ROMEOS"
+		},
+		{
+			"name": "RomeosTsakas",
+			"path": "../../RomeosTsakas"
+		}
+	],
+	"settings": {}
+}

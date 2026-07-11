@@ -1,0 +1,24 @@
+ROMEOS central_screen — σημείο επαναφοράς (UI OK, alignment OK)
+Ημερομηνία: 2026-05-17
+
+>>> Νεότερο πλήρες snapshot (UI + Wi‑Fi/NTP/sensor/alarm): ..\2026-05-17_EEZ-RUNTIME-OK\RESTORE.txt
+
+Περιεχόμενα:
+  eez_project_blakc_scren/     → πλήρες EEZ Studio project (D:\OTHONI New VERSION\blakc_scren)
+  eez_central_firmware/        → UI όπως ανέβηκε στην Viewe (trimmed images/fonts για 16MB flash)
+  platformio.ini               → env BOARD_VIEWE_EEZ_CENTRAL
+  main_eez_central.cpp         → minimal firmware entry
+  ROMEOS_V4_16MB_SINGLEAPP.csv → partition table
+
+Επαναφορά EEZ project:
+  robocopy "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_UI-OK\eez_project_blakc_scren" "D:\OTHONI New VERSION\blakc_scren" /MIR
+
+Επαναφορά firmware UI:
+  robocopy "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_UI-OK\eez_central_firmware" "d:\Romeos Tsakas\romeos-display-v4\src\eez_central" /MIR
+  cd "d:\Romeos Tsakas\romeos-display-v4"
+  pio run -e BOARD_VIEWE_EEZ_CENTRAL -t upload
+
+Σημείωση flash: το eez_central_firmware δεν συμπεριλαμβάνει unused background .c (foto_1, fondo, κ.λπ.).
+Μετά από EEZ Build, αν ξαναφουσκώσει το μέγεθος, καθάρισε unused assets στο EEZ ή ξαναεφάρμοσε το trim (images.c / διαγραφή ui_image_*.c).
+
+Upload env: BOARD_VIEWE_EEZ_CENTRAL, COM3

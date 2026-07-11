@@ -1,0 +1,9 @@
+[solar] boot: waiting for reads...
+[solar] LOCKED 2W reds@RTD+ white@RTD-
+[tick] millis=12150 CN5=27C RH=45% CN4=26C SOLAR=-- flow=0 defrost=1
+[solar] LIVE R0=154.5 T0=25.7C (touch=heat up)
+[tick] millis=18842 CN5=27C RH=45% CN4=26C SOLAR=25.7C flow=0 defrost=1
+[tick] millis=23970 CN5=27C RH=45% CN4=26C SOLAR=25.7C flow=0 defrost=1
+[tick] millis=31504 CN5=27C RH=45% CN4=26C SOLAR=25.7C flow=0 defrost=1
+[tick] millis=36593 CN5=27C RH=45% CN4=26C SOLAR=25.7C flow=0 defrost=1
+[tick] millis=41681 CN5=27C RH=45% CN4=26C SOLAR=25.7C flow=0 defrost=1

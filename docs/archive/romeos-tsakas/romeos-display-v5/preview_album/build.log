@@ -1,0 +1,6 @@
+﻿Processing BOARD_VIEWE_BG_PREVIEW (board: BOARD_VIEWE_UEDX80480070E_WB_A; framework: arduino; platform: https://github.com/pioarduino/platform-espressif32/releases/download/53.03.11/platform-espressif32.zip)
+--------------------------------------------------------------------------------
+Library Manager: Installing >=1.0.0 && <2.0.0
+Library Manager: Installing >=0.2.0 && <0.3.0
+Library Manager: Installing >=0.2.0 && <0.3.0
+Verbose mode can be enabled via `-v, --verbose` option

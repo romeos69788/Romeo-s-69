@@ -1,0 +1,33 @@
+ROMEOS central_screen_1 — σημείο επαναφοράς (UI + runtime OK)
+Ημερομηνία: 2026-05-17
+
+Πηγή EEZ: D:\OTHONI New VERSION\blakc_scren\central_screen_1.eez-project
+Export UI: blakc_scren\src\ui\  →  romeos-display-v4\src\eez_central\
+
+Επιβεβαιωμένο στην Viewe 7″ (COM3):
+  - Background img_32, setpoint κέντρο (arc διαφανές + πράσινη μπίλια #88EE37)
+  - +/- κουμπιά, 10.0–30.0 °C βήμα 0.5, εμφάνιση X.0 / X.5
+  - Wi‑Fi «Συνδεδεμένο» αριστερά/δεξιά (γαλάζιο/κόκκινο)
+  - Ρολόι 24ωρο + AM/PM, αναβοσβήνουσα :
+  - Ημερομηνία ελληνικά, SHT δωματίου, alarm + buzzer GPIO17
+
+Περιεχόμενα snapshot:
+  eez_central/       trimmed UI (μόνο ui_image_32.c + fonts που χρησιμοποιούνται)
+  firmware_src/      main_eez_central, romeos_eez_runtime, romeos_setpoint_ui
+  platformio.ini     env BOARD_VIEWE_EEZ_CENTRAL
+
+Επαναφορά:
+  robocopy "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_central_screen_1-OK\eez_central" "d:\Romeos Tsakas\romeos-display-v4\src\eez_central" /MIR
+  copy /Y "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_central_screen_1-OK\firmware_src\*" "d:\Romeos Tsakas\romeos-display-v4\src\"
+  copy /Y "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_central_screen_1-OK\platformio.ini" "d:\Romeos Tsakas\romeos-display-v4\"
+  cd "d:\Romeos Tsakas\romeos-display-v4"
+  pio run -e BOARD_VIEWE_EEZ_CENTRAL -t upload
+
+Μετά από EEZ Build:
+  1. Αντιγραφή src\ui\ → src\eez_central\
+  2. #include "lvgl.h" (όχι lvgl/lvgl.h)
+  3. images.c / images.h: μόνο εικόνες που χρησιμοποιεί το screens.c (συνήθως img_32)
+  4. Διαγραφή unused ui_image_*.c αν ξεπερνάει flash
+  5. Μην αλλάζεις χρώμα knob στο firmware — romeos_setpoint_ui.cpp κρατά #88EE37
+
+Upload: pio run -e BOARD_VIEWE_EEZ_CENTRAL -t upload

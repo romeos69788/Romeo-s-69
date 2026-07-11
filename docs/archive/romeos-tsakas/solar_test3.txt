@@ -1,0 +1,6 @@
+[ds18] LIVE on CN4/GPIO4
+[solar] boot: waiting for reads...
+[solar] LOCKED 2W reds@RTD+ white@RTD-
+[tick] millis=12154 CN5=27C RH=45% CN4=26C SOLAR=-- flow=0 defrost=1
+[tick] millis=20434 CN5=27C RH=45% CN4=26C SOLAR=-- flow=0 defrost=1
+[tick] millis=28712 CN5=27C RH=45% CN4=26C SOLAR=-- flow=0 defrost=1

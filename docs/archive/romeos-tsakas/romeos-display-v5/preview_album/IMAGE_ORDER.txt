@@ -1,0 +1,20 @@
+# Αυτόματα από convert_preview_album.py — σειρά αλφαβητική ονομάτων αρχείων
+# Σύνολο: 17 εικόνες (preview_00 … preview_16)
+
+01  preview_00  ChatGPT Image 21 Μαΐ 2026, 01_46_51 μ.μ.png
+02  preview_01  ChatGPT Image 21 Μαΐ 2026, 01_51_39 μ.μ.png
+03  preview_02  ChatGPT Image 21 Μαΐ 2026, 01_53_25 μ.μ.png
+04  preview_03  ChatGPT Image 21 Μαΐ 2026, 01_58_57 μ.μ.png
+05  preview_04  ChatGPT Image 21 Μαΐ 2026, 02_12_10 μ.μ.png
+06  preview_05  Gemini_Generated_Image_8w2i9o8w2i9o8w2i.png
+07  preview_06  image_Pippit_202605232309.png
+08  preview_07  image_Pippit_202605232310.png
+09  preview_08  image_Pippit_202605232315.png
+10  preview_09  image_Pippit_202605232323.png
+11  preview_10  image_Pippit_202605232324 (1).png
+12  preview_11  image_Pippit_202605232324.png
+13  preview_12  image_Pippit_202605232352.png
+14  preview_13  image_Pippit_202605232353 (1).png
+15  preview_14  image_Pippit_202605232353 (2).png
+16  preview_15  image_Pippit_202605232353.png
+17  preview_16  image_Pippit_202605240953.png

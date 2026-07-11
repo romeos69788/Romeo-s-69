@@ -1,0 +1,36 @@
+ROMEOS central_screen — σημείο επαναφοράς (UI + runtime OK)
+Ημερομηνία: 2026-05-17 (βράδυ)
+
+>>> Νεότερο snapshot: snapshots\2026-05-17_central_screen_1-OK\RESTORE.txt
+
+Παλιό layout (μπάρα setpoint). UI-only: snapshots\2026-05-17_UI-OK\
+
+Περιεχόμενα:
+  eez_central/              → πλήρες trimmed UI (LVGL export στο firmware)
+  firmware_src/             → main + runtime + setpoint + screens.h/c patches
+  platformio.ini            → env BOARD_VIEWE_EEZ_CENTRAL
+  ROMEOS_V4_16MB_SINGLEAPP.csv (αν υπάρχει)
+
+Λειτουργίες που δουλεύουν (επιβεβαιωμένο):
+  - Setpoint μπάρα 10.0–30.0 °C, βήμα 0.5, εμφάνιση 21.0 (όχι μόνο 21)
+  - +/- αριστερά/δεξιά της μπάρας (πάτημα ±0.5 °C)
+  - Wi‑Fi σπιτιού: «Συνδεδεμένο» γαλάζιο + εικονίδιο / κόκκινο όταν όχι
+  - Ρολόι NTP 24ωρο (ώρα:λεπτά) + ένδειξη AM/PM + αναβοσβήνουσα :
+  - Ημερομηνία (ημέρα, αριθμός, μήνας ελληνικά)
+  - Θερμοκρασία/υγρασία δωματίου (SHT onboard I2C)
+  - Alarm: κόκκινο εικονίδιο + buzzer GPIO17, πάτημα σταματά
+
+Επαναφορά firmware (πλήρης):
+  robocopy "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_EEZ-RUNTIME-OK\eez_central" "d:\Romeos Tsakas\romeos-display-v4\src\eez_central" /MIR
+  copy /Y "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_EEZ-RUNTIME-OK\firmware_src\*" "d:\Romeos Tsakas\romeos-display-v4\src\"
+  copy /Y "d:\Romeos Tsakas\romeos-display-v4\snapshots\2026-05-17_EEZ-RUNTIME-OK\platformio.ini" "d:\Romeos Tsakas\romeos-display-v4\"
+  cd "d:\Romeos Tsakas\romeos-display-v4"
+  pio run -e BOARD_VIEWE_EEZ_CENTRAL -t upload
+
+EEZ Studio project (πηγή UI):
+  D:\OTHONI New VERSION\blakc_scren\central_screen.eez-project
+  Μετά από αλλαγές στο EEZ: Build → αντιγραφή src\ui\ → src\eez_central\
+  Προσοχή: trim unused images/fonts αν ξεπεράσει ~16 MB flash.
+
+Upload: BOARD_VIEWE_EEZ_CENTRAL, COM3
+Wi‑Fi NVS: Serial 115200 → WIFI_HOME_SET / WIFI_HOME_SHOW

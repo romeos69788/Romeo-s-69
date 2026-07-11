@@ -1,0 +1,25 @@
+#include "images.h"
+
+const ext_img_desc_t images[21] = {
+    { "10", &img_10 },
+    { "fire", &img_fire },
+    { "A10", &img_a10 },
+    { "Α!", &img___ },
+    { "menu", &img_menu },
+    { "wi-fi", &img_wi_fi },
+    { "microphone", &img_microphone },
+    { "alarm", &img_alarm },
+    { "home", &img_home },
+    { "thermometer", &img_thermometer },
+    { "out_home", &img_out_home },
+    { "drop", &img_drop },
+    { "FONDO", &img_fondo },
+    { "FOTO 1", &img_foto_1 },
+    { "WI", &img_wi },
+    { "WFI", &img_wfi },
+    { "HOME1", &img_home1 },
+    { "OUT", &img_out },
+    { "BOLIER", &img_bolier },
+    { "12", &img_12 },
+    { "MENU", &img_menu1 },
+};

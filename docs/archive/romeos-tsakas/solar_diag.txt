@@ -1,0 +1,56 @@
+ets Jul 29 2019 12:21:46
+rst:0x1 (POWERON_RESET),boot:0x17 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:4688
+load:0x40078000,len:15448
+load:0x40080400,len:4
+ho 8 tail 4 room 4
+load:0x40080404,len:3196
+entry 0x400805a4
+[pin_map] ESP32 38-pin CONTROL BOARD — see romeos-design-notes §12.2.2
+[boot] Ίδιο firmware πρωτεύον/εφεδρικό — SoftAP+UDP προς οθόνη (ανταλλαγή module)
+[boot] setup start
+[link] sizeof(romeos_mb_to_display_v1_t)=35
+[link] sizeof(romeos_display_to_mb_v1_t)=12
+[ds18] CN4 real sensor (GPIO4)
+[ds18] CN4/GPIO4 idle=1 presence=1
+[ds18] CN4/GPIO4 ROM count=1
+[ds18] CN4/GPIO4 ROM[0]=284452f554250baa fam=28
+[ds18] CN4/GPIO4 OK T=25.7 C
+[ds18] LIVE on CN4/GPIO4
+[ds18] T=25.7 C raw=019b (CN4/GPIO4)
+[ds18] active bus: CN4/GPIO4 (GPIO4)
+[ds18] pre-WiFi probe...
+[ds18] CN4/GPIO4 idle=1 presence=1
+[ds18] CN4/GPIO4 ROM count=1
+[ds18] CN4/GPIO4 ROM[0]=284452f554250baa fam=28
+[ds18] CN4/GPIO4 OK T=25.7 C
+[ds18] T=25.7 C raw=019b (CN4/GPIO4)
+[ds18] active bus: CN4/GPIO4 (GPIO4)
+[ds18] pre-WiFi: sensor OK
+[dht] CN5 init GPIO16 (DHT22, fallback DHT11)
+[  4688][I][esp32-hal-i2c.c:125] i2cInit(): Initializing I2C Master: sda=21 scl=22 freq=100000
+[  4701][W][Wire.cpp:296] begin(): Bus already started in Master Mode.
+[solar] boot: waiting for reads...
+[solar] LOCKED 2W reds@RTD+ white@RTD-
+[mb_uart] UART1 RX=9 TX=10 baud=115200 (pong only)
+[nvs] setpoint loaded: 21.0 C
+[wifi] NVS home Wi‑Fi: Serial → WIFI_HOME_HELP
+[wifi_nvs] home credentials present — trying STA to home first
+[mqtt] broker 1f20d31217e1431a8723a096120ecd00.s1.eu.hivemq.cloud:8883 device=romeos-mb (TLS insecure dev)
+[boot] setup done — loop
+[rel_test] bench test: type REL HELP (115200)
+[solar] === SOLAR DIAG ===
+[solar] 2W live=0 R=nan R0=126.0 T0=25.0 spr=0.0 fault=0x00
+[solar] raw burst:
+[solar]   #1 rtd=32276 R=423.5
+[solar]   #2 rtd=10 R=0.1
+[solar]   #3 rtd=11562 R=151.7
+[solar]   #4 rtd=1927 R=25.3
+[solar]   #5 rtd=16254 R=213.3
+[solar] LCD: SOLAR reading...
+[dht] CN5 OK type=DHT22
+[dht] T=27.3 C RH=45.2 % idle=1
+[ds18] T=25.7 C raw=019b (CN4/GPIO4)

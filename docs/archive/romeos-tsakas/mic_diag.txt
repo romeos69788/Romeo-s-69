@@ -1,0 +1,8 @@
+[mic] INMP441 I2S OK WS=12 BCLK=2 SD=0
+[mic] === MIC DIAG ===
+[mic] rms=0 peak=1 zero=100% signal=0
+[mic] speak/clap near mic -> rms should rise
+[mic] Serial test: MIC CMD hello
+[mic] LCD L3: MIC wait signal...
+[dht] T=27.8 C RH=43.9 % idle=1
+[ds18] T=26.0 C raw=01a0 (CN4/GPIO4)
