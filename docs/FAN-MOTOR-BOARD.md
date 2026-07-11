@@ -1,11 +1,44 @@
 # Πλακέτα μοτέρ βεντιλατήρα (outdoor fan) — έρευνα 5 vs 4 καλώδια
 
-**Κατάσταση:** υπό διερεύνηση · 2026-07-11  
+**Κατάσταση:** ενημερώθηκε από archive · 2026-07-11  
 **Context:** AC outdoor unit μετατροπή σε αντλία θερμότητας · μοτέρ condenser fan
 
 ---
 
-## Το πρόβλημα
+## Εύρημα από archive (2026-07-11)
+
+Μετά το push του `docs/archive/romeos-tsakas/` (2599 αρχεία), η **κύρια** τεκμηρίωση για «4 αναμονές» δεν αφορά PSC condenser motor — αφορά την **ξεχωριστή πλακέτα AC Fan Spoofer** («Moter Vendilater» / **AC FAN SPOOFER V1.0**):
+
+| Πηγή archive | Περιεχόμενο |
+|--------------|-------------|
+| `romeos-display-v4/μητρική πλακέτα/AC_FAN_STANDALONE_COLOCATION.md` | NE555 + L7805, CN1 **4P** |
+| `thermostat-ui-demo/docs/romeos-design-notes.md` §3, §12.5.2 | Κλείδωμα λογικής spoofer |
+
+### Τι είναι η πλακέτα (spoofer)
+
+- Η **εξωτερική μονάδα** πρέπει να «βλέπει» ότι δουλεύει το **μοτέρ ventilator της εσωτερικής** — αλλιώς σφάλμα.
+- Το **φυσικό μοτέρ αφαιρείται**· η μικρή πλακέτα παίρνει τις **γραμμές που πήγαιναν στο μοτέρ** και δίνει **FAN_PWM/FG** (tach) πίσω στην εξωτερική.
+- **Δεν** συνδέεται με GPIO της Romeos· τροφοδοτείται από **~15 V** της εξωτερικής.
+
+### CN1 — 4 αναμονές (κλειδωμένο)
+
+| Pin CN1 | Net | Ρόλος |
+|---------|-----|--------|
+| 1 | GND | Γείωση |
+| 2 | 15V_IN | Τροφοδοσία από harness εξωτερικής |
+| 3 | VSP_SIGNAL | Σήμα ταχύτητας **από** εξωτερική → pin 5 NE555 (CONT) |
+| 4 | FAN_PWM / FG-SIGNAL | Έξοδος 555 → feedback **προς** εξωτερική |
+
+**Συμπέρασμα 5 vs 4:** Οι **4 αναμονές** είναι **σωστές** για spoofer — δεν χρειάζεται 5η pad. Το **5ο καλώδιο του μοτέρ** (αν υπάρχει) **δεν** πάει στο spoofer· πιθανότατα **PE** ή **αχρησιμοποίητο speed tap**.
+
+### Σχέση με μητρική Alpha / ROMEOS 69
+
+- Στη **μητρική:** **μόνο 4 τρύπες στήριξης** — **καμία** ηλεκτρική σύνδεση spoofer ↔ μητρική (§12.5.2).
+- Για **αντλία νερού-νερού (HP):** ο **outdoor condenser fan αφαιρείται** μαζί με air coil (`HANDOFF_2026-06-08.md`) — άλλο θέμα από indoor spoofer.
+
+---
+
+## Το αρχικό πρόβλημα (αν εννοείς άλλο μοτέρ — PSC outdoor)
 
 | Στο μοτέρ | Στη δική μας πλακέτα |
 |-----------|----------------------|
@@ -117,7 +150,9 @@ J4  (κενό)
 
 ---
 
-## Σχετικά
+## Σχετικά (archive paths)
 
-- HP outdoor board (future): RS485 · `HP-BOARD-LEITOURGIA.md` (τοπικό D:\Romeos Tsakas\...)
+- `docs/archive/romeos-tsakas/romeos-display-v4/μητρική πλακέτα/AC_FAN_STANDALONE_COLOCATION.md`
+- `docs/archive/romeos-tsakas/thermostat-ui-demo/docs/romeos-design-notes.md` §3, §12.5.2
+- `docs/archive/romeos-tsakas/κατασκευή αντλίας θερμότητας νερού νερού/HP-BOARD-LEITOURGIA.md` — HP outdoor (RS485, NTC spoof)
 - Beta board: UART προς Alpha
