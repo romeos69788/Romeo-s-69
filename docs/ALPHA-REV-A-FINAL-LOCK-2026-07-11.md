@@ -50,15 +50,13 @@
 
 ## 3. ⚠ Έλεγξε πριν κλείδωμα (silk / ονομασίες)
 
-### 3.1 CN1 — ROOM-NTC (κρίσιμο)
+### 3.1 CN1 — ROOM-NTC — ✓ επιβεβαιώθηκε (2026-07-11)
 
 **Κλειδωμένο:** **2P** · silk **ROOM-NTC** · nets **AC_POT_B / AC_POT_W** από MCP41050.
 
-**Στο PCB layout** φαίνεται silk **«A/C-SENSOR»** 3P (SING·GND·3V3) — **δεν** ταιριάζει με την απόφαση CN1.
+**Zoom PCB (χρήστης):** CN1 = **2 pad** · nets **AC_POT_B** (pin 1) · **AC_POT_W** (pin 2) — **σωστά** ✓
 
-**Ενέργεια (μία από τις δύο):**
-- Αν το **CN1** είναι **2P** δίπλα στο MCP41050 → **διόρθωσε silk** σε **ROOM-NTC** (όχι A/C-SENSOR).
-- Αν υπάρχει **πραγματικό 3P** αισθητήρα A/C → **αφαίρεσέ το** ή μετονόμασε (rev A **δεν** έχει A/C probe connector).
+**Μόνο silk:** γράφει **«A/C-SENSOR»** → άλλαξε σε **«ROOM-NTC»** (ή **«ROOM-NTC / MCP41050»**) πριν fab. **Όχι** αλλαγή κυκλώματος.
 
 ### 3.2 CN5 — outdoor I2C
 
@@ -145,7 +143,7 @@
 - [x] DRC **51/51** · **0 errors**
 - [x] CN2 / CN6 / CN7 / CN8 **αφαιρέθηκαν**
 - [x] CN3/4/10 DS18 · CN5 I2C · CN_DEFROST · CN_PANEL · U1 RTC · MCP41050 · Buzzer
-- [ ] **CN1 silk** = ROOM-NTC 2P (όχι A/C-SENSOR 3P)
+- [ ] **CN1 silk** → **ROOM-NTC** (2P OK · nets OK · μόνο rename silk)
 - [ ] **CN_DEFROST silk** σειρά pin 1-3V3 / 2-SING / 3-GND
 - [ ] **CN5 silk** 4P (αν θες τεκμηρίωση)
 - [ ] **100 nF** (όχι µF) στα DS18
