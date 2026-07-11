@@ -31,14 +31,19 @@ constexpr int kBetaTx = 17;
 constexpr int kBetaRx = 16;
 constexpr uint32_t kBetaBaud = 115200;
 
-// --- Displays: UART / ESP-NOW (TBD) ---
-constexpr int kDisplayUartNum = 2;
-constexpr int kDisplayTx = 25;
-constexpr int kDisplayRx = 33;
-constexpr uint32_t kDisplayBaud = 115200;
+// --- CN_PANEL — Viewe 7″ (UART2 · remapped pins) ---
+constexpr int kPanelUartNum = 2;
+constexpr int kPanelTx = 25;  // H2-9 · PANEL_TX → Viewe RX
+constexpr int kPanelRx = 33;  // H2-8 · PANEL_RX ← Viewe TX
+constexpr uint32_t kPanelBaud = 115200;
 
-// --- HP outdoor RS485 (ΜΗ χρησιμοποιείται στο rev A · future) ---
-// UART2 TX=17, RX=16, DE+RE=32 — κρατάμε για μελλοντική ενσωμάτωση HP board.
+// Legacy aliases (display folder docs)
+constexpr int kDisplayUartNum = kPanelUartNum;
+constexpr int kDisplayTx = kPanelTx;
+constexpr int kDisplayRx = kPanelRx;
+constexpr uint32_t kDisplayBaud = kPanelBaud;
+
+// --- Alpha ↔ Beta (UART1) ---
 
 constexpr int kRelayPins[] = {
     kRelayK1, kRelayK2, kRelayK3, kRelayK4, kRelayK5, kRelayK6,

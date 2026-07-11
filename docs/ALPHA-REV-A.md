@@ -6,7 +6,8 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 
 | Σύνδεση | Πρωτόκολλο | Σημειώσεις |
 |---------|-----------|------------|
-| **Beta** (outdoor) | UART | `TX=17`, `RX=16`, 115200 · **κυρίως ρελέ HP** — όχι defrost |
+| **Viewe 7″ panel** (λεβητοστάσι) | **CN_PANEL** UART2 | `TX=25`, `RX=33`, 115200 · **5V_AUX** |
+| **Beta** (outdoor) | UART1 | `TX=17`, `RX=16`, 115200 · **κυρίως ρελέ HP** |
 | **Οθόνες θερμοστάτη** | UART / ESP-NOW | `TX=25`, `RX=33` |
 | **HP outdoor board** | RS485 | **Όχι στο rev A** · future `MAX485EPA` |
 | **iPhone remote** | MQTT (HiveMQ) | [`shared/romeos-remote/`](../shared/romeos-remote/) |
@@ -71,6 +72,18 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 - **Module 230 V → opto** στο πεδίο (πηνίο τριόδης βάνας εξωτερικής HP)
 - **R9 4,7 kΩ** pull-up στο PCB
 - Λογική: defrost ενεργό → K2 OFF · K4 απομόνωση ηλιακού · K3 ON
+
+## CN_PANEL — Viewe 7″ (λεβητοστάσι)
+
+| CN_PANEL pin | Net | ESP32 |
+|--------------|-----|-------|
+| 1 GND | GND | H1-13 / H2-14 |
+| 2 5V | **5V_AUX** | μετά F2 1,5 A |
+| 3 TX | **PANEL_TX** | **GPIO25** (H2-9) |
+| 4 RX | **PANEL_RX** | **GPIO33** (H2-8) |
+
+- **UART2** · **115200** · crossover: Alpha TX→Viewe RX, Alpha RX←Viewe TX
+- **~500 mA** peak · Wi‑Fi UDP προς panel μπορεί να συνυπάρχει (backup)
 
 ## Ρελέ K1–K6
 

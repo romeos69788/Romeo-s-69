@@ -38,19 +38,31 @@
 - **230 V IN** ξεχωριστή ζώνη · creepage/clearance.
 - **F2 1,5 A** → `5V_AUX` για ρελέ + buzzer + panel (τώρα λείπει δεύτερο fuse).
 
-### 2. CN_PANEL — Viewe 7″ (τοπικός πίνακας λεβητοστασίου)
+### 2. CN_PANEL — Viewe 7″ — **ΚΛΕΙΔΩΜΕΝΟ ✓ (2026-07-11)**
 
-**Νέο κλέμα 4P** (JST-XH 2,54 mm):
+**Τοπικός πίνακας λεβητοστασίου** — **Viewe UEDX80480070E-WB-A** (7″, ESP32-S3) σε κουτί δίπλα στη μητρική.
 
-| Pin | Net | ESP32 (H2) |
-|-----|-----|------------|
-| 1 | GND | — |
-| 2 | 5V_AUX | μετά F2 |
-| 3 | PANEL_TX | **GPIO25** |
-| 4 | PANEL_RX | **GPIO33** |
+**Κλέμα 4P** (JST-XH 2,54 mm · π.χ. **PA001-4P**):
 
-- UART **115200** · **όχι** I2C.
-- Τρέφεται από **5V_AUX** (~500 mA peak).
+| CN_PANEL pin | Silk | Net | ESP32 DevKit 38 |
+|--------------|------|-----|-----------------|
+| **1** | **GND** | **GND** | H1-13 / H1-19 / H2-14 |
+| **2** | **5V** | **5V_AUX** | μετά **F2 1,5 A** |
+| **3** | **TX** | **PANEL_TX** | **H2-9 / GPIO25** (D25) |
+| **4** | **RX** | **PANEL_RX** | **H2-8 / GPIO33** (D33) |
+
+**Πρωτόκολλο:**
+- **UART2** Alpha · **115200** 8N1 · **όχι** I2C
+- **GPIO25 / GPIO33** = panel μόνο — **όχι** ρελέ K1/K5 (K1→GPIO32, K5→GPIO13)
+
+**Καλώδιο προς Viewe (crossover UART):**
+- Alpha **PANEL_TX** → Viewe **RX**
+- Alpha **PANEL_RX** ← Viewe **TX**
+- **GND** κοινό · **5V_AUX** → τροφοδοσία panel (~**500 mA** peak)
+
+**Σημείωση:** Το Viewe μπορεί επίσης **Wi‑Fi UDP/ESP‑NOW** προς Alpha (υπάρχον firmware) — το **CN_PANEL** είναι **ενσύρματο** backup / κουτί λεβητοστασίου.
+
+**EasyEDA:** πρόσθεσε **CN_PANEL** 4P · net **5V_AUX** από **F2** · **μην** βάλεις ρελέ στο GPIO25/33.
 
 ### 3. CN_BETA — δεύτερη μητρική (outdoor / HP)
 
@@ -185,11 +197,11 @@ Archive: **5× DS18B20** στο **ίδιο** 1-Wire (**GPIO4**, **μία** CN4 3
 | 21 | I2C_SDA | RTC |
 | 22 | I2C_SCL | RTC |
 | 23 | SPI_MOSI | |
-| 25 | PANEL_TX / REL_K1 | **σύγκρουση** — rev A: **PANEL_TX** (όχι ρελέ στο 25) |
+| 25 | **PANEL_TX** | **CN_PANEL** · UART2 TX — **όχι** ρελέ |
 | 26 | REL_K2 | |
 | 27 | REL_K3 | defrost → ON |
 | 32 | REL_K1 | TBD (rev A: K4 = GPIO12) |
-| 33 | PANEL_RX / REL_K5 | rev A: **PANEL_RX** |
+| 33 | **PANEL_RX** | **CN_PANEL** · UART2 RX — **όχι** ρελέ |
 | 34 | *(ελεύθερο)* | χωρίς flow rev A |
 | 35 | *(ελεύθερο)* | χωρίς CT rev A |
 | 36 | AC_OPTO | |
@@ -203,7 +215,7 @@ Archive: **5× DS18B20** στο **ίδιο** 1-Wire (**GPIO4**, **μία** CN4 3
 
 - [ ] **3× διπλά ρελέ** + 230 V ζώνη + LED ανά κανάλι
 - [ ] **F2** → 5V_AUX
-- [ ] **CN_PANEL** 4P (Viewe UART)
+- [ ] **CN_PANEL** 4P → GPIO25/33 + **5V_AUX** (F2) — **ΚΛΕΙΔΩΜΕΝΟ** · πρόσθεσε στο EasyEDA
 - [ ] **CN_BETA** 4P (UART 16/17)
 - [ ] ~~**MAX31865** + PT100 ηλιακός~~ — **αφαιρέθηκε** (DS18 SOLAR-RETURN στο bus)
 - [ ] **Διέγραψε CN6** + MAX31865 από EasyEDA
