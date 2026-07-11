@@ -13,15 +13,19 @@ romeos-display-v5.rar  →  96 MB  (προειδοποίηση > 50 MB)
 
 ---
 
-## Διόρθωση (1 εντολή)
+## Διόρθωση (πλήρης — μετά από merge + rejected push)
 
 ```powershell
 cd "D:\ROMEOS 69"
 git pull origin main
-powershell -ExecutionPolicy Bypass -File ".\docs\scripts\fix-push-large-files.ps1"
+powershell -ExecutionPolicy Bypass -File ".\docs\scripts\fix-push-final.ps1"
 ```
 
+Αυτό: abort merge → backup archive → reset → restore → commit **χωρίς** zip/rar → push.
+
 ---
+
+## Παλιό script (αν δεν υπάρχει merge)
 
 ## Χειροκίνητα (αν προτιμάς)
 
