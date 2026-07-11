@@ -154,9 +154,12 @@
 
 ## 8. Verdict
 
-**OK για fab** — μητρική Alpha rev A (connectors + τροφοδοσία), **αφού** διορθωθούν τα **silk** του §3 (CN1, CN_DEFROST, προαιρετικά CN5).
+**✓ LOCKED για fab (2026-07-11)** — μητρική Alpha rev A.
 
-Ρελέ · Beta · F2 → **άλλο PCB / φάση 2**.
+- DRC **51/51** · **0 errors**
+- CN1 **ROOM-NTC** silk ✓
+- 4× mounting pads ✓
+- Ρελέ · Beta · F2 → φάση 2
 
 ---
 
