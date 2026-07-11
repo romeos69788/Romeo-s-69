@@ -3,7 +3,7 @@
 **Τελικός έλεγχος:** 2026-07-11 · **μόνο μητρική Alpha**  
 **Scope:** κλειδωμένα connectors + τροφοδοσία · **όχι** ρελέ / CN_BETA / F2 (άλλη φάση ή Beta)
 
-**DRC:** 0 errors (PCB)
+**DRC:** **51/51 nets** · **0 errors** (PCB) — GND ratline resolved 2026-07-11 ✓
 
 ---
 
@@ -69,23 +69,15 @@
 
 ---
 
-## PCB layout — GND ratline (U1 DIGITAL CLOCK)
+## PCB layout — GND ratline (U1 DIGITAL CLOCK) — ✓ RESOLVED
 
-**Σύμπτωμα:** Design Manager → **Nets 50/51** · **GND** κόκκινο X · ratline **U1 GND** → **ESP32 GND**.
+**Ήταν:** Design Manager → **Nets 50/51** · **GND** κόκκινο X · ratline **U1 GND** → **ESP32 GND**.
 
-**Διόρθωση:** GND pour ή track · DRC **51/51** · **όχι fab** πριν κλείσει.
+**Τώρα (2026-07-11):** DRC **51/51 nets** · **0 errors** — χρήστης επιβεβαίωσε ✓
 
-**Αν η ratline μένει:** συχνά **2 ξεχωριστά GND nets** στο schematic (`GND` vs `GND1`) ή pad σε **λάθος net** — δες μήνυμα 26/27 ΣΥΖΗΤΗΣΗ.md.
+**Fab:** OK για παραγγελία Alpha rev A (connectors).
 
-### Αν **τίποτα** δεν κλείνει (track + pour + hints)
-
-1. **DRC report** → διάβασε **ακριβώς** ποια **2 pads** λέει (μπορεί να μην είναι U1↔ESP32).
-2. **Schematic** → **Edit → Find** → `GND1` / `AGND` / `GND2` — **Merge Nets** όλα σε **GND**.
-3. **Κλικ κάθε pad** του ratline → Properties → **Net name** — αν διαφέρουν → fix στο **schematic**, όχι PCB.
-4. **U1 footprint** → Library → Edit → pin **GND** στο σωστό φυσικό pad (DS3231 module 4P).
-5. **Update PCB from Schematic** (όχι μόνο hints) → ξανα-DRC.
-6. **Test:** σβήσε προσωρινά **GND pour** → track pad-to-pad — αν **δεν** κολλάει στο pad → **διαφορετικό net** (βήμα 3).
-7. **Last resort:** schematic wire **U1 GND → GND symbol** δίπλα σε ESP32 GND · ή **0 Ω jumper** footprint ανάμεσα στα 2 pads.
+**Troubleshooting (αν ξαναεμφανιστεί):** δες μηνύματα 25–29 ΣΥΖΗΤΗΣΗ.md — συχνά **GND vs GND1** στο schematic ή **λάθος pad** στο U1 footprint.
 
 ---
 
