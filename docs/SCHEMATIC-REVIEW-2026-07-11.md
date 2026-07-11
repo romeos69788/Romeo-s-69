@@ -1,110 +1,84 @@
-# Schematic/PCB review — CONTROL BOARD v1.0 (2026-07-11)
+# Schematic/PCB review — CONTROL BOARD v1.0
 
-**Πηγή:** screenshot schematic + PCB layout (Romeos Tsakas)  
-**DRC:** 0 errors (PCB) — **δεν** αντικαθιστά λογικό έλεγχο pin map
-
----
-
-## ✅ Σωστά
-
-| Block | Σχόλιο |
-|-------|--------|
-| **I2C bus** | `I2C_SDA` / `I2C_SCL` **ίδιο net** → U1 + CN5 + H1 — **σωστό** |
-| **H1-3 / H1-6** | IO22 (SCL) / IO21 (SDA) — ταιριάζει με DevKit 38 (USB κάτω) |
-| **CN_DEFROST** | 3V3 · SING · GND + **R1 4,7 kΩ** pull-up |
-| **CN1** | MCP41050 → AC_POT → ROOM-NTC |
-| **CN3/4/10** | DS18_DATA κοινό · **R13** pull-up · **100 nF** (C3/C11/C22) |
-| **CN_PANEL (U3)** | PANEL_TX/RX → **H2-9 / H2-8** (IO25/IO33) |
-| **Τροφοδοσία** | F1 · C1/C2 · D2 · LED-7 |
-| **Fan spoofer** | Ξεχωριστή ζώνη daughterboard |
+**Rev A check:** 2026-07-11 (2η εικόνα — μετά διόρθωση DEFROST)
 
 ---
 
-## ⚠️ Διόρθωση — κρίσιμο
+## ✅ Διορθώθηκε / OK
 
-### 1. DEFROST_SIG → λάθος pin (πιθανό)
-
-**Στο schematic:** `DEFROST_SIG` → **H1 pin 12**
-
-Σε **ESP32 DevKit 38** (silk USB κάτω, δεξιά σειρά H1):
-
-| H1 pin | GPIO | Σωστό net (rev A) |
-|--------|------|-------------------|
-| **11** | **17** | BETA_TX (UART) |
-| **12** | **16** | BETA_RX (UART) |
-| — | — | — |
-| **H2 pin 12** | **14** | **DEFROST_SIG** ✓ |
-
-**→ Μετακίνησε `DEFROST_SIG` από H1-12 (ή H1-11) σε H2-12 (IO14 / D14).**
-
-**Επιβεβαίωση:** multimeter από pad `DEFROST_SIG` στο pin του module που γράφει **14** (όχι 16/17).
+| Block | Κατάσταση |
+|-------|-----------|
+| **DEFROST_SIG** | **H2 pin 12** → GPIO14 ✓ (διόρθωση από H1-12) |
+| **I2C bus** | U1 + CN5 + H1 — **ίδιο net** `I2C_SDA`/`I2C_SCL` ✓ |
+| **I2C → ESP32** | PCB: **H1-3 (IO22/SCL)** · **H1-6 (IO21/SDA)** ✓ |
+| **CN_DEFROST** | 3V3 · SING · GND |
+| **CN1 / MCP41050** | SPI + AC_POT ✓ |
+| **CN3/4/10** | DS18_DATA → H1-13 (IO4) · R13 · 100 nF ✓ |
+| **CN_PANEL** | PANEL_TX/RX → H2-9 / H2-8 ✓ |
+| **Τροφοδοσία** | F1 · 5V_PRE · C1/C2 · D2 ✓ |
+| **Fan spoofer** | Daughterboard ζώνη ✓ |
 
 ---
 
-### 2. CN5 — σειρά pin ≠ κλειδωμένο doc
+## ⚠️ Έλεγξε πριν fab
 
-**Κλειδωμένο (PR/docs):**
+### 1. R1 στο DEFROST — πρέπει pull-**UP**
 
-| Pin | Net |
-|-----|-----|
-| 1 | GND |
-| 2 | 3V3 |
-| 3 | SDA |
-| 4 | SCL |
-| 5 | EN → 3V3 |
+**Σωστό:** `3V3` — **R1 4,7 kΩ** — `DEFROST_SIG` — (opto) — GND  
 
-**Στο schematic (τώρα):**
+**Όχι** pull-down προς GND (θα κρατάει το σήμα LOW).
 
-| Pin | Net |
-|-----|-----|
-| 1 | EN |
-| 2 | SCL |
-| 3 | SDA |
-| 4 | 3V3 |
-| 5 | GND |
+### 2. CN5 — σειρά pin (silk)
 
-**Nets προς ESP32 είναι σωστά** — αλλά **η σειρά στο κλέμα** είναι **διαφορετική**.  
-**→ Ευθυγράμμισε silk/connector** με το πραγματικό καλώδιο Qwiic (ή ενημέρωσε doc αν η σειρά στο PCB είναι η τελική).
+**PCB (4 pin):** GND · 3V3 · SDA · SCL (κάτω→πάνω)  
 
-**PCB:** φαίνεται **4 pin** (GND/SCL/SDA/3V3) — έλεγξε αν **EN** πάει μόνιμα **3V3** στο EndPoint (OK) ή λείπει.
+**Schematic CN5 (5P):** EN · SCL · SDA · 3V3 · GND  
 
----
+- Nets προς ESP32 **σωστά**
+- **EN:** OK αν EndPoint onboard έχει EN → 3V3 μόνιμα
+- **Σημείωσε στο silk** τη σειρά pin για το πεδίο (διαφορετική από doc PR — OK αν το PCB είναι η αλήθεια)
 
-### 3. U1 (DS3231) — τροφοδοσία 5V_ESP
+### 3. U1 DS3231 — 5V_ESP
 
-- Pin 5 = **5V_ESP** (όχι 3V3)
-- **OK** αν το module σου είναι **5 V** variant
-- I2C pull-ups προς **3V3** — συνήθως OK με ESP32
-- Αν module είναι **μόνο 3,3 V** → άλλαξε σε **3V3**
+OK αν module **5 V**. I2C pull-ups σε **3V3** — συνήθως OK.
+
+### 4. Qwiic EndPoint
+
+Έλεγξε footprint **COM-16988** δίπλα CN5 στο PCB (RJ45 προς outdoor SHT40).
 
 ---
 
-## ⏳ Λείπουν (ήδη στο checklist rev A)
+## ⏳ Ακόμα λείπουν
 
-| Στοιχείο | Κατάσταση |
-|----------|-----------|
-| **Ρελέ K1–K6** (3× διπλά) | Δεν φαίνονται |
-| **F2 → 5V_AUX** | Για CN_PANEL / ρελέ / buzzer |
-| **CN_BETA** 4P | UART 16/17 |
-| **SparkFun Qwiic EndPoint** | Έλεγξε αν είναι στο PCB δίπλα CN5 |
-| **CN2 CT, CN6, CN7/8** | Πρέπει να **μην** υπάρχουν |
-
----
-
-## 📋 Pin map H1/H2 — rev A (DevKit 38, USB κάτω)
-
-**H2 (αριστερά, pin 1 πάνω):** 3V3, EN, VP(36), VN(39), 34, 35, 32, **33**, **25**, 26, 27, **14**, 12, GND, 13, …
-
-**H1 (δεξιά, pin 1 πάνω):** GND, 23, **22**, TX, RX, **21**, GND, 19, 18, 5, **17**, **16**, **4**, 0, 2, 15, …
+| Στοιχείο |
+|----------|
+| **3× διπλά ρελέ** K1–K6 + ζώνη 230 V |
+| **F2 1,5 A → 5V_AUX** |
+| **CN_BETA** 4P (GPIO17 TX / GPIO16 RX) |
+| **Διαγραφή** CN2 CT · CN6 · CN7/8 (αν υπάρχουν ακόμα) |
 
 ---
 
-## Σύνοψη
+## Pin map σύνοψη (rev A · DevKit 38)
 
-| Προτεραιότητα | Θέμα |
-|---------------|------|
-| **🔴 Υψηλή** | DEFROST → **H2-12 (GPIO14)**, όχι H1-11/12 |
-| **🟡 Μέτρια** | CN5 pin order — ευθυγράμμιση silk ↔ καλώδιο |
-| **🟡 Μέτρια** | U1 5V vs 3V3 — έλεγχος module |
-| **🟢 Χαμηλή** | I2C shared bus — **OK** |
-| **⏳ Fab** | Ρελέ, F2, CN_BETA, Qwiic EndPoint |
+| Net | Header | GPIO |
+|-----|--------|------|
+| I2C_SCL | H1-3 | 22 |
+| I2C_SDA | H1-6 | 21 |
+| DS18_DATA | H1-13 | 4 |
+| DEFROST_SIG | **H2-12** | **14** |
+| PANEL_TX | H2-9 | 25 |
+| PANEL_RX | H2-8 | 33 |
+| BETA_TX | H1-11 | 17 |
+| BETA_RX | H1-12 | 16 |
+| POT_CS / SPI | H2-15, H1-2, H1-11, H1-18 | 13, 23, 18, 23 |
+
+---
+
+## Verdict
+
+**Για τα κλειδωμένα connectors: OK** (μετά DEFROST → H2-12).  
+
+**Πριν παραγγελία:** R1 pull-up · CN5 silk · ρελέ · F2 · CN_BETA · EndPoint.
+
+**Προηγούμενο review:** ημερομηνία 1ης εικόνας — DEFROST ήταν στο H1-12 (διορθώθηκε).
