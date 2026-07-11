@@ -68,7 +68,7 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 | CN_DEFROST pin | Net | ESP32 |
 |----------------|-----|-------|
 | 1 3V3 | 3V3 | H2-1 |
-| 2 SING | **DEFROST_SIG** | **GPIO14** (H1-11) |
+| 2 SING | **DEFROST_SIG** | **GPIO14** (H2-12) |
 | 3 GND | GND | H1-1 / H2-14 |
 
 - **Module 230 V → opto** στο πεδίο (πηνίο τριόδης βάνας εξωτερικής HP)
