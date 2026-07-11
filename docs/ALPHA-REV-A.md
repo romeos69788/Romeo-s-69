@@ -9,7 +9,7 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 | **Beta** (εξωτερικό/αίθριο) | UART | `TX=17`, `RX=16`, 115200 |
 | **Οθόνες θερμοστάτη** | UART / ESP-NOW | `TX=25`, `RX=33` |
 | **HP outdoor board** | RS485 | **Όχι στο rev A** · future `MAX485EPA` |
-| **iPhone remote** | MQTT (HiveMQ) | [romeos-remote](https://github.com/romeos69788/romeos-remote) |
+| **iPhone remote** | MQTT (HiveMQ) | [`shared/romeos-remote/`](../shared/romeos-remote/) |
 | **Boiler panel meter** | TUYA WiFi | Ξεχωριστή συσκευή · όχι CT |
 
 ## CT (ρεύμα)
@@ -40,25 +40,21 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 | `romeos/<DEVICE_ID>/state` | publish | JSON τηλεμετρίας |
 | `romeos/<DEVICE_ID>/cmd` | subscribe | `setpoint_c_x10`, `heater` |
 
-### Build flags (platformio.ini)
+### Build flags
+
+Ρύθμισε credentials στο `secrets/platformio.local.ini` (δες `secrets/README.md`) ή απευθείας:
 
 ```ini
 -DROMEOS_MQTT_HOST=\"xxxx.s1.eu.hivemq.cloud\"
--DROMEOS_MQTT_USER=\"...\"
--DROMEOS_MQTT_PASS=\"...\"
--DROMEOS_MQTT_DEVICE_ID=\"romeos-mb\"
--DROMEOS_WIFI_SSID=\"...\"
--DROMEOS_WIFI_PASS=\"...\"
+...
 ```
-
-Μην κάνεις commit κωδικούς στο git.
 
 ## Build
 
-```bash
-cd motherboard-fw
+```powershell
+cd D:\ROMEOS 69\alpha
 pio run -e alpha_rev_a_bench    # compile χωρίς broker
-pio run -e alpha_rev_a            # production (με build_flags)
+pio run -e alpha_rev_a            # production (με secrets)
 pio run -t upload -e alpha_rev_a
 pio device monitor
 ```

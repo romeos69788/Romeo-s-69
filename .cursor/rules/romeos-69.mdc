@@ -1,43 +1,43 @@
 ---
-description: ROMEOS 69 project context — canonical folder D:\ROMEOS 69
+description: ROMEOS 69 — D:\ROMEOS 69 folder structure
 globs:
 alwaysApply: true
 ---
 
-# ROMEOS 69 — Project Rules
+# ROMEOS 69
 
 ## Canonical path
 
-**All work continues from:** `D:\ROMEOS 69`
+`D:\ROMEOS 69`
 
-When working in cloud/git, the repo root maps 1:1 to this folder.
+## Folder structure (match exactly)
 
-## Project
-
-- **Alpha rev A:** boiler-room motherboard ESP32 firmware in `motherboard-fw/`
-- **romeos-remote:** iPhone MQTT web app in `romeos-remote/`
-- **Conversation log:** update `ΣΥΖΗΤΗΣΗ.md` after each session
-
-## Hardware (Alpha rev A)
-
-- Single CT only: SCT-013 20A/1V on heat pump line → Alpha GPIO35
-- NO second CT for boiler room (TUYA WiFi meter on boiler panel)
-- NO CT for 4kW central panel meter
-- Alpha↔Beta = UART (TX=17, RX=16)
-- Alpha↔displays = UART/ESP-NOW
-- RS485 MAX485EPA NOT used in rev A (reserved for future HP outdoor board)
-
-## Inventory
-
-- ~10× MAX485EPA (DIP8) in stock for future HP RS485 (UART2 TX=17, RX=16, DE+RE=32)
-- Do not order extra CT
-
-## MQTT protocol
-
-Match romeos-remote App.tsx RomeosState schema.
-Topics: `romeos/<DEVICE_ID>/state` and `romeos/<DEVICE_ID>/cmd`
+```
+D:\ROMEOS 69\
+├── alpha\          ← boiler motherboard firmware (PlatformIO)
+├── beta\           ← outdoor board firmware
+├── display\        ← thermostat display firmware
+├── docs\           ← documentation + ΣΥΖΗΤΗΣΗ.md
+├── secrets\        ← credentials (NEVER commit real secrets)
+├── shared\         ← romeos-remote + shared code
+└── README.md
+```
 
 ## After each session
 
-1. Update `ΣΥΖΗΤΗΣΗ.md` with user messages and decisions
-2. Commit and push to git so `D:\ROMEOS 69` can `git pull`
+1. Update `docs/ΣΥΖΗΤΗΣΗ.md`
+2. Commit and push — user runs `git pull` in `D:\ROMEOS 69`
+
+## Hardware (Alpha rev A)
+
+- Single CT: SCT-013 → GPIO35 only
+- TUYA WiFi meter on boiler panel (not CT)
+- Alpha↔Beta UART TX=17 RX=16
+- Alpha↔display UART/ESP-NOW
+- RS485 MAX485EPA not used in rev A
+
+## Build Alpha
+
+```
+cd alpha && pio run -e alpha_rev_a_bench
+```

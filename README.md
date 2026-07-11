@@ -1,108 +1,52 @@
 # ROMEOS 69
 
-**Τοπικός φάκελος project:** `D:\ROMEOS 69`  
-**GitHub repo:** https://github.com/romeos69788/Romeo-s-69
+**Τοπικός φάκελος:** `D:\ROMEOS 69`
 
-Σύστημα ελέγχου θέρμανσης / αντλίας θερμότητας · **Alpha rev A** (μητρική καυστήρα).
+Σύστημα ελέγχου θέρμανσης / αντλίας θερμότητας.
 
-> Όλη η δουλειά και οι συζητήσεις με Cursor βασίζονται σε **αυτόν τον φάκελο**.
-> Κάθε συνέχεια = άνοιγμα `D:\ROMEOS 69` στο Cursor.
-
----
-
-## Δομή φακέλου (`D:\ROMEOS 69`)
+## Δομή
 
 ```
 D:\ROMEOS 69\
-├── README.md                 ← αυτό το αρχείο
-├── ΣΥΖΗΤΗΣΗ.md               ← καταγραφή όλων των συζητήσεων (ενημερώνεται)
-├── ΣΥνδεσμοι.md              ← GitHub, PR, agent links
-├── motherboard-fw\           ← firmware Alpha rev A (PlatformIO)
-├── romeos-remote\            ← web app iPhone (React + MQTT)
-├── scripts\                  ← sync / setup (Windows)
-└── .cursor\rules\            ← context για Cursor agents
+├── alpha\          ← μητρική καυστήρα (ESP32 · Alpha rev A)
+├── beta\           ← πλακέτα εξωτερικού / αίθριου
+├── display\        ← οθόνες θερμοστάτη
+├── docs\           ← τεκμηρίωση + ΣΥΖΗΤΗΣΗ.md
+├── secrets\        ← κωδικοί / credentials (ΔΕΝ στο git)
+├── shared\         ← κοινός κώδικας (π.χ. romeos-remote)
+└── README.md
 ```
 
----
+## Γρήγορη εκκίνηση
 
-## Πρώτη εγκατάσταση στο PC
-
-### Α) Νέος φάκελος (κενός `D:\ROMEOS 69`)
+### Alpha firmware
 
 ```powershell
-cd D:\
-git clone https://github.com/romeos69788/Romeo-s-69.git "ROMEOS 69"
-cd "ROMEOS 69"
-git checkout cursor/alpha-rev-a-fw-fc5f
-```
-
-### Β) Έχεις ήδη αρχεία στο `D:\ROMEOS 69`
-
-```powershell
-cd "D:\ROMEOS 69"
-git init
-git remote add origin https://github.com/romeos69788/Romeo-s-69.git
-git fetch origin
-git checkout -b cursor/alpha-rev-a-fw-fc5f origin/cursor/alpha-rev-a-fw-fc5f
-# Αν υπάρχουν τοπικά αρχεία: git status → merge χειροκίνητα ή backup πρώτα
-```
-
-### Γ) Sync μετά από κάθε session agent
-
-```powershell
-cd "D:\ROMEOS 69"
-git pull origin cursor/alpha-rev-a-fw-fc5f
-```
-
----
-
-## Build firmware (Alpha rev A)
-
-```powershell
-cd "D:\ROMEOS 69\motherboard-fw"
+cd "D:\ROMEOS 69\alpha"
 pio run -e alpha_rev_a_bench
 ```
 
-Hardware docs: [`motherboard-fw/docs/ALPHA-REV-A.md`](motherboard-fw/docs/ALPHA-REV-A.md)
-
-## Remote app (iPhone)
+### iPhone remote
 
 ```powershell
-cd "D:\ROMEOS 69\romeos-remote"
+cd "D:\ROMEOS 69\shared\romeos-remote"
 npm install
 npm run dev
 ```
 
-Live URL: https://romeos69788.github.io/romeos-remote/
+### Sync με GitHub
 
----
-
-## Αρχιτεκτονική
-
-```
-┌─────────────┐   UART    ┌─────────────┐
-│ Alpha (MB)  │◄─────────►│ Beta        │
-│ boiler room │           │ outdoor     │
-└──────┬──────┘           └─────────────┘
-       │ UART / ESP-NOW
-       ▼
-┌─────────────┐   MQTT      ┌─────────────┐
-│ Displays    │             │ romeos-     │
-│ (thermostat)│             │ remote      │
-└─────────────┘             └──────┬──────┘
-                                   │ HiveMQ Cloud
-                                   ▼
-                            ┌─────────────┐
-                            │ Alpha (MB)  │
-                            └─────────────┘
+```powershell
+cd "D:\ROMEOS 69"
+.\docs\scripts\sync-romos69.ps1
 ```
 
-## Hardware notes
+## Συζήτηση & docs
 
-- **CT:** μόνο SCT-013 στη γραμμή HP → GPIO35
-- **TUYA WiFi meter** στον πίνακα καυστήρα (όχι CT)
-- **RS485 / MAX485EPA:** reserved για future HP outdoor board
+- [`docs/ΣΥΖΗΤΗΣΗ.md`](docs/ΣΥΖΗΤΗΣΗ.md) — ιστορικό συζητήσεων Cursor
+- [`docs/ALPHA-REV-A.md`](docs/ALPHA-REV-A.md) — hardware Alpha rev A
+- [`docs/ΣΥνδεσμοι.md`](docs/ΣΥνδεσμοι.md) — GitHub, PR, links
 
-## Συζήτηση & ιστορικό
+## GitHub
 
-Όλες οι συζητήσεις: [`ΣΥΖΗΤΗΣΗ.md`](ΣΥΖΗΤΗΣΗ.md)
+https://github.com/romeos69788/Romeo-s-69

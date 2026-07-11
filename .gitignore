@@ -1,0 +1,22 @@
+# Build artifacts
+.pio/
+.vscode/
+
+# Secrets (real credentials)
+secrets/*.env
+secrets/platformio.local.ini
+secrets/mqtt.env
+secrets/wifi.env
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files anywhere
+.env
+.env.local
+.env.*.local
