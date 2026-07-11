@@ -89,10 +89,12 @@
 - **CN2_DEFROST** (2P) — `DEFROST_SIG` → **GPIO14** (opto από τριόδη βάνα HP).
 - Λείπει από τρέχον σχέδιο.
 
-### 7. Εξωτερική θερμοκρασία (DHT)
+### 7. ~~Εξωτερική θερμοκρασία (DHT)~~ → **CN5 Qwiic + SHT40** — **ΚΛΕΙΔΩΜΕΝΟ ✓**
 
-- **CN5 «EXIT-TEMP»** — OK αν είναι **DHT22** (1 data + 3V3 + GND).
-- Net: **GPIO16** · pull-up 10 kΩ.
+- **CN5** 5P: GND · 3V3 · SDA · SCL · EN (EN → **3V3** / H2-1)
+- **SparkFun QwiicBus EndPoint** onboard · RJ45 → outdoor EndPoint + **SHT40/41**
+- **I2C_SDA/SCL** → GPIO21/22 · κοινό με DS3231
+- **Όχι** DHT22 / `DHT_DATA`
 
 ### 8. AC opto (inverter feedback) — προαιρετικό αλλά χρήσιμο
 
@@ -160,7 +162,7 @@ PCB: CN7/CN8 **5V** · archive Hall flow: **3,3 V** + GPIO34.
 | 13 | POT_CS / REL_K5 | MCP41050 CS |
 | 14 | DEFROST_SIG / REL_K3 | επιλογή |
 | 15 | BUZZER_ALARM / REL_K6 | archive: buzzer=15 |
-| 16 | DHT_DATA / BETA_RX | **σύγκρουση** — BETA_RX=16, DHT=16 OK same board if Beta UART always on |
+| 16 | BETA_RX | UART Beta (όχι DHT) |
 | 17 | BETA_TX | |
 | 18 | SPI_SCK | |
 | 19 | SPI_MISO | |
