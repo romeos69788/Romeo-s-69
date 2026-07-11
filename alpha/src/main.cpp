@@ -54,7 +54,7 @@ void onRemoteCommand(const AlphaCommand& cmd) {
 
 void readSensors() {
     // TODO: DS18B20 · NTC · WiFi meter (HP kWh) integration
-    g_state.flow_sig_high = digitalRead(alpha::kFlowSig) == HIGH ? 1 : 0;
+    g_state.flow_sig_high = 0;  // rev A: no flow sensor — pump speed manual
 }
 
 }  // namespace
@@ -65,7 +65,6 @@ void setup() {
     Serial.println();
     Serial.println("ROMEOS 69 Alpha rev A — motherboard-fw");
 
-    pinMode(alpha::kFlowSig, INPUT);
     initRelays();
     syncRelayState();
 

@@ -17,7 +17,7 @@
 | **DS3231** (DIGITAL CLOCK) I2C | OK — κράτα χωρίς LCD 2004 |
 | **BUZZER** | OK |
 | **AC FAN SPOOFER** ως daughterboard | OK (ξεχωριστό module) |
-| **Πολλαπλές εισόδους αισθητήρων** (CN1–CN8) | Καλή κατεύθυνση — χρειάζεται ευθυγράμμιση ονομάτων/pin |
+| **Εισόδοι αισθητήρων** (CN1, CN3/4/10, CN5) | Κλειδωμένες — CN2/CN6/CN7/CN8 αφαιρούνται |
 
 ---
 
@@ -79,7 +79,13 @@
 - **GPIO5** (`SOLAR_CS`) ελεύθερο.
 - **Πεδίο (εκτός PCB):** δοχείο διαστολής, PRV, μικρός κυκλοφορητής ανακυκλοφορίας · interlock με τριόδη + inverter pump.
 
-### 5b. CN3 / CN4 / CN10 — DS18B20 νερού — **ΚΛΕΙΔΩΜΕΝΟ ✓**
+### 5b. ~~Flow sensors CN7 / CN8~~ — **ΑΦΑΙΡΕΘΗΚΑΝ (2026-07-11)**
+
+- **CN7 / CN8 / FLOW_SIG:** **διέγραψε** από schematic + PCB.
+- **Λόγος:** κύριος βρόχος πάντα ίδιος · ροή από **σταθερή σκάλα** μεγάλου inverter κυκλοφορητή (μνήμη μετά power cycle) · COP tuning με **ΔT** DS18.
+- **GPIO34** ελεύθερο.
+
+### 5c. CN3 / CN4 / CN10 — DS18B20 νερού — **ΚΛΕΙΔΩΜΕΝΟ ✓**
 
 - **3P:** 3V3 · GND · SING → **`DS18_DATA`** → **GPIO4**
 - Pull-up **4,7 kΩ** μόνο **CN10** · **100 nF** ανά κλέμα · LED τροφοδοσίας 3V3→R→GND
@@ -131,12 +137,7 @@ Archive: **5× DS18B20** στο **ίδιο** 1-Wire (**GPIO4**, **μία** CN4 3
 
 **Πρόταση:** **CN4_WATER 3P** μόνο · 5 probes παράλληλα στο πεδίο.
 
-### Δ. Flow sensors — 5 V vs 3,3 V
-
-PCB: CN7/CN8 **5V** · archive Hall flow: **3,3 V** + GPIO34.
-
-- Έλεγξε datasheet αισθητήρα ροής.
-- Αν 3,3 V logic → άλλαξε silk σε **3V3** · net **GPIO34** (και CN7 **ή** CN8 — **μία** ροή ΖΝΧ για MVP).
+### Δ. ~~Flow sensors CN7/CN8~~ — **αφαιρέθηκαν** (βλ. §5b)
 
 ### Ε. Qwiic EndPoint
 
@@ -174,7 +175,7 @@ PCB: CN7/CN8 **5V** · archive Hall flow: **3,3 V** + GPIO34.
 | 27 | REL_K3 | |
 | 32 | REL_K4 | archive |
 | 33 | PANEL_RX / REL_K5 | rev A: **PANEL_RX** |
-| 34 | FLOW_SIG | |
+| 34 | *(ελεύθερο)* | χωρίς flow rev A |
 | 35 | *(ελεύθερο)* | χωρίς CT rev A |
 | 36 | AC_OPTO | |
 | 39 | BACKUP_THERM | optional U4 |
@@ -196,6 +197,7 @@ PCB: CN7/CN8 **5V** · archive Hall flow: **3,3 V** + GPIO34.
 - [ ] **Μία** 1-Wire bus DS18 (5 probes) ή τεκμηρίωση ROM
 - [ ] Διόρθωση **100 nF** (όχι 100 µF) στα DS18
 - [ ] **Διέγραψε CN2** (HP-WATT) + CT parts από EasyEDA
+- [ ] **Διέγραψε CN7 + CN8** + FLOW_SIG από EasyEDA
 - [ ] **ERC/DRC** + πίνακας pin 1–38 H1/H2 εκτυπωμένος
 - [ ] **Antenna keep-out** ESP32
 - [ ] Fan Spoofer: **μόνο τρύπες** στη μητρική (αν colocation) — ηλεκτρικό μένει στο module

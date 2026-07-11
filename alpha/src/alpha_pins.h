@@ -8,7 +8,8 @@
 
 namespace alpha {
 
-// --- GPIO35: ελεύθερο (rev A — χωρίς CT· kWh HP από WiFi μετρητή πίνακα) ---
+// --- GPIO34 / GPIO35: ελεύθερα (rev A — χωρίς flow / CT) ---
+// kWh HP από WiFi μετρητή πίνακα · ροή από σταθερή σκάλα inverter κυκλοφορητή
 
 // --- Ρελέ K1–K6 (TBD: επιβεβαίωσε με rev A schematic) ---
 constexpr int kRelayK1 = 26;
@@ -20,9 +21,6 @@ constexpr int kRelayK6 = 15;
 
 // --- OneWire DS18B20 (TBD: bus pin) ---
 constexpr int kOneWireBus = 4;
-
-// --- Flow sensor (digital) ---
-constexpr int kFlowSig = 34;
 
 // --- Alpha ↔ Beta (UART) ---
 constexpr int kBetaUartNum = 1;
