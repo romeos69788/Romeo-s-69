@@ -55,6 +55,8 @@ void onRemoteCommand(const AlphaCommand& cmd) {
 void readSensors() {
     // TODO: DS18B20 · NTC · WiFi meter (HP kWh) integration
     g_state.flow_sig_high = 0;  // rev A: no flow sensor — pump speed manual
+    g_state.defrost_active =
+        digitalRead(alpha::kDefrostSig) == HIGH ? 1 : 0;
 }
 
 }  // namespace
@@ -65,6 +67,7 @@ void setup() {
     Serial.println();
     Serial.println("ROMEOS 69 Alpha rev A — motherboard-fw");
 
+    pinMode(alpha::kDefrostSig, INPUT);
     initRelays();
     syncRelayState();
 

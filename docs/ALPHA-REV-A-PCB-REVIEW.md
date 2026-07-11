@@ -90,10 +90,25 @@
 - **3P:** 3V3 · GND · SING → **`DS18_DATA`** → **GPIO4**
 - Pull-up **4,7 kΩ** μόνο **CN10** · **100 nF** ανά κλέμα · LED τροφοδοσίας 3V3→R→GND
 
-### 6. Defrost / απόψυξη
+### 6. CN_DEFROST — απόψυξη HP — **ΚΛΕΙΔΩΜΕΝΟ ✓ (2026-07-11)**
 
-- **CN2_DEFROST** (2P) — `DEFROST_SIG` → **GPIO14** (opto από τριόδη βάνα HP).
-- Λείπει από τρέχον σχέδιο.
+**Αρχικά σχεδιασμός:** Beta (HP outdoor board). **Μεταφορά στην Alpha** — η Beta μένει **κυρίως ρελέ**.
+
+| CN_DEFROST pin | Silk | Net | ESP32 DevKit 38 |
+|----------------|------|-----|-----------------|
+| **1** | **3V3** | **3V3** | H2-1 |
+| **2** | **SING** | **DEFROST_SIG** | **H1-11 / GPIO14** (D14) |
+| **3** | **GND** | **GND** | H1-1 / H2-14 |
+
+**Πεδίο:**
+- **Module απόψυξης** (230 V → opto/LV) — τροφοδοσία AC **εκτός** PCB (ζώνη HV)
+- Σήμα όταν **ενεργό πηνίο τριόδης βάνας** εξωτερικής HP = **απόψυξη**
+- **R9 4,7 kΩ** pull-up **DEFROST_SIG** → **3V3** (στο PCB Alpha)
+
+**Firmware (interlocks — αργότερα):**
+- `DEFROST_SIG` ενεργό → **K2 OFF** · **K4** απομόνωση ηλιακού · **K3 ON** (κύριος κυκλοφορητής)
+
+**Beta:** **όχι** CN_DEFROST — μόνο ρελέ HP/outdoor (UART προς Alpha αν χρειαστεί status).
 
 ### 7. ~~Εξωτερική θερμοκρασία (DHT)~~ → **CN5 Qwiic + SHT40** — **ΚΛΕΙΔΩΜΕΝΟ ✓**
 
@@ -161,7 +176,7 @@ Archive: **5× DS18B20** στο **ίδιο** 1-Wire (**GPIO4**, **μία** CN4 3
 | 5 | *(ελεύθερο)* | χωρίς MAX31865 rev A |
 | 12 | REL_K4 | ή buzzer — **μία** χρήση |
 | 13 | POT_CS / REL_K5 | MCP41050 CS |
-| 14 | DEFROST_SIG / REL_K3 | επιλογή |
+| 14 | **DEFROST_SIG** | **CN_DEFROST** — όχι ρελέ |
 | 15 | BUZZER_ALARM / REL_K6 | archive: buzzer=15 |
 | 16 | BETA_RX | UART Beta (όχι DHT) |
 | 17 | BETA_TX | |
@@ -172,8 +187,8 @@ Archive: **5× DS18B20** στο **ίδιο** 1-Wire (**GPIO4**, **μία** CN4 3
 | 23 | SPI_MOSI | |
 | 25 | PANEL_TX / REL_K1 | **σύγκρουση** — rev A: **PANEL_TX** (όχι ρελέ στο 25) |
 | 26 | REL_K2 | |
-| 27 | REL_K3 | |
-| 32 | REL_K4 | archive |
+| 27 | REL_K3 | defrost → ON |
+| 32 | REL_K1 | TBD (rev A: K4 = GPIO12) |
 | 33 | PANEL_RX / REL_K5 | rev A: **PANEL_RX** |
 | 34 | *(ελεύθερο)* | χωρίς flow rev A |
 | 35 | *(ελεύθερο)* | χωρίς CT rev A |
@@ -193,7 +208,7 @@ Archive: **5× DS18B20** στο **ίδιο** 1-Wire (**GPIO4**, **μία** CN4 3
 - [ ] ~~**MAX31865** + PT100 ηλιακός~~ — **αφαιρέθηκε** (DS18 SOLAR-RETURN στο bus)
 - [ ] **Διέγραψε CN6** + MAX31865 από EasyEDA
 - [ ] ~~**CT** κύκλωμα → GPIO35~~ — **αφαιρέθηκε**
-- [ ] **CN_DEFROST** → GPIO14
+- [ ] **CN_DEFROST** 3P → GPIO14 (**R9** 4,7 kΩ pull-up) — **όχι** στη Beta
 - [ ] **Μία** 1-Wire bus DS18 (5 probes) ή τεκμηρίωση ROM
 - [ ] Διόρθωση **100 nF** (όχι 100 µF) στα DS18
 - [ ] **Διέγραψε CN2** (HP-WATT) + CT parts από EasyEDA

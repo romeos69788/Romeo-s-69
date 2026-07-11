@@ -12,12 +12,15 @@ namespace alpha {
 // kWh HP από WiFi μετρητή πίνακα · ροή από σταθερή σκάλα inverter κυκλοφορητή
 
 // --- Ρελέ K1–K6 (TBD: επιβεβαίωσε με rev A schematic) ---
-constexpr int kRelayK1 = 26;
-constexpr int kRelayK2 = 27;
-constexpr int kRelayK3 = 14;
-constexpr int kRelayK4 = 12;  // heater (συχνά K4 στο remote)
+constexpr int kRelayK1 = 32;  // TBD — spare / K1 until relay lock session
+constexpr int kRelayK2 = 26;
+constexpr int kRelayK3 = 27;  // κύριος κυκλοφορητής · defrost → ON
+constexpr int kRelayK4 = 12;  // heater / solar valve (συχνά K4 στο remote)
 constexpr int kRelayK5 = 13;
 constexpr int kRelayK6 = 15;
+
+// --- Defrost (CN_DEFROST · opto από τριόδη βάνα HP) ---
+constexpr int kDefrostSig = 14;
 
 // --- OneWire DS18B20 (TBD: bus pin) ---
 constexpr int kOneWireBus = 4;
