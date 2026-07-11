@@ -75,7 +75,7 @@
 
 **Διόρθωση:** GND pour ή track · DRC **51/51** · **όχι fab** πριν κλείσει.
 
-**Αν η ratline μένει:** (1) κλικ στη ratline → δες τα 2 pads · (2) **χειροκίνητο track GND** 0,5 mm ανάμεσά τους · (3) pour **Rebuild** · clearance ≤ 0,2 mm · (4) **via GND** αν pad σε άλλο layer · (5) έλεγξε ότι το κόκκινο pour **δεν** είναι 3V3 αντί GND.
+**Αν η ratline μένει:** συχνά **2 ξεχωριστά GND nets** στο schematic (`GND` vs `GND1`) ή pad σε **λάθος net** — δες μήνυμα 26/27 ΣΥΖΗΤΗΣΗ.md.
 
 ---
 
