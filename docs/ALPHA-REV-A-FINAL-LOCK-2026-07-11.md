@@ -56,7 +56,7 @@
 
 **Zoom PCB (χρήστης):** CN1 = **2 pad** · nets **AC_POT_B** (pin 1) · **AC_POT_W** (pin 2) — **σωστά** ✓
 
-**Μόνο silk:** γράφει **«A/C-SENSOR»** → άλλαξε σε **«ROOM-NTC»** (ή **«ROOM-NTC / MCP41050»**) πριν fab. **Όχι** αλλαγή κυκλώματος.
+**Silk:** ✓ **ROOM-NTC** (διορθώθηκε 2026-07-11 · full board screenshot)
 
 ### 3.2 CN5 — outdoor I2C
 
@@ -143,7 +143,7 @@
 - [x] DRC **51/51** · **0 errors**
 - [x] CN2 / CN6 / CN7 / CN8 **αφαιρέθηκαν**
 - [x] CN3/4/10 DS18 · CN5 I2C · CN_DEFROST · CN_PANEL · U1 RTC · MCP41050 · Buzzer
-- [ ] **CN1 silk** → **ROOM-NTC** (2P OK · nets OK · μόνο rename silk)
+- [x] **CN1 silk** → **ROOM-NTC** ✓
 - [ ] **CN_DEFROST silk** σειρά pin 1-3V3 / 2-SING / 3-GND
 - [ ] **CN5 silk** 4P (αν θες τεκμηρίωση)
 - [ ] **100 nF** (όχι µF) στα DS18
