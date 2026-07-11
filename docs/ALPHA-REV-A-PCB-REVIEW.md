@@ -66,11 +66,11 @@
 - **Όχι** τροφοδοσία Beta από Alpha — η Beta έχει δικό της CN1 5V.
 - Αν απόσταση > ~3 m → **rev B:** RS485 (2× MAX485EPA) αντί για raw UART.
 
-### 4. CT SCT-013 (HP-WATT) — μοναδικό CT
+### 4. ~~CT SCT-013 (HP-WATT)~~ — **ΑΦΑΙΡΕΘΗΚΕ (2026-07-11)**
 
-- **CN2 silk «HP-WATT»** — σωστή ιδέα.
-- Χρειάζεται **κύκλωμα μέτρησης:** SCT-013 1 V out → **offset/divider** → **GPIO35** (ADC).
-- **Όχι** δεύτερο CT · **όχι** CT 4 kW πίνακα (TUYA WiFi ξεχωριστά).
+- **CN2 / HP-WATT / CT:** **διέγραψε** από schematic + PCB.
+- **Λόγος:** kWh HP από **WiFi ψηφιακό μετρητή** στον πίνακα της αντλίας — διπλή μέτρηση όχι απαραίτητη.
+- **GPIO35** ελεύθερο.
 
 ### 5. Ηλιακός — MAX31865 + PT100 (SPI)
 
@@ -100,11 +100,11 @@
 
 | Στο schematic | Στο PCB layout |
 |---------------|----------------|
-| CN1/CN2 = έξοδοι **MCP41050** | CN1/CN2 = **A/C-SENSOR** / **HP-WATT** |
+| CN1/CN2 = έξοδοι **MCP41050** | CN1 = **ROOM-NTC** · **CN2 αφαιρέθηκε** (CT) |
 
 **→ Μετονόμασε** π.χ.:
-- MCP: **CN_AC_POT_A / CN_AC_POT_B**
-- Αισθητήρες: **CN_HP_CT**, **CN_AC_SENSE** (αν χρειάζεται ξεχωριστό από MCP)
+- MCP: **CN1 ROOM-NTC** (AC_POT_B/W)
+- ~~CN_HP_CT~~ — **αφαιρέθηκε**
 
 ### Β. Πυκνωτές DS18 — 100 µF;
 
@@ -167,7 +167,7 @@ PCB: CN7/CN8 **5V** · archive Hall flow: **3,3 V** + GPIO34.
 | 32 | REL_K4 | archive |
 | 33 | PANEL_RX / REL_K5 | rev A: **PANEL_RX** |
 | 34 | FLOW_SIG | |
-| 35 | CT_ADC | SCT-013 |
+| 35 | *(ελεύθερο)* | χωρίς CT rev A |
 | 36 | AC_OPTO | |
 | 39 | BACKUP_THERM | optional U4 |
 
@@ -182,11 +182,11 @@ PCB: CN7/CN8 **5V** · archive Hall flow: **3,3 V** + GPIO34.
 - [ ] **CN_PANEL** 4P (Viewe UART)
 - [ ] **CN_BETA** 4P (UART 16/17)
 - [ ] **MAX31865** + PT100 ηλιακός (όχι μόνο DS18 στο CN6)
-- [ ] **CT** κύκλωμα → GPIO35
+- [ ] ~~**CT** κύκλωμα → GPIO35~~ — **αφαιρέθηκε**
 - [ ] **CN_DEFROST** → GPIO14
 - [ ] **Μία** 1-Wire bus DS18 (5 probes) ή τεκμηρίωση ROM
 - [ ] Διόρθωση **100 nF** (όχι 100 µF) στα DS18
-- [ ] **Μετονόμαση CN** — χωρίς διπλό CN1/CN2
+- [ ] **Διέγραψε CN2** (HP-WATT) + CT parts από EasyEDA
 - [ ] **ERC/DRC** + πίνακας pin 1–38 H1/H2 εκτυπωμένος
 - [ ] **Antenna keep-out** ESP32
 - [ ] Fan Spoofer: **μόνο τρύπες** στη μητρική (αν colocation) — ηλεκτρικό μένει στο module

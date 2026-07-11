@@ -8,8 +8,7 @@
 
 namespace alpha {
 
-// --- CT (μοναδικό · SCT-013 20A/1V στη γραμμή αντλίας) ---
-constexpr int kCtHpAdc = 35;  // ADC1_CH7 · μόνο HP line
+// --- GPIO35: ελεύθερο (rev A — χωρίς CT· kWh HP από WiFi μετρητή πίνακα) ---
 
 // --- Ρελέ K1–K6 (TBD: επιβεβαίωσε με rev A schematic) ---
 constexpr int kRelayK1 = 26;

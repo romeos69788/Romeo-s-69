@@ -11,14 +11,15 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 | **HP outdoor board** | RS485 | **Όχι στο rev A** · future `MAX485EPA` |
 | **iPhone remote** | MQTT (HiveMQ) | [`shared/romeos-remote/`](../shared/romeos-remote/) |
 | **Boiler panel meter** | TUYA WiFi | Ξεχωριστή συσκευή · όχι CT |
+| **HP panel meter** | WiFi ψηφιακός | kWh αντλίας · **όχι CT στη μητρική** |
 
-## CT (ρεύμα)
+## Ενέργεια / ρεύμα HP
 
-**Μοναδικό CT** — SCT-013 20A/1V στη γραμμή αντλίας θερμότητας:
+**Όχι CT** (SCT-013) στη μητρική Alpha rev A.
 
-- **ADC:** GPIO **35** (`alpha::kCtHpAdc`)
-- **Όχι** δεύτερο CT για σύνολο καυστήρα (TUYA meter)
-- **Όχι** CT για 4kW κεντρικός πίνακας
+- **kWh αντλίας:** WiFi ψηφιακός μετρητής στον πίνακα της HP (ξεχωριστή συσκευή)
+- **kWh καυστήρα / 4 kW:** TUYA WiFi μετρητές πίνακα (ξεχωριστά)
+- **GPIO35:** ελεύθερο (δεν χρησιμοποιείται για CT)
 
 ## Ρελέ K1–K6
 
@@ -64,6 +65,5 @@ pio device monitor
 - [ ] DS18B20 / NTC ανάθεση αισθητήρων θερμοκρασίας
 - [ ] UART πρωτόκολλο Alpha ↔ Beta
 - [ ] ESP-NOW / UDP sync setpoint προς οθόνες
-- [ ] CT RMS (SCT-013 calibration)
-- [ ] TUYA meter integration (boiler panel)
+- [ ] TUYA / WiFi meter integration (HP kWh + καυστήρα)
 - [ ] Λογική ελέγχου (pumps, HP, defrost)

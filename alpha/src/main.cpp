@@ -53,11 +53,8 @@ void onRemoteCommand(const AlphaCommand& cmd) {
 }
 
 void readSensors() {
-    // TODO: DS18B20 · NTC · TUYA meter (WiFi) integration
+    // TODO: DS18B20 · NTC · WiFi meter (HP kWh) integration
     g_state.flow_sig_high = digitalRead(alpha::kFlowSig) == HIGH ? 1 : 0;
-
-    // CT HP line (GPIO35) — placeholder RMS calculation
-    (void)analogRead(alpha::kCtHpAdc);
 }
 
 }  // namespace
