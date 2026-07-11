@@ -40,15 +40,16 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 
 ## Outdoor θερμοκρασία / υγρασία (SHT40 · I2C)
 
-**CN5** 5P → **QwiicBus EndPoint** onboard · **SHT40/41** μέσω 2ου EndPoint + Cat5.
+**CN5** **4P** → **QwiicBus EndPoint** (EN → **3V3** μόνιμα στο module) · outdoor **SHT40/41** via 2ο EndPoint + Cat5.
 
-| CN5 pin | Net | ESP32 |
-|---------|-----|-------|
-| 1 GND | GND | H1-1 / H2-14 |
-| 2 3V3 | 3V3 | **H2-1** |
-| 3 SDA | I2C_SDA | **H1-6** (GPIO21) |
-| 4 SCL | I2C_SCL | **H1-3** (GPIO22) |
-| 5 EN | **3V3** | **H2-1** (ίδιο με pin 2) |
+| CN5 pin | Silk | Net | ESP32 |
+|---------|------|-----|-------|
+| **1** | **GND** | GND | H1-1 / H2-14 |
+| **2** | **3V3** | 3V3 | **H2-1** |
+| **3** | **SDA** | I2C_SDA | **H1-6** (GPIO21) |
+| **4** | **SCL** | I2C_SCL | **H1-3** (GPIO22) |
+
+*(Δεν υπάρχει pin EN στο κλέμα — hardwired 3V3 στο EndPoint.)*
 
 Κοινό I2C bus με **DS3231** RTC.
 

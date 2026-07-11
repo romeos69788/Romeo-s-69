@@ -1,84 +1,76 @@
-# Schematic/PCB review — CONTROL BOARD v1.0
+# Schematic/PCB review — Alpha rev A (CONTROL BOARD v1.0)
 
-**Rev A check:** 2026-07-11 (2η εικόνα — μετά διόρθωση DEFROST)
+**Τελικός έλεγχος:** 2026-07-11 · **μόνο μητρική Alpha**  
+**Scope:** κλειδωμένα connectors + τροφοδοσία · **όχι** ρελέ / CN_BETA / F2 (άλλη φάση ή Beta)
+
+**DRC:** 0 errors (PCB)
 
 ---
 
-## ✅ Διορθώθηκε / OK
+## ✅ Εγκρίθηκε — Alpha rev A
 
-| Block | Κατάσταση |
-|-------|-----------|
-| **DEFROST_SIG** | **H2 pin 12** → GPIO14 ✓ (διόρθωση από H1-12) |
-| **I2C bus** | U1 + CN5 + H1 — **ίδιο net** `I2C_SDA`/`I2C_SCL` ✓ |
-| **I2C → ESP32** | PCB: **H1-3 (IO22/SCL)** · **H1-6 (IO21/SDA)** ✓ |
-| **CN_DEFROST** | 3V3 · SING · GND |
-| **CN1 / MCP41050** | SPI + AC_POT ✓ |
-| **CN3/4/10** | DS18_DATA → H1-13 (IO4) · R13 · 100 nF ✓ |
-| **CN_PANEL** | PANEL_TX/RX → H2-9 / H2-8 ✓ |
-| **Τροφοδοσία** | F1 · 5V_PRE · C1/C2 · D2 ✓ |
+| Block | PCB/schematic |
+|-------|----------------|
+| **ESP32 H1/H2** | DevKit 38 ✓ |
+| **CN1** | MCP41050 → ROOM-NTC ✓ |
+| **CN3 / CN4 / CN10** | DS18 · R13 pull-up (CN10) · 100 nF ✓ |
+| **CN5 OUTDOOR-I2C** | 4P silk **GND·3V3·SDA·SCL** · H1-3/6 ✓ |
+| **Qwiic EN** | Μόνιμα **3V3** στο EndPoint ✓ |
+| **U1 DS3231** | I2C κοινό bus · **5V_ESP** ✓ |
+| **CN_DEFROST** | 3V3 · SING · GND · **R1 4,7k pull-up** ✓ |
+| **DEFROST_SIG** | **H2-12 → GPIO14** ✓ |
+| **CN_PANEL (7″)** | PANEL_TX/RX → H2-9/8 ✓ |
+| **BUZZER (U2)** | ✓ |
+| **Τροφοδοσία** | 12V module · F1 · 5V_PRE/5V_ESP · C1/C2 · D2 ✓ |
 | **Fan spoofer** | Daughterboard ζώνη ✓ |
+| **Αφαιρέθηκαν** | CN2 CT · CN6 · CN7/8 — **δεν φαίνονται** ✓ |
+
+**Verdict: OK για fab** — μητρική Alpha rev A (connectors).
 
 ---
 
-## ⚠️ Έλεγξε πριν fab
+## CN5 — τελική σειρά pin (PCB 4P)
 
-### 1. R1 στο DEFROST — πρέπει pull-**UP**
+| CN5 pin | Silk | Net |
+|---------|------|-----|
+| **1** | **GND** | GND |
+| **2** | **3V3** | 3V3 |
+| **3** | **SDA** | I2C_SDA → H1-6 (GPIO21) |
+| **4** | **SCL** | I2C_SCL → H1-3 (GPIO22) |
 
-**Σωστό:** `3V3` — **R1 4,7 kΩ** — `DEFROST_SIG` — (opto) — GND  
-
-**Όχι** pull-down προς GND (θα κρατάει το σήμα LOW).
-
-### 2. CN5 — σειρά pin (silk)
-
-**PCB (4 pin):** GND · 3V3 · SDA · SCL (κάτω→πάνω)  
-
-**Schematic CN5 (5P):** EN · SCL · SDA · 3V3 · GND  
-
-- Nets προς ESP32 **σωστά**
-- **EN:** OK αν EndPoint onboard έχει EN → 3V3 μόνιμα
-- **Σημείωσε στο silk** τη σειρά pin για το πεδίο (διαφορετική από doc PR — OK αν το PCB είναι η αλήθεια)
-
-### 3. U1 DS3231 — 5V_ESP
-
-OK αν module **5 V**. I2C pull-ups σε **3V3** — συνήθως OK.
-
-### 4. Qwiic EndPoint
-
-Έλεγξε footprint **COM-16988** δίπλα CN5 στο PCB (RJ45 προς outdoor SHT40).
+**EN:** όχι στο κλέμα — **3V3 μόνιμα** στο Qwiic EndPoint module.
 
 ---
 
-## ⏳ Ακόμα λείπουν
-
-| Στοιχείο |
-|----------|
-| **3× διπλά ρελέ** K1–K6 + ζώνη 230 V |
-| **F2 1,5 A → 5V_AUX** |
-| **CN_BETA** 4P (GPIO17 TX / GPIO16 RX) |
-| **Διαγραφή** CN2 CT · CN6 · CN7/8 (αν υπάρχουν ακόμα) |
-
----
-
-## Pin map σύνοψη (rev A · DevKit 38)
+## Pin map Alpha (DevKit 38 · USB κάτω)
 
 | Net | Header | GPIO |
 |-----|--------|------|
 | I2C_SCL | H1-3 | 22 |
 | I2C_SDA | H1-6 | 21 |
 | DS18_DATA | H1-13 | 4 |
-| DEFROST_SIG | **H2-12** | **14** |
+| DEFROST_SIG | H2-12 | 14 |
 | PANEL_TX | H2-9 | 25 |
 | PANEL_RX | H2-8 | 33 |
-| BETA_TX | H1-11 | 17 |
-| BETA_RX | H1-12 | 16 |
-| POT_CS / SPI | H2-15, H1-2, H1-11, H1-18 | 13, 23, 18, 23 |
+| POT_CS | H2-15 | 13 |
+| SPI_SCK / MOSI / MISO | H1-11 / H1-2 / H1-8 | 18 / 23 / 19 |
+
+**H1-11 / H1-12** (GPIO17/16): ελεύθερα — UART προς Beta **άλλη φάση**.
 
 ---
 
-## Verdict
+## Εκτός scope Alpha (άλλη φάση / Beta)
 
-**Για τα κλειδωμένα connectors: OK** (μετά DEFROST → H2-12).  
+| Στοιχείο | Σημείωση |
+|----------|----------|
+| Ρελέ K1–K6 | Όχι σε αυτό το PCB |
+| F2 / 5V_AUX | Όχι σε αυτό το PCB (φάση 2) |
+| CN_BETA | Β’ μητρική / καλώδιο αργότερα |
 
-**Πριν παραγγελία:** R1 pull-up · CN5 silk · ρελέ · F2 · CN_BETA · EndPoint.
+---
 
-**Προηγούμενο review:** ημερομηνία 1ης εικόνας — DEFROST ήταν στο H1-12 (διορθώθηκε).
+## Ιστορικό review
+
+1. DEFROST ήταν H1-12 → διορθώθηκε σε **H2-12** ✓  
+2. I2C shared bus — επιβεβαιώθηκε ✓  
+3. R1 pull-up · CN5 silk · EN · U1 5V — επιβεβαιώθηκαν από χρήστη ✓
