@@ -69,6 +69,14 @@
 
 ---
 
+## PCB layout — GND ratline (U1 DIGITAL CLOCK)
+
+**Σύμπτωμα:** Design Manager → **Nets 50/51** · **GND** κόκκινο X · ratline **U1 GND** → **ESP32 GND**.
+
+**Διόρθωση:** GND pour ή track · DRC **51/51** · **όχι fab** πριν κλείσει.
+
+---
+
 ## Ιστορικό review
 
 1. DEFROST ήταν H1-12 → διορθώθηκε σε **H2-12** ✓  
