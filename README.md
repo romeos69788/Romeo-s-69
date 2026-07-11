@@ -45,6 +45,9 @@ cd "D:\ROMEOS 69"
 
 - [`docs/ΣΥΖΗΤΗΣΗ.md`](docs/ΣΥΖΗΤΗΣΗ.md) — ιστορικό συζητήσεων Cursor
 - [`docs/ALPHA-REV-A.md`](docs/ALPHA-REV-A.md) — hardware Alpha rev A
+- [`docs/FAN-MOTOR-BOARD.md`](docs/FAN-MOTOR-BOARD.md) — πλακέτα βεντιλατήρα (5 vs 4 καλώδια)
+- [`docs/HP-BOARD-LEITOURGIA.md`](docs/HP-BOARD-LEITOURGIA.md) — HP outdoor board
+- [`docs/SYNOLOGI-IMPORT.md`](docs/SYNOLOGI-IMPORT.md) — import από `D:\Romeos Tsakas`
 - [`docs/ΣΥνδεσμοι.md`](docs/ΣΥνδεσμοι.md) — GitHub, PR, links
 
 ## GitHub
