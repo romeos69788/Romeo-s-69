@@ -8,15 +8,26 @@
 
 ## Γρήγορα
 
+### Πλήρης αντιγραφή φακέλου (προτείνεται)
+
+Αντιγράφει **όλο** το `D:\Romeos Tsakas` → `D:\ROMEOS 69\docs\archive\romeos-tsakas\`
+
 ```powershell
 cd "D:\ROMEOS 69"
-.\docs\scripts\import-from-romeos-tsakas.ps1
+powershell -ExecutionPolicy Bypass -File ".\docs\scripts\copy-romeos-tsakas-full.ps1"
 ```
 
-Dry-run (μόνο λίστα, χωρίς copy):
+Dry-run:
 
 ```powershell
-.\docs\scripts\import-from-romeos-tsakas.ps1 -WhatIf
+powershell -ExecutionPolicy Bypass -File ".\docs\scripts\copy-romeos-tsakas-full.ps1" -WhatIf
+```
+
+### Επιλεκτικό import (μόνο συγκεκριμένοι τύποι)
+
+```powershell
+cd "D:\ROMEOS 69"
+powershell -ExecutionPolicy Bypass -File ".\docs\scripts\import-from-romeos-tsakas.ps1"
 ```
 
 ---
