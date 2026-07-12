@@ -2,7 +2,10 @@
 
 **Ημερομηνία:** 2026-07-12  
 **Πηγές:** schematic + PCB layout EasyEDA (χρήστης)  
-**Σύγκριση με:** Alpha rev A locked · [`beta/README.md`](../beta/README.md)
+**Σύγκριση με:** Alpha rev A locked · [`beta/README.md`](../beta/README.md)  
+**Κατάσταση:** ✓ **FAB APPROVED** · παραγγελία JLCPCB · bench ~τέλος Ιουλίου 2026
+
+**Bring-up:** [`BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md`](BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md)
 
 ---
 
@@ -118,7 +121,8 @@ PCB silk (όπως φαίνεται):
 |---|------|----------------|
 | 1 | **CN_ALPHA** 4P UART (GND · RX · TX · NC) | 🔴 κρίσιμο — **επόμενο βήμα** |
 | 2 | ~~Αφαίρεση CN1–CN4~~ | ✓ **μένουν** — optional · όχι firmware rev A |
-| 2b | **Rename silk** CN1–CN4 (OPT / FUTURE) | 🟡 να συμφωνήσουμε |
+| 2b | **Rename silk** CN1–CN4 (OPT / FUTURE) | ✓ |
+| 2c | **Relay silk** CIRC/SOL/3-WAY/HP/4kW/ST-BY | ✓ 2026-07-12 |
 | 3 | **Pin map** H1/H2 → REL_K1…K8 (πίνακας GPIO) | ✓ **κλειδωμένο** 2026-07-12 |
 | 4 | **230 V** ζώνη · creepage · silk «IN 220V AC» | 🟡 έλεγχος DRC |
 | 5 | **ERC/DRC** · nets πλήρης | 🔴 |
@@ -155,6 +159,14 @@ PCB silk (όπως φαίνεται):
 3. **K1–K8** → ακριβής πεδίο wiring (contactor, 4kW, 3-way, HP OEM);
 4. UART πρωτόκολλο (π.χ. `REL K3 ON\n` / JSON / binary);
 5. **CN9** τι είναι στο schematic;
+
+---
+
+## 9. Post-fab (2026-07-12)
+
+**Review blocks 1–5:** ολοκληρώθηκαν · PCB synced · **52/52 nets · 0 DRC** · παραγγελία εγκρίθηκε.
+
+**Επόμενο:** bench bring-up — βλ. [`BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md`](BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md)
 
 ---
 

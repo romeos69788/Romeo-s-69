@@ -1,11 +1,14 @@
 # JLCPCB — παραγγελία μαζί (Alpha + Beta + άλλα)
 
 **Ημερομηνία:** 2026-07-12  
-**Στόχος:** **μία** αποστολή · όχι πολλαπλά μεταφορικά
+**Στόχος:** **μία** αποστολή · όχι πολλαπλά μεταφορικά  
+**Κατάσταση:** ✓ **ΠΑΡΑΓΓΕΛΙΑ** (χρήστης 2026-07-12) · άφιξη ~τέλος Ιουλίου 2026
+
+**Μετά άφιξη:** [`BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md`](BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md)
 
 ---
 
-## Πριν checkout
+## Πριν checkout *(checklist lock — ολοκληρώθηκε)*
 
 ### Alpha (Mitriki ALPHA · rev A)
 
@@ -17,10 +20,10 @@
 
 ### Beta (Bita Mitriki · v2.0)
 
-- [ ] **CN_ALPHA** (U5) — silk **TO ALPHA** · **όχι** 5V pin4 · TX/RX → GPIO17/16
-- [ ] OPT1–4 silk ✓
-- [ ] Ρελέ U1–U4: **VCC = 5V_ESP** (όχι 3V3) — έλεγχος
-- [ ] DRC clean → Gerber export
+- [x] **CN_ALPHA** (U5) — silk **TO ALPHA** · **όχι** 5V pin4 · TX/RX → GPIO17/16
+- [x] OPT1–4 silk ✓ · CN1–CN4 hardware wired
+- [x] Ρελέ U1–U4: **VCC = 5V_ESP** · K1–K8 GPIO lock
+- [x] DRC **0 errors** · **52/52 nets** → Gerber export
 
 ### Καλώδιο πεδίου (μετά fab)
 

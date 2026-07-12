@@ -1,11 +1,29 @@
 # Beta rev A — τελικός έλεγχος πριν παραγγελία JLCPCB
 
 **Ημερομηνία:** 2026-07-12  
-**Πηγές:** full schematic + PCB layout (χρήστης) · locked docs session 2026-07-12
+**Πηγές:** full schematic + PCB layout (χρήστης) · locked docs session 2026-07-12  
+**Κατάσταση:** ✓ **ΠΑΡΑΓΓΕΛΙΑ ΕΓΚΡΙΘΗΚΕ** (χρήστης 2026-07-12) · άφιξη ~τέλος Ιουλίου · bench test μετά
+
+**Επόμενο:** [`BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md`](BETA-BENCH-BRINGUP-HANDOFF-2026-07-12.md)
 
 ---
 
-## 🔴 ΜΗΝ παραγγείλεις αν δεν περάσει
+## ✓ Pre-fab — ολοκληρώθηκε (2026-07-12)
+
+| Έλεγχος | Αποτέλεσμα |
+|---------|------------|
+| Update PCB from Schematic | ✓ |
+| Design Manager nets | **52/52** |
+| DRC | **0 errors** |
+| CN1 OPT1-CURRENT | ✓ pin1=OPT_CT_IN · pin2=GND |
+| CN2/CN3 DS18 | ✓ |
+| CN4 flow | ✓ |
+| U1–U4 + REL_K1…K8 | ✓ |
+| K1–K8 field map + silk | ✓ |
+
+---
+
+## 🔴 ΜΗΝ παραγγείλεις αν δεν περάσει *(ιστορικό — πέρασε)*
 
 ### 1. Schematic ↔ PCB — **ίδια nets / ίδια GPIO**
 
