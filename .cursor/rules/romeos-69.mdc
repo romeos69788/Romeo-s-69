@@ -23,17 +23,21 @@ D:\ROMEOS 69\
 └── README.md
 ```
 
-## After each session
+## After EVERY conversation (mandatory — no user reminder)
 
-1. Update `docs/ΣΥΖΗΤΗΣΗ.md`
-2. Commit and push — user runs `git pull` in `D:\ROMEOS 69`
+1. Update **`docs/ΣΥΖΗΤΗΣΗ.md`** with new messages / decisions
+2. Update related docs (`ALPHA-REV-A.md`, field notes, connector locks, etc.)
+3. **Commit + push** to GitHub — user runs `git pull` in `D:\ROMEOS 69`
+4. Update open **PR** if code/docs changed on a feature branch
 
-## Hardware (Alpha rev A)
+## Hardware (Alpha rev A — locked so far)
 
-- Single CT: SCT-013 → GPIO35 only
-- TUYA WiFi meter on boiler panel (not CT)
-- Alpha↔Beta UART TX=17 RX=16
-- Alpha↔display UART/ESP-NOW
+- **CN1** ROOM-NTC → MCP41050 · **CN2** CT removed (GPIO35 free)
+- **CN3/4/10** DS18 → GPIO4 · **CN5** Qwiic SHT40 I2C
+- **CN6** removed · **CN7/8** flow removed (GPIO34 free)
+- **CN_DEFROST** 3P → GPIO14 · **CN_PANEL** 4P → GPIO25/33 + 5V_AUX
+- **Beta:** relay-only · UART TX=17 RX=16
+- HP kWh: WiFi meter · TUYA on boiler panel
 - RS485 MAX485EPA not used in rev A
 
 ## Build Alpha
@@ -41,3 +45,8 @@ D:\ROMEOS 69\
 ```
 cd alpha && pio run -e alpha_rev_a_bench
 ```
+
+## Field notes
+
+- HP outdoor: XiLa2 S-AC-10-OUT · R32 · see `docs/HP-FIELD-NOTES.md`
+- Fan motor board: installed OK · see `docs/FAN-MOTOR-BOARD.md`
