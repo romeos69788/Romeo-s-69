@@ -105,12 +105,16 @@ pin 4 NC       ─────── pin 4 NC
 
 ---
 
-## EasyEDA — Alpha
+## EasyEDA — Alpha (πριν παραγγελία — μαζί με Beta)
 
-**Αν rev A ήδη παραγγέλθηκε χωρίς CN_BETA:**
+1. **Place → Connector** 4P · designator **CN_BETA**
+2. Net: pin1 **GND** · pin2 **BETA_TX → H1-11 GPIO17** · pin3 **BETA_RX → H1-12 GPIO16** · pin4 **NC**
+3. Silk: **CN_BETA · TO BETA**
+4. **Όχι** 5V/3V3 στο κλέμα
+5. **Update PCB from schematic** → DRC → νέο Gerber export
+6. **JLCPCB:** ακύρωσε παλιό καλάθι Alpha · upload **νέο** zip · παραγγελία **μαζί** με Beta (+ άλλα PCBs)
 
-- **Προσωρινά:** dupont από **H1-11 (TX)** · **H1-12 (RX)** · **GND** → καλώδιο προς Beta
-- **Rev B Alpha:** πρόσθεσε **CN_BETA** 4P με τον πίνακα πάνω
+~~Rev B / dupont~~ — **δεν χρειάζεται** αν προσθέσεις CN_BETA τώρα.
 
 ---
 
