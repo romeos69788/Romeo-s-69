@@ -11,7 +11,7 @@
 | Block | Schematic | PCB | Σχόλιο |
 |-------|-----------|-----|--------|
 | ESP32 DevKit 38 (H1/H2) | ✓ | ✓ | ⚠ διπλό ESP32 με Alpha — δες §3 |
-| 12 V IN + buck 12→5 V | ✓ | ✓ | OK |
+| 12 V IN + buck 12→5 V | ✓ | ✓ | 🔄 **έλεγχος block 3/7** |
 | F1 1,5 A → 5V_ESP | ✓ | ✓ | OK (ρελέ rail) |
 | C3/C4 + D1 Zener + LED-F1 | ✓ | ✓ | OK |
 | **U1–U4** 4P → **2-ch relay modules** | ✓ | ✓ | **8 κανάλια** · OK |
@@ -19,9 +19,9 @@
 | **CN1** AC FLOW (2P) | ✓ | ✓ | 🔴 **αφαίρεση** — αποφάσεις rev A |
 | **CN2/CN3** WATER-TEMP DS18 | ✓ | ✓ | 🔴 **αφαίρεση** — DS18 στην Alpha |
 | **CN4** WATER FLOW (3P) | ✓ | ✓ | 🔴 **αφαίρεση** — flow αφαιρέθηκε |
-| **CN9** 2P | ✓ | — | έλεγξε net (5V in;) |
+| **CN9** 2P + **F1** 1,5 A | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | Silk REL1–REL4 | — | ✓ | βλ. πίνακα §4 |
-| **CN_ALPHA / UART** προς Alpha | ✗ | ✗ | 🔴 **λείπει** |
+| **CN_ALPHA / UART** (U5) προς Alpha | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | CN_DEFROST | ✗ | ✗ | ✓ σωστά (μένει Alpha) |
 | Mounting holes + pads | — | ✓ | OK |
 
