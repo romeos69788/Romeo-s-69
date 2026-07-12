@@ -40,7 +40,23 @@
 |------|----------|
 | **Qwiic EndPoint COM-16988** | Ξεχωστή παραγγελία — **2×** για CN5 |
 | **SHT40** | Ξεχωστή παραγγελία |
-| **SCT-013 CT** | **Όχι** — rule ROMEOS 69 |
+| **SCT-013 CT** | **Όχι** στην **Alpha** rev A · **1×** optional **Beta CN1** (OPT1) — βλ. [`BETA-OPT-HARDWARE-MAP.md`](../BETA-OPT-HARDWARE-MAP.md) |
+
+---
+
+## AliExpress — SCT-013 CT (Beta OPT1-CURRENT)
+
+**Link:** https://www.aliexpress.com/item/1005007531832172.html
+
+**Προϊόν:** **SCT-013** split-core CT · έκδοση **1 V output** (built-in burden)  
+**Ποσότητα:** **1×** για **Beta CN1** · **όχι** δεύτερο CT elsewhere
+
+| Έκδοση | Πότε |
+|--------|------|
+| **20 A / 1 V** | Γραμμή HP / outdoor (προτείνεται αν max ~20 A) |
+| **10 A / 1 V** | Μικρότερο φορτίο |
+
+**PCB:** R_CT1/R_CT2 **10 kΩ** · C_CT1 **10 µF** · **GPIO35** · CN1 **2P** (κόψιμο TRS jack στο πεδίο).
 
 ---
 

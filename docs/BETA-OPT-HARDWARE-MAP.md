@@ -19,27 +19,55 @@
 
 ## Πίνακας κλέματος → ESP32
 
-### CN1 — **OPT1-CURRENT** (2P)
+### CN1 — **OPT1-CURRENT** (2P) — **SCT-013** (1 V output)
 
-Μελλοντικός αισθητήρας ρεύματος (Hall / CT module / analog out).
+**Module (χρήστης):** [SCT-013 AliExpress 1005007531832172](https://www.aliexpress.com/item/1005007531832172.html)  
+**Τύπος:** split-core CT · **έξοδος τάσης** (εσωτερικό burden) · **όχι** mA έξοδος  
+**Φυσικό:** μπλε clamp · καλώδιο ~1 m · **βύσμα 3,5 mm TRS** στο τέλος
 
-| CN1 pin | Silk | Net | Σύνδεση ESP32 |
-|---------|------|-----|---------------|
-| **1** | **SIG** | **OPT_CURRENT_SIG** | → κύκλωμα divider → **H2-6 · GPIO35** |
-| **2** | **GND** | **GND** | **H1-1 / H2-14** |
+| Ετικέτα CT | Έκδοση | Κλίμακα |
+|------------|--------|---------|
+| **20 A / 1 V** (φωτο χρήστη) | 1 V RMS @ 20 A | **50 mV / A** |
+| **10 A / 1 V** (link cart) | 1 V RMS @ 10 A | **100 mV / A** |
 
-**Κύκλωμα (standby-safe):**
+**→ Διάλεξε μία έκδοση** πριν lock BOM · για γραμμή HP/outdoor συνήθως **20 A / 1 V** · **μην** παραγγείλεις δεύτερο CT (βλ. shopping note).
+
+**Σύνδεση στο PCB (CN1 2P):**
+
+| CN1 pin | Silk | Σύνδεση |
+|---------|------|---------|
+| **1** | **SIG** | Ένα καλώδιο CT (μετά **C_CT1**) → bias → **GPIO35** |
+| **2** | **GND** | Άλλο καλώδιο CT → **GND** |
+
+**Πεδίο:** κόψε TRS jack **ή** βάλε **3,5 mm socket** στο κουτί — στο PCB μένει **2P** screw terminal.
+
+**Κύκλωμα bias AC → ADC (ESP32 GPIO35):**
 
 ```
-OPT_CURRENT_SIG ──[ R1 ]──┬── GPIO35 (ADC)
-                          │
-                         [ R2 ]── GND
+3V3 ── R_CT1 10k ──┬── OPT_CURRENT_ADC ── GPIO35 (H2-6)
+                    │
+                   R_CT2 10k
+                    │
+                   GND
+
+CN1-1 (SIG) ── C_CT1 10µF ──► κόμβος OPT_CURRENT_ADC
+CN1-2       ───────────────► GND
 ```
 
-- **R1 / R2:** τελική τιμή **όταν** επιλεγεί module (π.χ. 0–1 V CT → bias 1,65 V · divider όπως archive CT).
-- **Rev A:** GPIO35 = **input-only** · **χωρίς** module = ασφαλές (floating με weak bias αν θες — optional 100 kΩ προς GND).
+| Ref | Τιμή | Ρόλος |
+|-----|------|-------|
+| **R_CT1** | **10 kΩ** | Bias divider (πάνω) |
+| **R_CT2** | **10 kΩ** | Bias divider (κάτω) → **~1,65 V** στο ADC at rest |
+| **C_CT1** | **10 µF** (ηλεκτρολυτικός) | Σύζευξη AC από CT · **+** προς CT / **−** προς ADC node |
 
-**Firmware (αργότερα):** `analogRead(GPIO35)` · `#define ROMEOS_BETA_OPT_CURRENT 0` στο rev A.
+**Σημειώσεις:**
+
+- **Μόνο ένας** αγωγός μέσα στο CT (L **ή** N — **όχι** και τα δύο).
+- Έξοδος CT = **AC** · firmware (αργότερα): **πολλαπλά δείγματα** → **RMS** (50 Hz Ελλάδα).
+- **Rev A firmware:** `#define ROMEOS_BETA_OPT_CURRENT 0` — κύκλωμα onboard · κώδικας off.
+- **Όχι** επιπλέον burden resistor (το **1 V** model το έχει μέσα).
+
+**Firmware (αργότερα):** `I_rms = V_rms × (20 ή 10)` ανά έκδοση CT.
 
 ---
 
@@ -100,7 +128,7 @@ OPT_CURRENT_SIG ──[ R1 ]──┬── GPIO35 (ADC)
 |-----|-----------|
 | `BETA_DS18_DATA` | OneWire OPT2 + OPT3 |
 | `BETA_FLOW_SIG` | Pulse flow OPT4 |
-| `OPT_CURRENT_SIG` | Πριν divider → GPIO35 |
+| `OPT_CURRENT_ADC` | Μετά bias (GPIO35) · πριν = CN1 SIG |
 | `REL_K1` … `REL_K8` | Έξοδοι ρελέ (block 5) |
 
 ---
@@ -111,7 +139,7 @@ OPT_CURRENT_SIG ──[ R1 ]──┬── GPIO35 (ADC)
 - [ ] CN2/CN3 pin order **GND · 3V3 · SING**
 - [ ] **R_OPT1** 4,7 kΩ pull-up DS18
 - [ ] CN4 **5V_ESP** (όχι 3V3) στο pin τροφοδοσίας flow
-- [ ] **OPT_CURRENT_SIG** → divider → **GPIO35**
+- [ ] **CN1 SCT-013:** **R_CT1/R_CT2** 10 kΩ · **C_CT1** 10 µF · → **GPIO35**
 - [ ] **BETA_FLOW_SIG** → **GPIO34**
 - [ ] **Δεν** μοιράζονται GPIO με **REL_*** / UART
 
