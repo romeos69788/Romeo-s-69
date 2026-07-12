@@ -9,12 +9,14 @@
 
 Τυπικό **2-ch 5 V relay module** (JD-Vcc / opto):
 
-| Pin module | Silk (πρόταση) | Net |
-|------------|--------------|-----|
-| **1** | **VCC** | **`5V_ESP`** (μετά **F1** · **όχι 3V3**) |
+| Pin module | Silk (lock PCB) | Net |
+|------------|-----------------|-----|
+| **1** | **GND** | **GND** |
 | **2** | **IN-1** | **`REL_Kx`** → GPIO |
 | **3** | **IN-2** | **`REL_Ky`** → GPIO |
-| **4** | **GND** | **GND** |
+| **4** | **VCC** | **`5V_ESP`** (μετά **F1** · **όχι 3V3**) |
+
+*(Schematic χρήστη 2026-07-12: **pin1=GND · pin4=5V_ESP** — lock silk.)*
 
 ⚠️ Αν το footprint σου έχει **άλλη σειρά** pin — **lock silk** στο PCB · η λογική μένει: **VCC=5V_ESP · GND · 2× IN**.
 
