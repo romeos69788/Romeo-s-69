@@ -82,7 +82,7 @@ GND ─────┴── U1..U4 GND (κοινό)
 Πολλά modules 5 V: **IN = LOW** → ρελέ **ON** · **HIGH** → OFF.  
 **Επιβεβαίωσε** στο bench πριν lock firmware · `#define RELAY_ACTIVE_LOW 1` αν ισχύει.
 
-**Defrost:** λογική στην **Alpha** (GPIO14) → εντολές **UART** → Beta οδηγεί **K2/K3/K4** (όχι DEFROST pin στη Beta).
+**Defrost:** λογική στην **Alpha** (CN_DEFROST / GPIO14) → εντολές **UART** → Beta. **Ποιο K** κόβεται/ανάβει στο defrost — ορίζεται στο firmware Alpha (TBD ανά K1–K8 πεδίου).
 
 ---
 
