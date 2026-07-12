@@ -150,21 +150,50 @@ CN2/3 pin 1 ── GND
 
 ---
 
-### CN4 — **OPT4-WATER-FLOW** (3P)
+### CN4 — **OPT4-WATER-FLOW** (3P) — **YF-B10** (Hall brass)
 
-Μελλοντικός αισθητήρας ροής (π.χ. YF-S201 · pulse).
+**Module (χρήστης):** [YF-B10 flow AliExpress 1005005588692911](https://www.aliexpress.com/item/1005005588692911.html)  
+**Τύπος:** Hall effect · ορείχαλκος · **3/4"** (επιλογή χρήστη) · **2–50 L/min** (ετικέτα)  
+**Καλώδιο module (3 wires):**
+
+| Χρώμα | Σύνδεση CN4 |
+|-------|-------------|
+| **Κόκκινο** | **5V** (`5V_ESP`) |
+| **Μαύρο** | **GND** |
+| **Κίτρινο** | **PULSE** (`BETA_FLOW_SIG`) |
+
+**Σειρά pin CN4 (lock silk PCB):**
 
 | Pin | Silk | Net | Σύνδεση ESP32 |
 |-----|------|-----|---------------|
 | **1** | **GND** | **GND** | GND |
-| **2** | **5V** | **5V_ESP** | **μετά F1** (ίδιο rail με ρελέ) |
-| **3** | **PULSE** | **BETA_FLOW_SIG** | **H2-5 · GPIO34** |
+| **2** | **5V** | **5V_ESP** | **μετά F1** (H2-19 rail) |
+| **3** | **PULSE** | **`BETA_FLOW_SIG`** | **H2-5 · GPIO34** |
 
-**Κύκλωμα (αν open-collector output):**
+**Pull-up (open-collector Hall — YF-B10):**
 
-- **R_OPT2** **10 kΩ** · **BETA_FLOW_SIG → 3V3** (pull-up — αν το module δεν έχει εσωτερικό).
+| Ref | Τιμή | Σύνδεση |
+|-----|------|---------|
+| **R12** (ή **R_FLOW**) | **10 kΩ** | **`BETA_FLOW_SIG` → 3V3** |
 
-**Firmware (αργότερα):** `attachInterrupt` / pulse count στο GPIO34 · `#define ROMEOS_BETA_OPT_FLOW 0` στο rev A.
+⚠️ Pull-up σε **3V3** — **όχι 5V** στο GPIO34 (max 3,3 V input).
+
+**Σύνδεσεις:**
+
+```
+5V_ESP ── CN4 pin 2 (5V) ── κόκκινο module
+GND    ── CN4 pin 1 ── μαύρο module
+
+3V3 ── R12 10k ── BETA_FLOW_SIG ── H2-5 (GPIO34)
+                        ▲
+                   CN4 pin 3 ── κίτρινο module
+```
+
+**Πεδίο:** βέλος στο module = **κατεύθυνση ροής** · μην αντιστρέψεις.
+
+**Firmware rev A:** `#define ROMEOS_BETA_OPT_FLOW 0` — hardware wired · pulse count off.
+
+**Firmware (αργότερα):** `attachInterrupt` GPIO34 · pulses/L → L/min (calibration ανά probe).
 
 ---
 

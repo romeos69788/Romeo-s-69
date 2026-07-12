@@ -60,6 +60,17 @@
 
 ---
 
+## AliExpress — YF-B10 flow (Beta CN4 OPT4)
+
+**Link:** https://www.aliexpress.com/item/1005005588692911.html
+
+**Προϊόν:** **YF-B10** Hall brass flow · **3/4"** · ~2–50 L/min  
+**Καλώδιο:** κόκκινο **5V** · μαύρο **GND** · κίτρινο **pulse**
+
+**PCB CN4:** pin **GND · 5V_ESP · PULSE** → **GPIO34** + **R12 10 kΩ** → 3V3.
+
+---
+
 ## Άλλα parts — checklist συναρμολόγησης Alpha
 
 | Part | Για |
