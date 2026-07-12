@@ -16,7 +16,7 @@
 | C3/C4 + D1 Zener + LED-F1 | ✓ | ✓ | OK |
 | **U1–U4** 4P → **2-ch relay modules** | ✓ | ✓ | **8 κανάλια** · OK |
 | **LED-K1…K8** + R | ✓ | ✓ | ένδειξη ρελέ · OK |
-| **CN1** OPT1-CURRENT (2P) | ✓ | ✓ | 🔄 **block 4/7** · optional |
+| **CN1** OPT1-CURRENT (2P) + R13/R14/C6 | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | **CN2/CN3** OPT2/3-WATER-T (3P) | ✓ | ✓ | 🔄 **block 4/7** · optional |
 | **CN4** OPT4-WATER-FLOW (3P) | ✓ | ✓ | 🔄 **block 4/7** · optional |
 | **CN9** 2P + **F1** 1,5 A | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
