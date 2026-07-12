@@ -38,7 +38,9 @@
 | **CN4** 3P | **Ροή νερού** (αν χρειαστεί) | **Όχι** στον κώδικα | Flow αφαιρέθηκε από Alpha scope — optional εδώ |
 | **DEFROST** | — | — | ✓ μένει **Alpha** μόνο |
 
-**Συμφωνία ρόλου Beta:** **μόνο διαχείριση ρελέ** στο firmware · οι 4 κλέμες = **hardware option** για αργότερα.
+**Συμφωνία ρόλου Beta:** **μόνο διαχείριση ρελέ** στο firmware rev A · οι 4 κλέμες = **πλήρως συνδεδεμένες στο hardware** · firmware **standby** (δεν ενεργοποιούνται στον κώδικα rev A).
+
+**Hardware map:** [`BETA-OPT-HARDWARE-MAP.md`](BETA-OPT-HARDWARE-MAP.md)
 
 ### Πρόταση ονομασίας (να μην μπερδεύονται με Alpha)
 
