@@ -14,8 +14,8 @@
 | 12 V IN + buck 12→5 V | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | F1 1,5 A → 5V_ESP | ✓ | ✓ | OK (ρελέ rail) |
 | C3/C4 + D1 Zener + LED-F1 | ✓ | ✓ | OK |
-| **U1–U4** 4P → **2-ch relay modules** | ✓ | ✓ | **8 κανάλια** · OK |
-| **LED-K1…K8** + R | ✓ | ✓ | ένδειξη ρελέ · OK |
+| **U1–U4** 4P → **2-ch relay modules** | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
+| **LED-K1…K8** + R | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | **CN1** OPT1-CURRENT (2P) + R13/R14/C6 | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | **CN2/CN3** OPT2/3-WATER-T (3P) + R9 | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
 | **CN4** OPT4-WATER-FLOW (3P) + R16/C5 | ✓ | ✓ | ✓ **κλειδωμένο** 2026-07-12 |
@@ -119,7 +119,7 @@ PCB silk (όπως φαίνεται):
 | 1 | **CN_ALPHA** 4P UART (GND · RX · TX · NC) | 🔴 κρίσιμο — **επόμενο βήμα** |
 | 2 | ~~Αφαίρεση CN1–CN4~~ | ✓ **μένουν** — optional · όχι firmware rev A |
 | 2b | **Rename silk** CN1–CN4 (OPT / FUTURE) | 🟡 να συμφωνήσουμε |
-| 3 | **Pin map** H1/H2 → REL_K1…K8 (πίνακας GPIO) | 🔴 πριν routing lock |
+| 3 | **Pin map** H1/H2 → REL_K1…K8 (πίνακας GPIO) | ✓ **κλειδωμένο** 2026-07-12 |
 | 4 | **230 V** ζώνη · creepage · silk «IN 220V AC» | 🟡 έλεγχος DRC |
 | 5 | **ERC/DRC** · nets πλήρης | 🔴 |
 | 6 | Silk **BETA rev A** / ημερομηνία | 🟡 |

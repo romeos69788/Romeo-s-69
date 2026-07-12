@@ -86,13 +86,13 @@ GND ─────┴── U1..U4 GND (κοινό)
 
 ---
 
-## Checklist schematic
+## Checklist schematic — ✓ κλειδωμένο 2026-07-12
 
-- [ ] **U1–U4 VCC** = **`5V_ESP`** (όχι 3V3)
-- [ ] **IN-1/IN-2** → **`REL_K1`…`REL_K8`** → GPIO πίνακα πάνω
-- [ ] **LED-K1…K8** + **1 kΩ** στο ίδιο net με αντίστοιχο **IN**
-- [ ] **Δεν** conflict OPT / UART GPIO
-- [ ] **230 V** ζώνη ξεχωριστή
+- [x] **U1–U4 VCC** = **`5V_ESP`** (όχι 3V3)
+- [x] **IN-1/IN-2** → **`REL_K1`…`REL_K8`** → GPIO πίνακα πάνω
+- [x] **LED-K1…K8** + **1 kΩ** στο ίδιο net με αντίστοιχο **IN**
+- [x] **Δεν** conflict OPT / UART GPIO
+- [ ] **230 V** ζώνη ξεχωριστή (έλεγχος DRC)
 
 ---
 
