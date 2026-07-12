@@ -90,20 +90,55 @@ CN1-2 ── GND
 
 ### CN2 + CN3 — **OPT2-WATER-T** / **OPT3-WATER-T** (3P each)
 
-Κοινό **OneWire** bus (όπως Alpha CN3/4/10).
+**Αισθητήρης:** **DS18B20** (1-Wire) · **κοινό bus** στα δύο κλέματα (όπως Alpha CN3/4/10).
 
 | Pin | Silk | Net | Σύνδεση |
 |-----|------|-----|---------|
-| **1** | **GND** | **GND** | GND |
-| **2** | **3V3** | **3V3** | **H2-1 · 3V3** (από ESP32 module) |
-| **3** | **SING** | **BETA_DS18_DATA** | **H1-13 · GPIO4** |
+| **1** | **GND** | **GND** | **H1-1 / H2-14** |
+| **2** | **3V3** | **3V3** | **H2-1 · 3V3** |
+| **3** | **SING** | **`BETA_DS18_DATA`** | **H1-13 · GPIO4** (κοινό και στα δύο) |
 
-**Κύκλωμα:**
+**Pull-up (μία φορά στο bus):**
 
-- **R_OPT1** **4,7 kΩ** · **BETA_DS18_DATA → 3V3** (pull-up **μία φορά** στο bus — π.χ. κοντά CN2 ή κοντά ESP32).
-- CN2-SING και CN3-SIGN **κοινό net** `BETA_DS18_DATA`.
+| Ref | Τιμή | Σύνδεση |
+|-----|------|---------|
+| **R15** (ή **R_DS18**) | **4,7 kΩ** | **`BETA_DS18_DATA` → 3V3** |
 
-**Firmware (αργότερα):** OneWire στο GPIO4 · `#define ROMEOS_BETA_OPT_DS18 0` στο rev A.
+⚠️ **Όχι R13** — η **R13** είναι ήδη 10 kΩ για CN1 (CT).
+
+**Σύνδεσεις:**
+
+| Από | → | Προς |
+|-----|---|------|
+| **CN2 pin 3** | **SING** | **`BETA_DS18_DATA`** |
+| **CN3 pin 3** | **SING** | **`BETA_DS18_DATA`** (ίδιο net) |
+| **H1-13** | | **`BETA_DS18_DATA`** (= **GPIO4**) |
+| **R15** 4,7 kΩ | | **`BETA_DS18_DATA` → 3V3** |
+| **CN2/3 pin 2** | **3V3** | **3V3** (H2-1) |
+| **CN2/3 pin 1** | **GND** | **GND** |
+
+```
+3V3 (H2-1) ──┬── CN2 pin 2 ── CN3 pin 2
+             │
+            R15 4k7
+             │
+             └── BETA_DS18_DATA ── H1-13 (GPIO4)
+                      ▲              ▲
+                 CN2 pin 3      CN3 pin 3 (SING)
+
+CN2/3 pin 1 ── GND
+```
+
+**Silk PCB:**
+
+| Κλέμα | Block silk |
+|-------|------------|
+| **CN2** | **OPT2-WATER-T** |
+| **CN3** | **OPT3-WATER-T** |
+
+**Firmware rev A:** `#define ROMEOS_BETA_OPT_DS18 0` — hardware wired · κώδικας off.
+
+**Firmware (αργότερα):** OneWire στο **GPIO4** · έως **2 probes** (CN2 + CN3) · ξεχωριστά ROM IDs.
 
 ---
 
