@@ -1,0 +1,115 @@
+# Αντιστάσεις & πυκνωτές — Alpha + Beta rev A
+
+**Ημερομηνία:** 2026-07-16  
+**Πηγές:** locked schematic/docs session 2026-07-11…12  
+**Σκοπός:** λίστα αγορών / συναρμολόγησης παθητικών **μόνο πάνω στις μητρικές** (όχι modules)
+
+---
+
+## Σύνοψη αγορών (και οι δύο πλακέτες μαζί)
+
+| Τιμή | Σύνολο τεμ. | Alpha | Beta | Τύπος (πρόταση) |
+|------|-------------|-------|------|-----------------|
+| **1 kΩ** | **11** | 2 | 9 | THT ¼ W · 5% |
+| **4,7 kΩ** | **3** | 2 | 1 | THT ¼ W · 5% |
+| **10 kΩ** | **3** | — | 3 | THT ¼ W · 5% |
+| **100 nF** | **6** | 3 | 3 | κεραμικός · ≥16 V |
+| **10 µF / 16 V** | **3** | 1 | 2 | ηλεκτρολυτικός (C6 Beta: πολωμένος) |
+| **470 µF / 16 V** | **2** | 1 | 1 | ηλεκτρολυτικός |
+
+> Πάρε **+2–3 τεμ.** ανά τιμή για ανταλλακτικά.
+
+---
+
+## Α. Μητρική Alpha (Mitriki ALPHA · rev A)
+
+### Αντιστάσεις
+
+| Ref | Τιμή | Ρόλος |
+|-----|------|-------|
+| **R1** *(παλιό R9)* | **4,7 kΩ** | Pull-up `DEFROST_SIG` → **3V3** |
+| **R13** | **4,7 kΩ** | Pull-up `DS18_DATA` → **3V3** · **μόνο CN10** |
+| **R7** | **1 kΩ** | Series **LED-7** ένδειξη 5 V |
+| **R?** (LED DS18) | **1 kΩ** | Series LED τροφοδοσίας ζώνης DS18 · 3V3→R→LED→GND |
+
+**Alpha R σύνολο:** 2× 4,7 kΩ + 2× 1 kΩ
+
+### Πυκνωτές
+
+| Ref | Τιμή | Ρόλος |
+|-----|------|-------|
+| **C1** | **470 µF / 16 V** | Φίλτρο `5V_PRE` (μετά buck, πριν F1) |
+| **C2** | **10 µF / 16 V** | Φίλτρο `5V_PRE` (με C1 + D2 Zener) |
+| **C×3** (CN3/CN4/CN10) | **100 nF** | `DS18_DATA` → GND · **ανά κλέμα** |
+
+**Alpha C σύνολο:** 1× 470 µF + 1× 10 µF + 3× 100 nF
+
+### Όχι στο PCB Alpha
+
+Ρελέ LED R1–R6 · CT · flow · DHT · Fan Spoofer · passives μέσα σε ESP32 / buck / RTC / shield modules.
+
+---
+
+## Β. Μητρική Beta (Bita Mitriki · CONTROL BOARD v2.0 · rev A)
+
+### Αντιστάσεις
+
+| Ref | Τιμή | Ρόλος |
+|-----|------|-------|
+| **R1–R8** | **1 kΩ** ×8 | Series **LED-K1…K8** · `REL_Kx` → LED → GND |
+| **R12** | **1 kΩ** | Series **LED-4** ένδειξης flow (όχι pull-up) |
+| **R9** | **4,7 kΩ** | Pull-up `BETA_DS18_DATA` → **3V3** (CN2/CN3, μία φορά) |
+| **R13** | **10 kΩ** | CT bias · **3V3** → `OPT_CURRENT_SIG` |
+| **R14** | **10 kΩ** | CT bias · `OPT_CURRENT_SIG` → **GND** |
+| **R16** | **10 kΩ** | Pull-up flow · `BETA_FLOW_SIG` → **3V3** |
+
+**Beta R σύνολο:** 9× 1 kΩ + 1× 4,7 kΩ + 3× 10 kΩ
+
+> **LED-F1** (ένδειξη 5V_ESP): υπάρχει στο schematic · series R **χωρίς** κλειδωμένο designator στα docs — τυπικά **1 kΩ** επιπλέον αν δεν είναι ήδη στο BOM του EasyEDA.
+
+### Πυκνωτές
+
+| Ref | Τιμή | Ρόλος |
+|-----|------|-------|
+| **C3** | **470 µF / 16 V** | Bulk filter `5V_PRE` |
+| **C4** | **10 µF** | Filter `5V_PRE` (με C3 + D1) |
+| **C1, C2** | **100 nF** ×2 | Decoupling DS18 bus → GND |
+| **C5** | **100 nF** | Decoupling `BETA_FLOW_SIG` → GND |
+| **C6** | **10 µF** (ηλεκτρολυτικός) | CT AC couple · CN1-1 **+** → `OPT_CURRENT_SIG` **−** |
+
+**Beta C σύνολο:** 1× 470 µF + 2× 10 µF + 3× 100 nF
+
+### Όχι στο PCB Beta
+
+Passives μέσα σε: ESP32 DevKit · U1–U4 relay modules · 12→5 V buck module · SCT-013 (έχει burden μέσα) · YF-B10 / DS18 probes.
+
+---
+
+## Γ. Ανά κύκλωμα (γρήγορη αναφορά)
+
+### Alpha
+
+| Block | R | C |
+|-------|---|---|
+| Τροφοδοσία 5V | R7 1k (LED-7) | C1 470µF · C2 10µF |
+| DEFROST | R1 4k7 | — |
+| DS18 | R13 4k7 · R 1k (LED) | 3× 100nF |
+
+### Beta
+
+| Block | R | C |
+|-------|---|---|
+| Τροφοδοσία 5V | LED-F1 series (~1k) | C3 470µF · C4 10µF |
+| Ρελέ LED K1–K8 | R1–R8 1k | — |
+| CN1 CT | R13/R14 10k | C6 10µF |
+| CN2/CN3 DS18 | R9 4k7 | C1/C2 100nF |
+| CN4 flow | R16 10k · R12 1k (LED-4) | C5 100nF |
+
+---
+
+## Σχετικά
+
+- [`ALPHA-REV-A-FINAL-LOCK-2026-07-11.md`](ALPHA-REV-A-FINAL-LOCK-2026-07-11.md)
+- [`BETA-OPT-HARDWARE-MAP.md`](BETA-OPT-HARDWARE-MAP.md)
+- [`BETA-RELAY-MAP.md`](BETA-RELAY-MAP.md)
+- [`hardware/SHOPPING-REMINDERS.md`](hardware/SHOPPING-REMINDERS.md)
