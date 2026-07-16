@@ -25,9 +25,18 @@ powershell -ExecutionPolicy Bypass -File ".\docs\scripts\fix-push-final.ps1"
 
 ---
 
-## Παλιό script (αν δεν υπάρχει merge)
+## Αν έτρεξες `fix-push-large-files.ps1` και απέτυχε
 
-## Χειροκίνητα (αν προτιμάς)
+Συνήθεις αιτίες από το terminal:
+
+- `Cannot do a soft reset in the middle of a merge` → **MERGE_HEAD** — τρέξε **`fix-push-final.ps1`**
+- Push ακόμα απορρίπτει zip/rar → τα μεγάλα αρχεία είναι **σε παλιό commit** στην ιστορία — μόνο **`fix-push-final.ps1`** (hard reset στο origin)
+
+Το `fix-push-large-files.ps1` **δεν** αρκεί μετά από merge ή rejected push.
+
+---
+
+## Χειροκίνητα (μόνο αν δεν υπάρχει merge και ένα commit χωρίς ιστορία zip)
 
 ```powershell
 cd "D:\ROMEOS 69"

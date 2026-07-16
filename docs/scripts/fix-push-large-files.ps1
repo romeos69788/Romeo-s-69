@@ -1,11 +1,25 @@
 # Fix failed push: remove large zip/rar from last commit and push again
 # Run: powershell -ExecutionPolicy Bypass -File .\docs\scripts\fix-push-large-files.ps1
+#
+# If you see "Cannot do a soft reset in the middle of a merge" OR push still
+# rejects zip/rar, use fix-push-final.ps1 instead (resets history to origin).
 
 $ErrorActionPreference = "Stop"
 Set-Location "D:\ROMEOS 69"
 
+if (Test-Path ".git\MERGE_HEAD") {
+    Write-Host "[FIX] Unfinished merge detected — use fix-push-final.ps1" -ForegroundColor Red
+    Write-Host '  powershell -ExecutionPolicy Bypass -File ".\docs\scripts\fix-push-final.ps1"'
+    exit 1
+}
+
 Write-Host "[FIX] Undo last commit (keep files on disk)..." -ForegroundColor Cyan
 git reset --soft HEAD~1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[FIX] Soft reset failed — use fix-push-final.ps1" -ForegroundColor Red
+    Write-Host '  powershell -ExecutionPolicy Bypass -File ".\docs\scripts\fix-push-final.ps1"'
+    exit 1
+}
 
 Write-Host "[FIX] Unstage large archives..." -ForegroundColor Cyan
 $patterns = @("*.zip", "*.rar", "*.7z", "*.iso")
