@@ -2,47 +2,44 @@
 
 Firmware για **Viewe UEDX80480070E-WB-A** (800×480, ESP32-S3).
 
-**Κλείδωμα ρόλων (2026-07-19):** [`docs/DISPLAY-TWO-ROLES-2026-07-19.md`](../docs/DISPLAY-TWO-ROLES-2026-07-19.md)
+| Ρόλος | Ποια οθόνη | Link | UX |
+|-------|------------|------|-----|
+| **Alpha panel** | **Παλιά** Viewe | **CN_PANEL** UART GPIO25/33 | **Hub 6 πλαισίων** — [`PANEL-HUB-6-TILES-LOCK`](../docs/PANEL-HUB-6-TILES-LOCK-2026-07-19.md) |
+| **Room thermostat** | **Νέα** Viewe | Wi‑Fi / ESP‑NOW | setpoint · φώτα · ρολά · αργότερα |
 
-| Ρόλος | Ποια οθόνη | Link | Φάκελος / env (στόχος) |
-|-------|------------|------|-------------------------|
-| **Alpha panel** (λεβητοστάσιο) | **Παλιά** Viewe | **CN_PANEL** UART GPIO25/33 | `display/` · `BOARD_VIEWE_PANEL` |
-| **Room thermostat** | **Νέα** Viewe (παραγγελία) | Wi‑Fi UDP / ESP‑NOW | αργότερα · `BOARD_VIEWE_ROOM` |
+Αρχιτεκτονική: [`DISPLAY-TWO-ROLES-2026-07-19.md`](../docs/DISPLAY-TWO-ROLES-2026-07-19.md)
 
 ---
 
-## Οθόνη 1 — Panel Alpha (δουλειά τώρα)
+## Panel Alpha — hub (κλειδωμένο)
 
-### Σύνδεση CN_PANEL (κλειδωμένο)
+```
+1 Νερό · 2 Αντλία · 3 Έξοδοι
+4 Μπόιλερ/διαχωριστής · 5 Σύστημα · 6 Συνδέσεις
+```
 
-| CN_PANEL pin | Net | Alpha ESP32 |
-|--------------|-----|-------------|
+Κάθε πλαίσιο → detail οθόνη · BACK στην κύρια.
+
+### CN_PANEL
+
+| Pin | Net | Alpha |
+|-----|-----|-------|
 | 1 GND | GND | — |
-| 2 5V | 5V_AUX / 5V_ESP | ~500 mA peak |
-| 3 TX | PANEL_TX | **GPIO25** (H2-9) |
-| 4 RX | PANEL_RX | **GPIO33** (H2-8) |
-
-- **UART** 115200 8N1 · crossover: Alpha TX → Viewe RX · Alpha RX ← Viewe TX
-- Βάση UI: **romeos-display-v10** → μετατροπή σε panel (όχι room setpoint)
+| 2 5V | 5V | — |
+| 3 TX | PANEL_TX | GPIO25 |
+| 4 RX | PANEL_RX | GPIO33 |
 
 ### Κατάσταση
 
-- [x] Ρόλος κλειδωμένος (παλιά = panel Alpha)
-- [ ] EEZ / UI διαμόρφωση panel
-- [ ] PlatformIO scaffold στο `display/`
-- [ ] UART pins στο Viewe + protocol με Alpha
-- [ ] Εμφάνιση ρελέ Beta (via Alpha)
+- [x] Ρόλος panel vs room
+- [x] Hub 6 πλαισίων κλειδωμένο
+- [ ] Περιεχόμενο detail οθονών (συζήτηση)
+- [ ] EEZ UI από την αρχή (χωρίς παλιό room UI)
+- [ ] PlatformIO scaffold `display/`
+- [ ] UART protocol με Alpha
 
 ---
 
-## Οθόνη 2 — Room thermostat (μετά άφιξη)
+## Remote
 
-- Setpoint χώρου · SHT · MENU comfort (HEAT / …)
-- Link ασύρματο προς Alpha — **όχι** CN_PANEL
-- Βάση: ίδιο v10 με role `ROOM`
-
----
-
-## Remote (εκτός σπιτιού)
-
-Setpoint / state μέσω MQTT → [`../shared/romeos-remote/`](../shared/romeos-remote/)
+MQTT → [`../shared/romeos-remote/`](../shared/romeos-remote/)
