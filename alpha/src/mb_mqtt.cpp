@@ -100,15 +100,16 @@ void reconnectMqtt() {
 bool mbMqttBegin(const char* wifiSsid, const char* wifiPass) {
     buildTopics();
 
+#if defined(ROMEOS_BENCH) || !defined(ROMEOS_MQTT_HOST)
+    (void)wifiSsid;
+    (void)wifiPass;
+    Serial.println("[mqtt] bench mode — no WiFi/MQTT (compile with ROMEOS_MQTT_HOST)");
+    return true;
+#else
     WiFi.mode(WIFI_STA);
     WiFi.begin(wifiSsid, wifiPass);
 
     g_tls.setInsecure();  // bench · production: CA cert
-
-#if defined(ROMEOS_BENCH) || !defined(ROMEOS_MQTT_HOST)
-    Serial.println("[mqtt] bench mode — no broker (compile with ROMEOS_MQTT_HOST)");
-    return true;
-#else
     g_mqtt.setServer(ROMEOS_MQTT_HOST, ROMEOS_MQTT_PORT);
     g_mqtt.setCallback(onMqttMessage);
     g_mqtt.setBufferSize(512);

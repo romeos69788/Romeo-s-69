@@ -72,6 +72,15 @@ void setup() {
     initRelays();
     syncRelayState();
 
+#if defined(ROMEOS_BENCH)
+    // DevKit BOOT (GPIO0) — toggle heater στο Wokwi / πάγκο χωρίς MQTT
+    pinMode(0, INPUT_PULLUP);
+    Serial.println("[bench] BOOT button toggles heater (K4)");
+    applyHeater(true);
+    delay(300);
+    applyHeater(false);
+#endif
+
     mbMqttSetCommandHandler(onRemoteCommand);
     mbMqttBegin(ROMEOS_WIFI_SSID, ROMEOS_WIFI_PASS);
 
@@ -83,6 +92,17 @@ void loop() {
     readSensors();
     syncRelayState();
     g_state.uptime_ms = millis();
+
+#if defined(ROMEOS_BENCH)
+    static bool lastBootHigh = true;
+    const bool bootHigh = digitalRead(0) == HIGH;
+    if (lastBootHigh && !bootHigh) {
+        applyHeater(g_state.heater == 0);
+        Serial.printf("[bench] heater -> %s\n", g_state.heater ? "ON" : "OFF");
+        delay(40);  // απλό debounce
+    }
+    lastBootHigh = bootHigh;
+#endif
 
     mbMqttLoop();
     mbMqttPublishState(g_state);

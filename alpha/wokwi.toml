@@ -1,0 +1,9 @@
+# ROMEOS 69 Alpha — Wokwi simulator (PlatformIO)
+# Docs: ../docs/WOKWI-START.md
+# Build first: pio run -e alpha_rev_a_bench
+# Then: open diagram.json → F1 → "Wokwi: Start Simulator"
+
+[wokwi]
+version = 1
+firmware = '.pio/build/alpha_rev_a_bench/firmware.bin'
+elf = '.pio/build/alpha_rev_a_bench/firmware.elf'
