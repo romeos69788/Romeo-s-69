@@ -15,7 +15,9 @@
 - **Ιστότοπος:** https://wokwi.com  
 - **VS Code / Cursor:** extension *Wokwi Simulator* (+ PlatformIO)  
 - **Τι καλύπτει:** 2× ESP32, GPIO, LED, κουμπιά, Serial, **UART μεταξύ δύο chips** (π.χ. Alpha TX17/RX16 ↔ Beta)  
-- **Τι δεν καλύπτει ρεαλιστικά:** SCT-013 RMS, πραγματικά ρελέ/φορτία, Wi‑Fi/MQTT σταθερότητα πεδίου, θόρυβο γραμμής
+- **Τι δεν καλύπτει ρεαλιστικά:** SCT-013 RMS, πραγματικά ρελέ/φορτία, Wi‑Fi/MQTT σταθερότητα πεδίου, θόρυβο γραμμής  
+- **Οδηγός για αρχάριους:** [`WOKWI-START.md`](WOKWI-START.md)  
+- **Έτοιμο setup Alpha:** `alpha/diagram.json` + `alpha/wokwi.toml`
 
 Χρήσιμο για: πρωτόκολλο Alpha↔Beta, state machine, εντολές, timeouts — πριν το bench με καλώδια.
 
