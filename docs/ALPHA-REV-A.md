@@ -7,7 +7,8 @@ Firmware PlatformIO για την **μητρική πλακέτα Alpha** στο
 | Σύνδεση | Πρωτόκολλο | Σημειώσεις |
 |---------|-----------|------------|
 | **Beta** (εξωτερικό/αίθριο) | UART | `TX=17`, `RX=16`, 115200 |
-| **Οθόνες θερμοστάτη** | UART / ESP-NOW | `TX=25`, `RX=33` |
+| **Οθόνη panel λεβητοστασίου** (Viewe παλιά) | UART **CN_PANEL** | `TX=25`, `RX=33` · 115200 |
+| **Θερμοστάτης χώρου** (Viewe νέα) | Wi‑Fi UDP / ESP‑NOW | όχι CN_PANEL |
 | **HP outdoor board** | RS485 | **Όχι στο rev A** · future `MAX485EPA` |
 | **iPhone remote** | MQTT (HiveMQ) | [`shared/romeos-remote/`](../shared/romeos-remote/) |
 | **Boiler panel meter** | TUYA WiFi | Ξεχωριστή συσκευή · όχι CT |
@@ -63,7 +64,8 @@ pio device monitor
 
 - [ ] DS18B20 / NTC ανάθεση αισθητήρων θερμοκρασίας
 - [ ] UART πρωτόκολλο Alpha ↔ Beta
-- [ ] ESP-NOW / UDP sync setpoint προς οθόνες
+- [ ] UART πρωτόκολλο Alpha ↔ **panel οθόνη** (CN_PANEL) · βλ. [`DISPLAY-TWO-ROLES-2026-07-19.md`](DISPLAY-TWO-ROLES-2026-07-19.md)
+- [ ] ESP-NOW / UDP sync setpoint από **room** οθόνη
 - [ ] CT RMS (SCT-013 calibration)
 - [ ] TUYA meter integration (boiler panel)
 - [ ] Λογική ελέγχου (pumps, HP, defrost)

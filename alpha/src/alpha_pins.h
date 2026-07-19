@@ -31,11 +31,19 @@ constexpr int kBetaTx = 17;
 constexpr int kBetaRx = 16;
 constexpr uint32_t kBetaBaud = 115200;
 
-// --- Displays: UART / ESP-NOW (TBD) ---
-constexpr int kDisplayUartNum = 2;
-constexpr int kDisplayTx = 25;
-constexpr int kDisplayRx = 33;
-constexpr uint32_t kDisplayBaud = 115200;
+// --- Alpha ↔ Panel οθόνη λεβητοστασίου (CN_PANEL UART) ---
+// Room thermostat = άλλη Viewe · Wi‑Fi/ESP‑NOW · όχι αυτά τα pins.
+// Docs: docs/DISPLAY-TWO-ROLES-2026-07-19.md
+constexpr int kPanelUartNum = 2;
+constexpr int kPanelTx = 25;  // CN_PANEL pin 3 · H2-9
+constexpr int kPanelRx = 33;  // CN_PANEL pin 4 · H2-8
+constexpr uint32_t kPanelBaud = 115200;
+
+// Legacy aliases (παλιά ονομασία «Display»)
+constexpr int kDisplayUartNum = kPanelUartNum;
+constexpr int kDisplayTx = kPanelTx;
+constexpr int kDisplayRx = kPanelRx;
+constexpr uint32_t kDisplayBaud = kPanelBaud;
 
 // --- HP outdoor RS485 (ΜΗ χρησιμοποιείται στο rev A · future) ---
 // UART2 TX=17, RX=16, DE+RE=32 — κρατάμε για μελλοντική ενσωμάτωση HP board.
