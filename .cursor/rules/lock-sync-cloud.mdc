@@ -1,0 +1,16 @@
+---
+description: On explicit lock, commit and push docs/firmware to GitHub
+alwaysApply: true
+---
+
+# ROMEOS 69 — κλείδωμα = cloud sync
+
+Όταν ο χρήστης **κλειδώνει** κάτι ρητά (οπτικό, δομή, HW απόφαση, κ.λπ.):
+
+1. Ενημέρωσε τα σχετικά docs στο `D:\ROMEOS 69\docs\` (και `panel/` αν αφορά firmware).
+2. **Αυτόματα** κάνε `git commit` + `git push` στο `origin` (GitHub `romeos69788/Romeo-s-69`) — χωρίς να ξαναρωτήσεις αν «θέλει push».
+3. Μην ανεβάζεις πλήρη EEZ `ui_image_*.c` (~27 MB) από `Othoni Levita/` (είναι στο `.gitignore`) · ανεβάζε slim assets στο `panel/`.
+4. Μην κάνεις force-push στο `main`.
+5. Στο τέλος πες το URL / ότι ανέβηκε το cloud.
+
+Αυτό ισχύει μόνο για **ρητό κλείδωμα**, όχι για κάθε ενδιάμεσο preview.

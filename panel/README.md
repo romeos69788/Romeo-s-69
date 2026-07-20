@@ -1,6 +1,8 @@
-# Panel Alpha — Viewe 7″ hub preview
+# Panel Alpha — Viewe 7″ hub
 
-**Σκοπός:** Flash το EEZ hub (`Othoni_Levita`) στο **COM4** για να δεις πώς φαίνεται στην οθόνη. **Όχι** κλείδωμα οπτικού.
+**ΚΛΕΙΔΩΜΕΝΟ οπτικό hub:** έκδοση **3** (`Othoni_Levita_2`) · 2026-07-20
+
+Flash COM4 για το κλειδωμένο hub.
 
 ## Upload
 
@@ -12,6 +14,6 @@ pio device monitor -e BOARD_VIEWE_PANEL
 
 ## Σημειώσεις
 
-- Background: slim `ui_image_2.c` (RGB565 only) — τα πλήρη EEZ exports (~27 MB) δεν χωράνε στο flash.
-- Χωρίς Wi‑Fi / mic / detail screens.
-- Source EEZ: `../Othoni Levita/Othoni_Levita/`
+- Background: slim `ui_image_4.c` (RGB565) — τα πλήρη EEZ exports (~27 MB) δεν χωράνε στο flash.
+- EEZ: `../Othoni Levita/Othoni_Levita_1/Othoni_Levita_2.eez-project`
+- Docs: [`docs/panel-hub/HUB-VERSIONS.md`](../docs/panel-hub/HUB-VERSIONS.md)

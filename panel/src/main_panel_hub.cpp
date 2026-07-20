@@ -1,6 +1,6 @@
 /*
  * Panel Alpha — hub preview flash (COM4).
- * EEZ: Othoni_Levita main_1 · 6 tiles. No Wi‑Fi / mic / lock.
+ * EEZ: Othoni_Levita_2 (hub V3 LOCKED) · 6 tiles.
  */
 
 #include <Arduino.h>
@@ -38,7 +38,7 @@ void setup()
     Serial.println();
     Serial.println("========================================");
     Serial.println("*** ROMEOS PANEL HUB PREVIEW ***");
-    Serial.println("*** Othoni_Levita · COM4 · no lock ***");
+    Serial.println("*** Othoni_Levita_2 V3 LOCKED · COM4 ***");
     Serial.println("========================================");
 
     auto *board = new Board();
@@ -64,7 +64,7 @@ void setup()
         return;
     }
     ui_init();
-    disable_scroll(objects.main_1);
+    disable_scroll(objects.main);
     lvgl_port_unlock();
 
     Serial.println("[panel] ui_init done — hub on glass. Look at the Viewe.");
