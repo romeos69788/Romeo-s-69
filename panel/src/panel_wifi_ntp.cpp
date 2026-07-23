@@ -60,10 +60,10 @@ const char *k_month_el[] = {
 
 void fill_buffers(const struct tm &t)
 {
-    // 24-hour clock (no AM/PM)
+    // 24-hour digits + visible AM/PM
     snprintf(s_hh, sizeof(s_hh), "%02d", t.tm_hour);
     snprintf(s_mm, sizeof(s_mm), "%02d", t.tm_min);
-    s_ampm[0] = '\0';
+    snprintf(s_ampm, sizeof(s_ampm), "%s", (t.tm_hour >= 12) ? "PM" : "AM");
     s_sec = t.tm_sec;
     snprintf(s_day, sizeof(s_day), "%d", t.tm_mday);
 
@@ -74,25 +74,38 @@ void fill_buffers(const struct tm &t)
     s_have_ui = true;
 }
 
-/** EEZ placed hour left-aligned; narrow digits (e.g. 21) leave a gap before ':'.
- *  Right-align hour into a fixed box ending just before the colon. */
+/** Match hour↔colon gap to colon↔minutes gap (EEZ right side). Keep AM/PM visible. */
 void fix_clock_layout_once()
 {
-    if (s_layout_fixed) {
+    if (s_layout_fixed || !objects._____ || !objects.______1 || !objects.______2) {
         return;
     }
-    constexpr lv_coord_t k_colon_x = 683;
-    constexpr lv_coord_t k_hour_w = 40;
-    constexpr lv_coord_t k_hour_x = k_colon_x - k_hour_w;  // 643
 
-    if (objects._____) {
-        lv_obj_set_pos(objects._____, k_hour_x, 12);
-        lv_obj_set_size(objects._____, k_hour_w, LV_SIZE_CONTENT);
-        lv_obj_set_style_text_align(objects._____, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
+    const lv_coord_t colon_x = lv_obj_get_x(objects.______1);
+    const lv_coord_t min_x = lv_obj_get_x(objects.______2);
+    const lv_font_t *font = lv_obj_get_style_text_font(objects.______1, LV_PART_MAIN);
+    const lv_coord_t colon_tw =
+        font ? lv_txt_get_width(":", 1, font, 0, LV_TEXT_FLAG_NONE)
+             : lv_obj_get_width(objects.______1);
+
+    // Same clear space: end of ':' glyph → start of minutes
+    lv_coord_t gap = min_x - (colon_x + colon_tw);
+    if (gap < 0) {
+        gap = 0;
     }
+
+    constexpr lv_coord_t k_hour_w = 42;
+    const lv_coord_t hour_x = colon_x - gap - k_hour_w;
+
+    lv_obj_set_pos(objects._____, hour_x, lv_obj_get_y(objects._____));
+    lv_obj_set_size(objects._____, k_hour_w, LV_SIZE_CONTENT);
+    lv_obj_set_style_text_align(objects._____, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
+
     if (objects.______3) {
-        lv_obj_add_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
     }
+
+    Serial.printf("[panel-wifi] clock gap=%d px (hour|:%d|:|min)\n", (int)gap, (int)gap);
     s_layout_fixed = true;
 }
 
@@ -202,7 +215,8 @@ void panel_wifi_ntp_apply_ui()
         lv_label_set_text(objects.______2, s_mm);
     }
     if (objects.______3) {
-        lv_obj_add_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
+        lv_label_set_text(objects.______3, s_ampm);
     }
     if (objects.obj6) {
         lv_label_set_text(objects.obj6, s_day);
