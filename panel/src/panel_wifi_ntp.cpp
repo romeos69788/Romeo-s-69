@@ -74,38 +74,40 @@ void fill_buffers(const struct tm &t)
     s_have_ui = true;
 }
 
-/** Match hour↔colon gap to colon↔minutes gap (EEZ right side). Keep AM/PM visible. */
+/** Exact EEZ positions from designer (ρολόι / ρολόι_1 / ρολόι_2 / ρολόι_3). */
 void fix_clock_layout_once()
 {
-    if (s_layout_fixed || !objects._____ || !objects.______1 || !objects.______2) {
+    if (s_layout_fixed) {
         return;
     }
 
-    const lv_coord_t colon_x = lv_obj_get_x(objects.______1);
-    const lv_coord_t min_x = lv_obj_get_x(objects.______2);
-    const lv_font_t *font = lv_obj_get_style_text_font(objects.______1, LV_PART_MAIN);
-    const lv_coord_t colon_tw =
-        font ? lv_txt_get_width(":", 1, font, 0, LV_TEXT_FLAG_NONE)
-             : lv_obj_get_width(objects.______1);
-
-    // Same clear space: end of ':' glyph → start of minutes
-    lv_coord_t gap = min_x - (colon_x + colon_tw);
-    if (gap < 0) {
-        gap = 0;
+    // Hour  642,12  39×33 — right-align digits inside box (08 / 21)
+    if (objects._____) {
+        lv_obj_set_pos(objects._____, 642, 12);
+        lv_obj_set_size(objects._____, 39, 33);
+        lv_obj_set_style_text_align(objects._____, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
     }
-
-    constexpr lv_coord_t k_hour_w = 42;
-    const lv_coord_t hour_x = colon_x - gap - k_hour_w;
-
-    lv_obj_set_pos(objects._____, hour_x, lv_obj_get_y(objects._____));
-    lv_obj_set_size(objects._____, k_hour_w, LV_SIZE_CONTENT);
-    lv_obj_set_style_text_align(objects._____, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
-
+    // Colon 683,10  7×33
+    if (objects.______1) {
+        lv_obj_set_pos(objects.______1, 683, 10);
+        lv_obj_set_size(objects.______1, 7, 33);
+        lv_obj_set_style_text_align(objects.______1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+    }
+    // Minutes 692,12  36×33
+    if (objects.______2) {
+        lv_obj_set_pos(objects.______2, 692, 12);
+        lv_obj_set_size(objects.______2, 36, 33);
+        lv_obj_set_style_text_align(objects.______2, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
+    }
+    // AM/PM 737,12  34×22
     if (objects.______3) {
         lv_obj_clear_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_pos(objects.______3, 737, 12);
+        lv_obj_set_size(objects.______3, 34, 22);
+        lv_obj_set_style_text_align(objects.______3, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
     }
 
-    Serial.printf("[panel-wifi] clock gap=%d px (hour|:%d|:|min)\n", (int)gap, (int)gap);
+    Serial.println("[panel-wifi] clock layout = EEZ (642|683|692|737)");
     s_layout_fixed = true;
 }
 
