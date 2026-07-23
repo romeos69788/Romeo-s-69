@@ -10,6 +10,7 @@
 #include <lvgl.h>
 
 #include "lvgl_v8_port.h"
+#include "panel_nav.h"
 #include "panel_status_ticker.h"
 #include "panel_wifi_ntp.h"
 #include "ui/ui.h"
@@ -40,7 +41,7 @@ void setup()
     Serial.println();
     Serial.println("========================================");
     Serial.println("*** ROMEOS PANEL HUB V4 LOCKED ***");
-    Serial.println("*** clock + bottom ticker test ***");
+    Serial.println("*** nav slides + clock + ticker ***");
     Serial.println("========================================");
 
     auto *board = new Board();
@@ -67,11 +68,18 @@ void setup()
     }
     ui_init();
     disable_scroll(objects.main);
+    disable_scroll(objects.water);
+    disable_scroll(objects.hp);
+    disable_scroll(objects.out);
+    disable_scroll(objects.boiler);
+    disable_scroll(objects.system);
+    disable_scroll(objects.wifi);
+    panel_nav_begin();
     panel_status_ticker_begin();
     lvgl_port_unlock();
 
     panel_wifi_ntp_begin();
-    Serial.println("[panel] ui_init done — Wi‑Fi clock + ticker…");
+    Serial.println("[panel] ui_init done — nav + Wi‑Fi clock + ticker…");
 }
 
 void loop()
@@ -79,9 +87,12 @@ void loop()
     panel_wifi_ntp_poll();
 
     if (lvgl_port_lock(0)) {
-        panel_wifi_ntp_apply_ui();
-        panel_status_ticker_apply_ui();
-        ui_tick();
+        // During slide: skip label churn so LVGL can focus on the animation
+        if (!panel_nav_busy()) {
+            panel_wifi_ntp_apply_ui(panel_nav_screen_id());
+            panel_status_ticker_apply_ui(panel_nav_on_hub());
+            ui_tick();
+        }
         lvgl_port_unlock();
     }
     delay(5);

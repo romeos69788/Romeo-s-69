@@ -20,13 +20,21 @@
 | | |
 |--|--|
 | **EEZ** | `Othoni_Levita_4.eez-project` (φάκελος `Othoni Levita/Othoni_Levita_1/`) |
-| **Firmware bg** | slim `img_6` RGB565 |
+| **Firmware bg** | slim `img_8` (hub) + `img_10` (detail screens) RGB565 |
 | **Tiles** | **ΝΕΡΟ · ΑΝΤΛΙΑ · ΕΞΟΔΟΙ · ΜΠΟΙΛΕΡ · ΣΥΣΤΗΜΑ · ΔΙΚΤΥΟ** |
-| **Πάνω μπάρα** | Ημερομηνία + ώρα (live NTP όταν Wi‑Fi) |
-| **Κάτω μπάρα** | Κουμπί συναγερμού |
+| **Detail screens** | `water` `hp` `out` `boiler` `system` `wifi` — slide nav (2026-07-23) |
+| **Πάνω μπάρα** | Ημερομηνία + ώρα (live NTP όταν Wi‑Fi) · όλες οι οθόνες |
+| **Κάτω μπάρα** | Hub: idle ticker · Detail: βελάκι + **Μενού** → επιστροφή |
 | **Στυλ** | Τεχνικά / σχηματικά εικονίδια ανά τομέα |
 
-Δομή 6 tiles: [`PANEL-HUB-6-TILES-LOCK-2026-07-19.md`](../PANEL-HUB-6-TILES-LOCK-2026-07-19.md)
+Δομή 6 tiles: [`PANEL-HUB-6-TILES-LOCK-2026-07-19.md`](../PANEL-HUB-6-TILES-LOCK-2026-07-19.md)  
+Nav session: [`SESSION-2026-07-23-HUB-NAV.md`](../SESSION-2026-07-23-HUB-NAV.md)
+
+### Πλοήγηση (firmware)
+
+- Tile → detail: `LV_SCR_LOAD_ANIM_OVER_LEFT` · `panel_nav.cpp`
+- Μενού → hub: `LV_SCR_LOAD_ANIM_OVER_RIGHT`
+- **TODO:** μικρό lag στο άνοιγμα οθόνης — δεύτερος χρόνος
 
 ---
 
@@ -37,8 +45,8 @@
 | **V1** | Λιτή · αγγλικά |
 | **V2** | Φορτωμένη · ελληνικές φράσεις |
 | **V3** | Λιτή · ελληνικά κοντά · κλειδώθηκε προσωρινά 2026-07-20 · καλό για room thermostat |
-| **V4** | **LOCKED** panel λεβητοστασίου · τεχνικά icons · 2026-07-23 |
+| **V4** | **LOCKED** panel λεβητοστασίου · τεχνικά icons · 2026-07-23 · multi-screen nav βράδυ |
 
 ---
 
-*Lock οπτικού hub V4: 2026-07-23*
+*Lock οπτικού hub V4: 2026-07-23 · nav 6 οθονών: 2026-07-23 βράδυ*

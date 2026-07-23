@@ -75,40 +75,81 @@ void fill_buffers(const struct tm &t)
 }
 
 /** Exact EEZ positions from designer (ρολόι / ρολόι_1 / ρολόι_2 / ρολόι_3). */
+void fix_one_clock(lv_obj_t *hh, lv_obj_t *colon, lv_obj_t *mm, lv_obj_t *ampm)
+{
+    if (hh) {
+        lv_obj_set_pos(hh, 642, 12);
+        lv_obj_set_size(hh, 39, 33);
+        lv_obj_set_style_text_align(hh, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
+    }
+    if (colon) {
+        lv_obj_set_pos(colon, 683, 10);
+        lv_obj_set_size(colon, 7, 33);
+        lv_obj_set_style_text_align(colon, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+    }
+    if (mm) {
+        lv_obj_set_pos(mm, 692, 12);
+        lv_obj_set_size(mm, 36, 33);
+        lv_obj_set_style_text_align(mm, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
+    }
+    if (ampm) {
+        lv_obj_clear_flag(ampm, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_pos(ampm, 737, 12);
+        lv_obj_set_size(ampm, 34, 22);
+        lv_obj_set_style_text_align(ampm, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
+    }
+}
+
 void fix_clock_layout_once()
 {
     if (s_layout_fixed) {
         return;
     }
 
-    // Hour  642,12  39×33 — right-align digits inside box (08 / 21)
-    if (objects._____) {
-        lv_obj_set_pos(objects._____, 642, 12);
-        lv_obj_set_size(objects._____, 39, 33);
-        lv_obj_set_style_text_align(objects._____, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
-    }
-    // Colon 683,10  7×33
-    if (objects.______1) {
-        lv_obj_set_pos(objects.______1, 683, 10);
-        lv_obj_set_size(objects.______1, 7, 33);
-        lv_obj_set_style_text_align(objects.______1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-    }
-    // Minutes 692,12  36×33
-    if (objects.______2) {
-        lv_obj_set_pos(objects.______2, 692, 12);
-        lv_obj_set_size(objects.______2, 36, 33);
-        lv_obj_set_style_text_align(objects.______2, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
-    }
-    // AM/PM 737,12  34×22
-    if (objects.______3) {
-        lv_obj_clear_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_set_pos(objects.______3, 737, 12);
-        lv_obj_set_size(objects.______3, 34, 22);
-        lv_obj_set_style_text_align(objects.______3, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
-    }
+    fix_one_clock(objects._____, objects.______1, objects.______2, objects.______3);
+    fix_one_clock(objects.______4, objects.______5, objects.______6, objects.______7);
+    fix_one_clock(objects.______8, objects.______9, objects.______10, objects.______11);
+    fix_one_clock(objects.______12, objects.______13, objects.______14, objects.______15);
+    fix_one_clock(objects.______16, objects.______17, objects.______18, objects.______19);
+    fix_one_clock(objects.______20, objects.______21, objects.______22, objects.______23);
+    fix_one_clock(objects.______24, objects.______25, objects.______26, objects.______27);
 
-    Serial.println("[panel-wifi] clock layout = EEZ (642|683|692|737)");
+    Serial.println("[panel-wifi] clock layout on all 7 screens");
     s_layout_fixed = true;
+}
+
+void apply_clock_pack(lv_obj_t *hh,
+                      lv_obj_t *colon,
+                      lv_obj_t *mm,
+                      lv_obj_t *ampm,
+                      lv_obj_t *day,
+                      lv_obj_t *wday,
+                      lv_obj_t *month,
+                      bool colon_on)
+{
+    if (hh) {
+        lv_label_set_text(hh, s_hh);
+    }
+    if (colon) {
+        lv_obj_set_style_text_opa(colon, colon_on ? LV_OPA_COVER : LV_OPA_TRANSP, LV_PART_MAIN);
+        lv_label_set_text(colon, ":");
+    }
+    if (mm) {
+        lv_label_set_text(mm, s_mm);
+    }
+    if (ampm) {
+        lv_obj_clear_flag(ampm, LV_OBJ_FLAG_HIDDEN);
+        lv_label_set_text(ampm, s_ampm);
+    }
+    if (day) {
+        lv_label_set_text(day, s_day);
+    }
+    if (wday) {
+        lv_label_set_text(wday, s_wday);
+    }
+    if (month) {
+        lv_label_set_text(month, s_month);
+    }
 }
 
 }  // namespace
@@ -194,7 +235,7 @@ void panel_wifi_ntp_poll()
     fill_buffers(t);
 }
 
-void panel_wifi_ntp_apply_ui()
+void panel_wifi_ntp_apply_ui(int screen_id)
 {
     if (!s_have_ui) {
         return;
@@ -202,31 +243,37 @@ void panel_wifi_ntp_apply_ui()
 
     fix_clock_layout_once();
 
-    if (objects._____) {
-        lv_label_set_text(objects._____, s_hh);
-    }
-    if (objects.______1) {
-        // Blink colon: on odd seconds, off even (1s on / 1s off)
-        const bool colon_on = (s_sec % 2) != 0;
-        lv_obj_set_style_text_opa(objects.______1,
-                                  colon_on ? LV_OPA_COVER : LV_OPA_TRANSP,
-                                  LV_PART_MAIN);
-        lv_label_set_text(objects.______1, ":");
-    }
-    if (objects.______2) {
-        lv_label_set_text(objects.______2, s_mm);
-    }
-    if (objects.______3) {
-        lv_obj_clear_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
-        lv_label_set_text(objects.______3, s_ampm);
-    }
-    if (objects.obj6) {
-        lv_label_set_text(objects.obj6, s_day);
-    }
-    if (objects.obj7) {
-        lv_label_set_text(objects.obj7, s_wday);
-    }
-    if (objects.obj8) {
-        lv_label_set_text(objects.obj8, s_month);
+    const bool colon_on = (s_sec % 2) != 0;
+    switch (screen_id) {
+    case 1:  // SCREEN_ID_MAIN
+        apply_clock_pack(objects._____, objects.______1, objects.______2, objects.______3,
+                         objects.obj6, objects.obj7, objects.obj8, colon_on);
+        break;
+    case 2:  // WATER
+        apply_clock_pack(objects.______4, objects.______5, objects.______6, objects.______7,
+                         objects.obj9, objects.obj10, objects.obj11, colon_on);
+        break;
+    case 3:  // HP
+        apply_clock_pack(objects.______8, objects.______9, objects.______10, objects.______11,
+                         objects.obj14, objects.obj15, objects.obj16, colon_on);
+        break;
+    case 4:  // OUT
+        apply_clock_pack(objects.______12, objects.______13, objects.______14, objects.______15,
+                         objects.obj19, objects.obj20, objects.obj21, colon_on);
+        break;
+    case 5:  // BOILER
+        apply_clock_pack(objects.______16, objects.______17, objects.______18, objects.______19,
+                         objects.obj24, objects.obj25, objects.obj26, colon_on);
+        break;
+    case 6:  // SYSTEM
+        apply_clock_pack(objects.______20, objects.______21, objects.______22, objects.______23,
+                         objects.obj29, objects.obj30, objects.obj31, colon_on);
+        break;
+    case 7:  // WIFI
+        apply_clock_pack(objects.______24, objects.______25, objects.______26, objects.______27,
+                         objects.obj34, objects.obj35, objects.obj36, colon_on);
+        break;
+    default:
+        break;
     }
 }

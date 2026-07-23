@@ -187,9 +187,15 @@ void panel_status_ticker_begin()
     Serial.println("[ticker] dual-slot idle ticker (centered, smooth)");
 }
 
-void panel_status_ticker_apply_ui()
+void panel_status_ticker_apply_ui(bool hub_visible)
 {
     if (!s_ready) {
+        return;
+    }
+
+    if (!hub_visible) {
+        // Freeze motion while off-hub; labels live on main screen only
+        s_last_ms = millis();
         return;
     }
 
