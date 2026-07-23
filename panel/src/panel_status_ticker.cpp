@@ -36,10 +36,14 @@ constexpr float k_speed_px_s = 55.f;
 constexpr uint32_t k_pause_ms = 5000;
 
 const char *k_msgs[] = {
-    "Θερμοκρασίες νερού — OK",
-    "Αντλία θερμότητας | ON",
+    "θερμοκρασίες Νερού  /  OK",
+    "αντλία θερμότητας  /  OK",
+    "έλεγχος εξόδου  /  OK",
+    "θερμοκρασίες Μπόιλερ  /  OK",
+    "έλεγχος συστήματος  /  OK",
+    "συνδέσεις δικτύου  /  OK",
 };
-constexpr uint8_t k_msg_count = 2;
+constexpr uint8_t k_msg_count = 6;
 
 lv_coord_t measure_text(const char *txt)
 {
