@@ -1,6 +1,6 @@
 /*
  * Panel Alpha — hub V4 LOCKED (Othoni_Levita_4) · COM4.
- * Test: home Wi‑Fi + NTP → live clock/date on top bar.
+ * Live clock/date + idle bottom-bar status ticker test.
  */
 
 #include <Arduino.h>
@@ -10,6 +10,7 @@
 #include <lvgl.h>
 
 #include "lvgl_v8_port.h"
+#include "panel_status_ticker.h"
 #include "panel_wifi_ntp.h"
 #include "ui/ui.h"
 #include "ui/screens.h"
@@ -39,7 +40,7 @@ void setup()
     Serial.println();
     Serial.println("========================================");
     Serial.println("*** ROMEOS PANEL HUB V4 LOCKED ***");
-    Serial.println("*** WiFi+NTP clock test · COM4 ***");
+    Serial.println("*** clock + bottom ticker test ***");
     Serial.println("========================================");
 
     auto *board = new Board();
@@ -66,10 +67,11 @@ void setup()
     }
     ui_init();
     disable_scroll(objects.main);
+    panel_status_ticker_begin();
     lvgl_port_unlock();
 
     panel_wifi_ntp_begin();
-    Serial.println("[panel] ui_init done — connecting Wi‑Fi for live clock…");
+    Serial.println("[panel] ui_init done — Wi‑Fi clock + ticker…");
 }
 
 void loop()
@@ -78,6 +80,7 @@ void loop()
 
     if (lvgl_port_lock(0)) {
         panel_wifi_ntp_apply_ui();
+        panel_status_ticker_apply_ui();
         ui_tick();
         lvgl_port_unlock();
     }
