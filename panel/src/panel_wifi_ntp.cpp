@@ -30,6 +30,8 @@ char s_day[8];
 char s_wday[32];
 char s_month[40];
 bool s_have_ui = false;
+bool s_layout_fixed = false;
+int s_sec = 0;
 
 const char *k_wday_el[] = {
     "Κυριακή",
@@ -62,6 +64,7 @@ void fill_buffers(const struct tm &t)
     snprintf(s_hh, sizeof(s_hh), "%02d", t.tm_hour);
     snprintf(s_mm, sizeof(s_mm), "%02d", t.tm_min);
     s_ampm[0] = '\0';
+    s_sec = t.tm_sec;
     snprintf(s_day, sizeof(s_day), "%d", t.tm_mday);
 
     const char *wd = (t.tm_wday >= 0 && t.tm_wday <= 6) ? k_wday_el[t.tm_wday] : "—";
@@ -69,6 +72,28 @@ void fill_buffers(const struct tm &t)
     snprintf(s_wday, sizeof(s_wday), "%s", wd);
     snprintf(s_month, sizeof(s_month), "%s", mo);
     s_have_ui = true;
+}
+
+/** EEZ placed hour left-aligned; narrow digits (e.g. 21) leave a gap before ':'.
+ *  Right-align hour into a fixed box ending just before the colon. */
+void fix_clock_layout_once()
+{
+    if (s_layout_fixed) {
+        return;
+    }
+    constexpr lv_coord_t k_colon_x = 683;
+    constexpr lv_coord_t k_hour_w = 40;
+    constexpr lv_coord_t k_hour_x = k_colon_x - k_hour_w;  // 643
+
+    if (objects._____) {
+        lv_obj_set_pos(objects._____, k_hour_x, 12);
+        lv_obj_set_size(objects._____, k_hour_w, LV_SIZE_CONTENT);
+        lv_obj_set_style_text_align(objects._____, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
+    }
+    if (objects.______3) {
+        lv_obj_add_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
+    }
+    s_layout_fixed = true;
 }
 
 }  // namespace
@@ -159,14 +184,24 @@ void panel_wifi_ntp_apply_ui()
     if (!s_have_ui) {
         return;
     }
+
+    fix_clock_layout_once();
+
     if (objects._____) {
         lv_label_set_text(objects._____, s_hh);
+    }
+    if (objects.______1) {
+        // Blink colon: on odd seconds, off even (1s on / 1s off)
+        const bool colon_on = (s_sec % 2) != 0;
+        lv_obj_set_style_text_opa(objects.______1,
+                                  colon_on ? LV_OPA_COVER : LV_OPA_TRANSP,
+                                  LV_PART_MAIN);
+        lv_label_set_text(objects.______1, ":");
     }
     if (objects.______2) {
         lv_label_set_text(objects.______2, s_mm);
     }
     if (objects.______3) {
-        // 24h: hide AM/PM label left over from EEZ layout
         lv_obj_add_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
     }
     if (objects.obj6) {
