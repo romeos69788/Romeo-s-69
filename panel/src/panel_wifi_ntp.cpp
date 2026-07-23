@@ -58,13 +58,10 @@ const char *k_month_el[] = {
 
 void fill_buffers(const struct tm &t)
 {
-    int hour12 = t.tm_hour % 12;
-    if (hour12 == 0) {
-        hour12 = 12;
-    }
-    snprintf(s_hh, sizeof(s_hh), "%02d", hour12);
+    // 24-hour clock (no AM/PM)
+    snprintf(s_hh, sizeof(s_hh), "%02d", t.tm_hour);
     snprintf(s_mm, sizeof(s_mm), "%02d", t.tm_min);
-    snprintf(s_ampm, sizeof(s_ampm), "%s", (t.tm_hour >= 12) ? "PM" : "AM");
+    s_ampm[0] = '\0';
     snprintf(s_day, sizeof(s_day), "%d", t.tm_mday);
 
     const char *wd = (t.tm_wday >= 0 && t.tm_wday <= 6) ? k_wday_el[t.tm_wday] : "—";
@@ -169,7 +166,8 @@ void panel_wifi_ntp_apply_ui()
         lv_label_set_text(objects.______2, s_mm);
     }
     if (objects.______3) {
-        lv_label_set_text(objects.______3, s_ampm);
+        // 24h: hide AM/PM label left over from EEZ layout
+        lv_obj_add_flag(objects.______3, LV_OBJ_FLAG_HIDDEN);
     }
     if (objects.obj6) {
         lv_label_set_text(objects.obj6, s_day);
