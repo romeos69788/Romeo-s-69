@@ -1,6 +1,6 @@
 /*
- * Panel Alpha — hub preview flash (COM4).
- * EEZ: Othoni_Levita_2 (hub V3 LOCKED) · 6 tiles.
+ * Panel Alpha — hub V4 LOCKED (Othoni_Levita_4) · COM4.
+ * Test: home Wi‑Fi + NTP → live clock/date on top bar.
  */
 
 #include <Arduino.h>
@@ -10,6 +10,7 @@
 #include <lvgl.h>
 
 #include "lvgl_v8_port.h"
+#include "panel_wifi_ntp.h"
 #include "ui/ui.h"
 #include "ui/screens.h"
 
@@ -37,8 +38,8 @@ void setup()
     delay(300);
     Serial.println();
     Serial.println("========================================");
-    Serial.println("*** ROMEOS PANEL HUB PREVIEW ***");
-    Serial.println("*** Othoni_Levita_2 V3 LOCKED · COM4 ***");
+    Serial.println("*** ROMEOS PANEL HUB V4 LOCKED ***");
+    Serial.println("*** WiFi+NTP clock test · COM4 ***");
     Serial.println("========================================");
 
     auto *board = new Board();
@@ -67,12 +68,16 @@ void setup()
     disable_scroll(objects.main);
     lvgl_port_unlock();
 
-    Serial.println("[panel] ui_init done — hub on glass. Look at the Viewe.");
+    panel_wifi_ntp_begin();
+    Serial.println("[panel] ui_init done — connecting Wi‑Fi for live clock…");
 }
 
 void loop()
 {
+    panel_wifi_ntp_poll();
+
     if (lvgl_port_lock(0)) {
+        panel_wifi_ntp_apply_ui();
         ui_tick();
         lvgl_port_unlock();
     }

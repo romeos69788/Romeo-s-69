@@ -35,3 +35,7 @@ docs/archive/**/*.dll
 
 # Full EEZ bitmap dumps (~27 MB each) — use panel/src/ui slim RGB565 instead
 Othoni Levita/**/ui_image_*.c
+
+# Local panel serial captures
+panel/scripts/wifi_monitor_log.txt
+
