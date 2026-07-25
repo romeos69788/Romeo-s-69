@@ -18,5 +18,6 @@ pio device monitor -e BOARD_VIEWE_PANEL
 - Nav: `panel_nav.cpp` · tiles → detail · Μενού → hub
 - Wire: `scripts/wire_hub_v4_screens.py`
 - Docs: [`docs/panel-hub/HUB-VERSIONS.md`](../docs/panel-hub/HUB-VERSIONS.md) · [`docs/SESSION-2026-07-23-HUB-NAV.md`](../docs/SESSION-2026-07-23-HUB-NAV.md)
+- Alarm UX (LOCKED): [`docs/PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md`](../docs/PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md)
 - Live clock: home Wi‑Fi + NTP (Ελλάδα) → πάνω μπάρα (όλες οι οθόνες)
-- Idle ticker: κάτω μπάρα hub μόνο
+- Idle ticker: κάτω μπάρα hub μόνο (χωρίς ενεργό συναγερμό)

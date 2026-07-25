@@ -28,13 +28,14 @@
 | **Στυλ** | Τεχνικά / σχηματικά εικονίδια ανά τομέα |
 
 Δομή 6 tiles: [`PANEL-HUB-6-TILES-LOCK-2026-07-19.md`](../PANEL-HUB-6-TILES-LOCK-2026-07-19.md)  
-Nav session: [`SESSION-2026-07-23-HUB-NAV.md`](../SESSION-2026-07-23-HUB-NAV.md)
+Nav session: [`SESSION-2026-07-23-HUB-NAV.md`](../SESSION-2026-07-23-HUB-NAV.md)  
+**Συναγερμοί / βλάβες ανά τομέα (LOCKED 2026-07-26):** [`PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md`](../PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md)
 
 ### Πλοήγηση (firmware)
 
-- Tile → detail: `LV_SCR_LOAD_ANIM_OVER_LEFT` · `panel_nav.cpp`
-- Μενού → hub: `LV_SCR_LOAD_ANIM_OVER_RIGHT`
-- **TODO:** μικρό lag στο άνοιγμα οθόνης — δεύτερος χρόνος
+- Tile → detail: snapshot-slide (όχι `scr_load_anim`) · `panel_nav.cpp`
+- Μενού → hub: αντίστροφη ολίσθηση
+- **Συναγερμός:** κόκκινο αναβοσβήσιμο πλαίσιο τομέα · μπάρα + ήχος · mute από μπάρα · κόκκινο στο ελαττωματικό στοιχείο μέσα στη detail — βλ. lock συναγερμού
 
 ---
 
