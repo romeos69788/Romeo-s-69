@@ -29,7 +29,8 @@
 
 Δομή 6 tiles: [`PANEL-HUB-6-TILES-LOCK-2026-07-19.md`](../PANEL-HUB-6-TILES-LOCK-2026-07-19.md)  
 Nav session: [`SESSION-2026-07-23-HUB-NAV.md`](../SESSION-2026-07-23-HUB-NAV.md)  
-**Συναγερμοί / βλάβες ανά τομέα (LOCKED 2026-07-26):** [`PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md`](../PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md)
+**Συναγερμοί / βλάβες ανά τομέα (LOCKED 2026-07-26):** [`PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md`](../PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md)  
+**Handoff detail EEZ:** [`SESSION-2026-07-26-HANDOFF-DETAIL-EEZ.md`](../SESSION-2026-07-26-HANDOFF-DETAIL-EEZ.md)
 
 ### Πλοήγηση (firmware)
 

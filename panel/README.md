@@ -19,5 +19,7 @@ pio device monitor -e BOARD_VIEWE_PANEL
 - Wire: `scripts/wire_hub_v4_screens.py`
 - Docs: [`docs/panel-hub/HUB-VERSIONS.md`](../docs/panel-hub/HUB-VERSIONS.md) · [`docs/SESSION-2026-07-23-HUB-NAV.md`](../docs/SESSION-2026-07-23-HUB-NAV.md)
 - Alarm UX (LOCKED): [`docs/PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md`](../docs/PANEL-HUB-ALARM-UX-LOCK-2026-07-26.md)
+- Επόμενο: EEZ detail οθόνες από χρήστη → wire + τεστ · [`docs/SESSION-2026-07-26-HANDOFF-DETAIL-EEZ.md`](../docs/SESSION-2026-07-26-HANDOFF-DETAIL-EEZ.md)
 - Live clock: home Wi‑Fi + NTP (Ελλάδα) → πάνω μπάρα (όλες οι οθόνες)
 - Idle ticker: κάτω μπάρα hub μόνο (χωρίς ενεργό συναγερμό)
+- Nav: snapshot-slide (`panel_nav.cpp`) — χωρίς lag

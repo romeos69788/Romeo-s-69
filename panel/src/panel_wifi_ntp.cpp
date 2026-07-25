@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
+#include <string.h>
 #include <time.h>
 
 #include <lvgl.h>
@@ -33,34 +34,26 @@ bool s_have_ui = false;
 bool s_layout_fixed = false;
 int s_sec = 0;
 
+char s_prev_hh[8];
+char s_prev_mm[8];
+char s_prev_ampm[8];
+char s_prev_day[8];
+char s_prev_wday[32];
+char s_prev_month[40];
+int s_prev_colon_on = -1;
+int s_prev_screen = -1;
+
 const char *k_wday_el[] = {
-    "Κυριακή",
-    "Δευτέρα",
-    "Τρίτη",
-    "Τετάρτη",
-    "Πέμπτη",
-    "Παρασκευή",
-    "Σάββατο",
+    "Κυριακή", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο",
 };
 
 const char *k_month_el[] = {
-    "Ιανουαρίου",
-    "Φεβρουαρίου",
-    "Μαρτίου",
-    "Απριλίου",
-    "Μαΐου",
-    "Ιουνίου",
-    "Ιουλίου",
-    "Αυγούστου",
-    "Σεπτεμβρίου",
-    "Οκτωβρίου",
-    "Νοεμβρίου",
-    "Δεκεμβρίου",
+    "Ιανουαρίου", "Φεβρουαρίου", "Μαρτίου", "Απριλίου", "Μαΐου", "Ιουνίου",
+    "Ιουλίου", "Αυγούστου", "Σεπτεμβρίου", "Οκτωβρίου", "Νοεμβρίου", "Δεκεμβρίου",
 };
 
 void fill_buffers(const struct tm &t)
 {
-    // 24-hour digits + visible AM/PM
     snprintf(s_hh, sizeof(s_hh), "%02d", t.tm_hour);
     snprintf(s_mm, sizeof(s_mm), "%02d", t.tm_min);
     snprintf(s_ampm, sizeof(s_ampm), "%s", (t.tm_hour >= 12) ? "PM" : "AM");
@@ -74,28 +67,33 @@ void fill_buffers(const struct tm &t)
     s_have_ui = true;
 }
 
-/** Exact EEZ positions from designer (ρολόι / ρολόι_1 / ρολόι_2 / ρολόι_3). */
+/**
+ * montserrat_30 ≈ 18–20 px/digit. Boxes 39/36 clipped:
+ * right-align "00" → visible "0"; left-align "30" → visible "3".
+ */
 void fix_one_clock(lv_obj_t *hh, lv_obj_t *colon, lv_obj_t *mm, lv_obj_t *ampm)
 {
     if (hh) {
-        lv_obj_set_pos(hh, 642, 12);
-        lv_obj_set_size(hh, 39, 33);
+        lv_obj_set_pos(hh, 636, 12);
+        lv_obj_set_size(hh, 48, 33);
         lv_obj_set_style_text_align(hh, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
+        lv_label_set_long_mode(hh, LV_LABEL_LONG_CLIP);
     }
     if (colon) {
-        lv_obj_set_pos(colon, 683, 10);
-        lv_obj_set_size(colon, 7, 33);
+        lv_obj_set_pos(colon, 685, 10);
+        lv_obj_set_size(colon, 8, 33);
         lv_obj_set_style_text_align(colon, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
     }
     if (mm) {
-        lv_obj_set_pos(mm, 692, 12);
-        lv_obj_set_size(mm, 36, 33);
+        lv_obj_set_pos(mm, 694, 12);
+        lv_obj_set_size(mm, 48, 33);
         lv_obj_set_style_text_align(mm, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
+        lv_label_set_long_mode(mm, LV_LABEL_LONG_CLIP);
     }
     if (ampm) {
         lv_obj_clear_flag(ampm, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_set_pos(ampm, 737, 12);
-        lv_obj_set_size(ampm, 34, 22);
+        lv_obj_set_pos(ampm, 744, 12);
+        lv_obj_set_size(ampm, 40, 22);
         lv_obj_set_style_text_align(ampm, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
     }
 }
@@ -105,7 +103,6 @@ void fix_clock_layout_once()
     if (s_layout_fixed) {
         return;
     }
-
     fix_one_clock(objects._____, objects.______1, objects.______2, objects.______3);
     fix_one_clock(objects.______4, objects.______5, objects.______6, objects.______7);
     fix_one_clock(objects.______8, objects.______9, objects.______10, objects.______11);
@@ -113,9 +110,18 @@ void fix_clock_layout_once()
     fix_one_clock(objects.______16, objects.______17, objects.______18, objects.______19);
     fix_one_clock(objects.______20, objects.______21, objects.______22, objects.______23);
     fix_one_clock(objects.______24, objects.______25, objects.______26, objects.______27);
-
-    Serial.println("[panel-wifi] clock layout on all 7 screens");
+    Serial.println("[panel-wifi] clock digit boxes 48px (fix 00/30 clip)");
     s_layout_fixed = true;
+}
+
+void set_if_changed(lv_obj_t *obj, char *prev, size_t n, const char *now)
+{
+    if (!obj || strncmp(prev, now, n) == 0) {
+        return;
+    }
+    strncpy(prev, now, n - 1);
+    prev[n - 1] = '\0';
+    lv_label_set_text(obj, now);
 }
 
 void apply_clock_pack(lv_obj_t *hh,
@@ -127,29 +133,33 @@ void apply_clock_pack(lv_obj_t *hh,
                       lv_obj_t *month,
                       bool colon_on)
 {
-    if (hh) {
-        lv_label_set_text(hh, s_hh);
+    set_if_changed(hh, s_prev_hh, sizeof(s_prev_hh), s_hh);
+    set_if_changed(mm, s_prev_mm, sizeof(s_prev_mm), s_mm);
+    if (ampm) {
+        lv_obj_clear_flag(ampm, LV_OBJ_FLAG_HIDDEN);
+        set_if_changed(ampm, s_prev_ampm, sizeof(s_prev_ampm), s_ampm);
     }
-    if (colon) {
+    set_if_changed(day, s_prev_day, sizeof(s_prev_day), s_day);
+    set_if_changed(wday, s_prev_wday, sizeof(s_prev_wday), s_wday);
+    set_if_changed(month, s_prev_month, sizeof(s_prev_month), s_month);
+
+    const int c = colon_on ? 1 : 0;
+    if (colon && s_prev_colon_on != c) {
+        s_prev_colon_on = c;
         lv_obj_set_style_text_opa(colon, colon_on ? LV_OPA_COVER : LV_OPA_TRANSP, LV_PART_MAIN);
         lv_label_set_text(colon, ":");
     }
-    if (mm) {
-        lv_label_set_text(mm, s_mm);
-    }
-    if (ampm) {
-        lv_obj_clear_flag(ampm, LV_OBJ_FLAG_HIDDEN);
-        lv_label_set_text(ampm, s_ampm);
-    }
-    if (day) {
-        lv_label_set_text(day, s_day);
-    }
-    if (wday) {
-        lv_label_set_text(wday, s_wday);
-    }
-    if (month) {
-        lv_label_set_text(month, s_month);
-    }
+}
+
+void invalidate_text_cache()
+{
+    s_prev_hh[0] = '\0';
+    s_prev_mm[0] = '\0';
+    s_prev_ampm[0] = '\0';
+    s_prev_day[0] = '\0';
+    s_prev_wday[0] = '\0';
+    s_prev_month[0] = '\0';
+    s_prev_colon_on = -1;
 }
 
 }  // namespace
@@ -172,18 +182,13 @@ void panel_wifi_ntp_begin()
     for (int i = 0; i < n; i++) {
         const String id = WiFi.SSID(i);
         Serial.printf("[panel-wifi]   %2d  rssi=%4d  ch=%2d  %s\n",
-                      i,
-                      WiFi.RSSI(i),
-                      WiFi.channel(i),
-                      id.c_str());
+                      i, WiFi.RSSI(i), WiFi.channel(i), id.c_str());
         if (id == ROMEOS_WIFI_SSID) {
             saw = true;
         }
     }
     Serial.printf("[panel-wifi] scan done n=%d target=%s %s\n",
-                  n,
-                  ROMEOS_WIFI_SSID,
-                  saw ? "FOUND" : "NOT IN SCAN");
+                  n, ROMEOS_WIFI_SSID, saw ? "FOUND" : "NOT IN SCAN");
 
     WiFi.begin(ROMEOS_WIFI_SSID, ROMEOS_WIFI_PASS);
     s_wifi_started = true;
@@ -224,12 +229,8 @@ void panel_wifi_ntp_poll()
     if (!s_synced_once) {
         s_synced_once = true;
         Serial.printf("[panel-wifi] NTP OK %04d-%02d-%02d %02d:%02d:%02d (Athens)\n",
-                      t.tm_year + 1900,
-                      t.tm_mon + 1,
-                      t.tm_mday,
-                      t.tm_hour,
-                      t.tm_min,
-                      t.tm_sec);
+                      t.tm_year + 1900, t.tm_mon + 1, t.tm_mday,
+                      t.tm_hour, t.tm_min, t.tm_sec);
     }
 
     fill_buffers(t);
@@ -243,33 +244,38 @@ void panel_wifi_ntp_apply_ui(int screen_id)
 
     fix_clock_layout_once();
 
+    if (screen_id != s_prev_screen) {
+        s_prev_screen = screen_id;
+        invalidate_text_cache();
+    }
+
     const bool colon_on = (s_sec % 2) != 0;
     switch (screen_id) {
-    case 1:  // SCREEN_ID_MAIN
+    case 1:
         apply_clock_pack(objects._____, objects.______1, objects.______2, objects.______3,
                          objects.obj6, objects.obj7, objects.obj8, colon_on);
         break;
-    case 2:  // WATER
+    case 2:
         apply_clock_pack(objects.______4, objects.______5, objects.______6, objects.______7,
                          objects.obj9, objects.obj10, objects.obj11, colon_on);
         break;
-    case 3:  // HP
+    case 3:
         apply_clock_pack(objects.______8, objects.______9, objects.______10, objects.______11,
                          objects.obj14, objects.obj15, objects.obj16, colon_on);
         break;
-    case 4:  // OUT
+    case 4:
         apply_clock_pack(objects.______12, objects.______13, objects.______14, objects.______15,
                          objects.obj19, objects.obj20, objects.obj21, colon_on);
         break;
-    case 5:  // BOILER
+    case 5:
         apply_clock_pack(objects.______16, objects.______17, objects.______18, objects.______19,
                          objects.obj24, objects.obj25, objects.obj26, colon_on);
         break;
-    case 6:  // SYSTEM
+    case 6:
         apply_clock_pack(objects.______20, objects.______21, objects.______22, objects.______23,
                          objects.obj29, objects.obj30, objects.obj31, colon_on);
         break;
-    case 7:  // WIFI
+    case 7:
         apply_clock_pack(objects.______24, objects.______25, objects.______26, objects.______27,
                          objects.obj34, objects.obj35, objects.obj36, colon_on);
         break;
