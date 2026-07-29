@@ -1,0 +1,15 @@
+﻿JC1060P470C_I_W_Y factory flash backup
+Date: 2026-07-29 21:20:20
+Port: COM14
+Chip: ESP32-P4 rev v1.3
+MAC: 30:ed:a0:ea:cf:f6
+Flash: 16MB (0x1000000)
+File: JC1060P470C_factory_dump_16MB_COM14.bin
+SHA256: 6F4BB37609781A14C4725BEDCE82514A8D46B9FD2DE07E688D8EF94130044FB9
+Tool: esptool 5.2.0 read-flash
+
+Restore (P4 app flash only):
+  python -m esptool --chip esp32p4 --port COM14 write-flash 0x0 JC1060P470C_factory_dump_16MB_COM14.bin
+
+Also: official_burn_bins\ (Guition demos + JC-C6-slave_v2.3.2.bin for WiFi companion).
+C6 is a separate chip — this dump is ESP32-P4 flash only.

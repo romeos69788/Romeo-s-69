@@ -36,6 +36,18 @@ docs/archive/**/*.dll
 # Full EEZ bitmap dumps (~27 MB each) — use panel/src/ui slim RGB565 instead
 Othoni Levita/**/ui_image_*.c
 
+# JC1060 vendor kit demos + 16MB factory dump (keep local)
+Othoni Levita/JC1060P470C_I_W_Y/JC1060P470C_I_W_Y/
+Othoni Levita/JC1060P470C_I_W_Y/factory_flash_backup/*.bin
+
 # Local panel serial captures
 panel/scripts/wifi_monitor_log.txt
+
+# Scratch
+_probe.txt
+
+
+display-jc1060/build_log.txt
+display-jc1060/upload_log.txt
+Othoni Levita/JC1060P470C_I_W_Y/factory_flash_backup/official_burn_bins/
 
