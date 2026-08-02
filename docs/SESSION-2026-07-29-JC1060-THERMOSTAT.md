@@ -1,7 +1,7 @@
 # SESSION 2026-07-29 — JC1060 θερμοστάτης χώρου
 
-**Θέμα:** Bring-up JC1060P470C · EEZ mockups · swipe 6 σελίδων · review σχεδίου  
-**Pause:** 2026-08-02 ~13:25 — χρήστης έφυγε επειγόντως · συνέχεια όταν επιστρέψει
+**Θέμα:** Bring-up JC1060P470C · EEZ · λειτουργικό home/menu · Wi‑Fi/NTP · polish knob  
+**Update:** 2026-08-02 ~19:00 — **pause** · Wi‑Fi OK · knob pad=10 + shadow · sync cloud
 
 ---
 
@@ -11,46 +11,47 @@
 |----------|------|
 | Οθόνη | JC1060P470C_I_W_Y · ESP32-P4 · **1024×600** · **COM14** |
 | Ρόλος | **Θερμοστάτης χώρου** (όχι Alpha hub) |
-| Panel hub | Viewe · COM4 · V4 κλειδωμένο — **άθικτο** |
-| Στην οθόνη τώρα | ✓ **6 backgrounds** flashαρρισμένα · swipe ομαλό (επιβεβαίωση χρήστη) |
-| EEZ | `Othoni Levita/Thermostat_JC1060/THermostat NEW/` · draft · χωρίς live temps |
-| Firmware | `display-jc1060` · partition **14 MB factory** · `data/img_1.bin`…`img_6.bin` |
-| Οπτικό | **ανοιχτό** — έγινε review · **όχι lock ακόμα** |
+| Panel hub | Viewe · COM4 · V4 κλειδωμένο — **άθικτο** (μόνο diagnostics) |
+| UI τώρα | 6 οθόνες · home+menu labels · tiles→3–6 · soft slide ~980 ms |
+| Setpoint | 10–40 °C · οπτικό mid=**20 °C** · arc knob **pad=10** + shadow |
+| Ρολόι | NTP Αθήνα όταν Wi‑Fi up · blink `:` |
+| Wi‑Fi | `secrets/wifi.env` → `MERCUSYS_ROMEOS` · εικονίδιο **πράσινο** όταν OK |
+| C6 | ESP-Hosted slave **2.12.11** (SDIO OTA από embed `data/c6_slave_2.12.11.bin`) |
+| Firmware | `display-jc1060/` · embed `img_1`…`img_6` + fonts + C6 bin |
 
-### Πλοήγηση στο firmware (όπως είναι τώρα)
+### Πλοήγηση
 
-- Αρχική = οθόνη 1 · swipe αριστερά = επόμενη · δεξιά = πίσω · χωρίς wrap στα άκρα
+- Home MENU → οθόνη 2 (slide)
+- Menu BACK → home · tiles → οθόνες 3–6 (HP / φώτα / θέρμανση / ρολά)
+- Detail BACK → menu
+
+### Wi‑Fi notes (2026-08-02)
+
+- P4 χωρίς radio · Wi‑Fi = **ESP32-C6** via ESP-Hosted SDIO (CLK18 CMD19 D0–D3=14–17 RST54)
+- Παλιό Guition slave → RPC fail · OTA στο **2.12.11** το έλυσε
+- Ίδια credentials με panel · C6 RF πιο αδύναμο από panel STA (~−30 dB στο ίδιο desk) · τελικά **συνδέθηκε** στο lab
+- CT rule άθικτο: μόνο SCT-013 στο HP line
 
 ---
 
 ## Review σχεδίου (2026-08-02) — σύνοψη
 
-Χρήστης έστειλε τις 6 εικόνες · agent έδωσε καθαρό feedback (χωρίς χάιδεμα):
-
-| Οθόνη | Ρόλος στο draft | Συμπέρασμα |
-|-------|-----------------|------------|
-| A | Home / κύκλος | **Κρατάμε** κύκλο · λείπει μεγάλο setpoint · κόψε περιττό Home pill |
-| B | Μενού 2×2 | **Καλύτερη δομή** · καλύτερα hub με **tap**, όχι swipe-σελίδα στη μέση |
-| C | Αντλία θερμότητας | **Υπερβολή** διακόσμησης · μεγάλα νούμερα, όχι καντράν/ουράνιο τόξο |
-| D | Φώτα | ΟΚ ιδέα ορόφων · ομοιόμορφα toggles · πραγματικά ονόματα δωματίων |
-| E | Θέρμανση | Πολύ «πίνακας τεχνικού» για room thermostat · απλοποίηση |
-| F | Ρολά | **Καλύτερη λεπτομέρεια** · μικροδιορθώσεις μόνο |
-
-**Διαγώνια προτεραιότητα όταν συνεχίσουμε:**
-1. Κλείδωμα πλοήγησης: A=home, B=hub (tap), λεπτομέρειες από B
-2. Ένα icon system (όχι μίγμα 3D/flat/φωτο)
-3. Mockups με ψεύτικους αριθμούς πριν το live data
-4. C/E απλοποίηση · D ονόματα · F σχεδόν OK
-5. Ίδιο background ×6 → πιο ήρεμο στις data σελίδες
+| Οθόνη | Συμπέρασμα |
+|-------|------------|
+| A home | Κρατάμε κύκλο · knob polish OK |
+| B menu | Hub μέσω tap |
+| C/E | Απλοποίηση αργότερα |
+| D | Πραγματικά ονόματα |
+| F | Καλύτερη λεπτομέρεια |
 
 ---
 
-## Επόμενα (όταν επιστρέψει)
+## Επόμενα (άλλη μέρα)
 
-1. Συζήτηση / απόφαση πάνω στο review (τι κλειδώνει)
-2. EEZ refinements (αρχικά A+B)
-3. Ξανα-extract bins → flash COM14
-4. Αργότερα: LVGL widgets · Wi‑Fi C6 · link Alpha
+1. Live data από Alpha / αισθητήρες (όχι μόνο placeholders)
+2. EEZ refinements C/D/E αν κλειδώσει το review
+3. Σταθερότητα Wi‑Fi στο λεβητοστάσιο (RF/κεραία C6)
+4. Λέβητας / MQTT αργότερα
 
 ---
 

@@ -3,6 +3,9 @@
 
 static int16_t current_screen = -1;
 
+/* Soft page turn */
+static const uint32_t kScreenAnimMs = 980;
+
 int ui_current_screen_index(void)
 {
     return (int)current_screen;
@@ -22,14 +25,14 @@ void loadScreen(enum ScreensEnum screenId)
     lv_scr_load_anim_t anim = LV_SCR_LOAD_ANIM_NONE;
     if (current_screen >= 0) {
         if (idx > current_screen) {
-            anim = LV_SCR_LOAD_ANIM_MOVE_LEFT;   // next (swipe L←)
+            anim = LV_SCR_LOAD_ANIM_MOVE_LEFT;
         } else if (idx < current_screen) {
-            anim = LV_SCR_LOAD_ANIM_MOVE_RIGHT;  // back (swipe →R)
+            anim = LV_SCR_LOAD_ANIM_MOVE_RIGHT;
         }
     }
 
     current_screen = (int16_t)idx;
-    lv_scr_load_anim(target, anim, 280, 0, false);
+    lv_scr_load_anim(target, anim, kScreenAnimMs, 0, false);
 }
 
 void ui_init(void)

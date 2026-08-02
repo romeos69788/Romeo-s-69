@@ -11,6 +11,8 @@
 #include "jd9165_lcd.h"
 #include "gt911_touch.h"
 #include "ui.h"
+#include "jc1060_wifi.h"
+#include "jc1060_c6_ota.h"
 
 static bsp_lcd_handles_t lcd_panels;
 static jd9165_lcd lcd(LCD_RST);
@@ -47,7 +49,10 @@ void setup()
 {
     Serial.begin(115200);
     delay(400);
-    Serial.println("*** JC1060P4 EEZ mockup · 2 pages · swipe ***");
+    Serial.println("*** JC1060P4 · home+menu · soft slide · WiFi ***");
+
+    /* C6 slave must match host ESP-Hosted (2.12.11) before WiFi works */
+    (void)jc1060_c6_ensure_slave();
 
     i2c_master_bus_handle_t i2c_handle = nullptr;
     i2c_master_bus_config_t i2c_bus_conf = {};
@@ -94,12 +99,14 @@ void setup()
     esp_lcd_dpi_panel_register_event_callbacks(lcd_panels.panel, &cbs, &disp_drv);
 
     ui_init();
-    Serial.println("[jc1060] EEZ mockup loaded");
+    jc1060_wifi_begin();
+    Serial.println("[jc1060] home+menu ready");
 }
 
 void loop()
 {
     lv_timer_handler();
     ui_tick();
+    jc1060_wifi_tick();
     delay(5);
 }

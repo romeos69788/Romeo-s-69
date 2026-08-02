@@ -38,12 +38,12 @@
 | Project | `D:\ROMEOS 69\display-jc1060\` |
 | BSP | Guition **Old_Panel** JD9165 (New_Panel = τρέμουλο) |
 | Smoke | μαύρη οθόνη + κείμενο · καθαρή εικόνα 2026-07-29 |
-| Mockup EEZ | ✓ 2 εικόνες + swipe 2026-07-29 · σχέδιο **όχι κλειδωμένο** (κύκλος / φιδάκι) |
+| Mockup EEZ | ✓ 6 οθόνες · λειτουργικό home/menu/tiles 2026-08-02 |
 | Factory backup | `..\JC1060P470C_I_W_Y\factory_flash_backup\` (τοπικά) |
 
-Wi‑Fi μέσω ESP32-C6 (ESP-Hosted) — αργότερα.
+Wi‑Fi μέσω ESP32-C6 (ESP-Hosted 2.12.11) · NTP · πράσινο icon — **OK στο lab 2026-08-02**.
 
-**Pause 2026-07-29 (βράδυ):** bring-up + mockups + swipe OK. Συνέχεια EEZ όταν έχεις χρόνο · απόφαση οπτικού ανοιχτή.
+**Pause 2026-08-02:** UI+Wi‑Fi OK · συνέχεια live data / EEZ polish άλλη μέρα.
 
 ---
 
