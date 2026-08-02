@@ -31,13 +31,14 @@ static void on_swipe(lv_event_t *e)
 
     const lv_coord_t dx = p.x - swipe_start_x;
     const lv_coord_t threshold = 80;  // ~8% of 1024
+    const int cur = ui_current_screen_index();
 
-    if (dx <= -threshold) {
-        // finger right → left : go to page 2
-        loadScreen(SCREEN_ID_2);
-    } else if (dx >= threshold) {
-        // finger left → right : go to page 1
-        loadScreen(SCREEN_ID_1);
+    if (dx <= -threshold && cur >= 0 && cur < SCREEN_COUNT - 1) {
+        // finger right → left : next page
+        loadScreen((enum ScreensEnum)(cur + 2));
+    } else if (dx >= threshold && cur > 0) {
+        // finger left → right : previous page
+        loadScreen((enum ScreensEnum)(cur));
     }
 }
 
@@ -65,8 +66,12 @@ static lv_obj_t *make_image_screen(const lv_img_dsc_t *img)
 
 void create_screens(void)
 {
-    objects.screen_1 = make_image_screen(&img_1);
-    objects.screen_2 = make_image_screen(&img_2);
+    static const lv_img_dsc_t *const imgs[SCREEN_COUNT] = {
+        &img_1, &img_2, &img_3, &img_4, &img_5, &img_6
+    };
+    for (int i = 0; i < SCREEN_COUNT; i++) {
+        objects.screens[i] = make_image_screen(imgs[i]);
+    }
 }
 
 void tick_screen(int screen_index)

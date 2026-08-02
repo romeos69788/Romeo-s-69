@@ -1,7 +1,7 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[THermostat NEW.eez-project]:/userPages/0",
-    "selectedBitmapObject": "[THermostat NEW.eez-project]:/bitmaps/0",
+    "selectedUserPageObject": "[THermostat NEW.eez-project]:/userPages/5",
+    "selectedBitmapObject": "[THermostat NEW.eez-project]:/bitmaps/4",
     "subnavigationSelectedItems": {}
   },
   "layoutModel": {
@@ -194,17 +194,16 @@
               "children": [
                 {
                   "type": "tab",
-                  "id": "#d462e787-fbcf-4507-9a96-7841ee0170f6",
-                  "name": "Main",
+                  "id": "#22eb8550-3d5b-45e1-9235-ae82df680962",
+                  "name": "6A",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[THermostat NEW.eez-project]:/userPages/0",
+                    "objectPath": "[THermostat NEW.eez-project]:/userPages/5",
                     "permanent": false
                   },
                   "icon": "svg:page"
                 }
-              ],
-              "active": true
+              ]
             },
             {
               "type": "row",
@@ -224,7 +223,8 @@
                       "enableClose": false,
                       "icon": "svg:properties"
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
@@ -1059,10 +1059,95 @@
       },
       "transform": {
         "translate": {
-          "x": -526,
-          "y": -281
+          "x": -427.875,
+          "y": -203.75000000000006
         },
-        "scale": 1
+        "scale": 0.75
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[THermostat NEW.eez-project]:/userPages/1[flow-state]": {
+      "selectionFront": {},
+      "selectionBack": {},
+      "transform": {
+        "translate": {
+          "x": -512,
+          "y": -300
+        },
+        "scale": 0.75
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[THermostat NEW.eez-project]:/userPages/2[flow-state]": {
+      "selectionFront": {},
+      "selectionBack": {},
+      "transform": {
+        "translate": {
+          "x": -512,
+          "y": -300
+        },
+        "scale": 0.75
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[THermostat NEW.eez-project]:/userPages/3[flow-state]": {
+      "selectionFront": {},
+      "selectionBack": {},
+      "transform": {
+        "translate": {
+          "x": -512,
+          "y": -300
+        },
+        "scale": 0.75
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[THermostat NEW.eez-project]:/userPages/4[flow-state]": {
+      "selectionFront": {},
+      "selectionBack": {},
+      "transform": {
+        "translate": {
+          "x": -512,
+          "y": -300
+        },
+        "scale": 0.75
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[THermostat NEW.eez-project]:/userPages/5[flow-state]": {
+      "selectionFront": {},
+      "selectionBack": {},
+      "transform": {
+        "translate": {
+          "x": -512,
+          "y": -300
+        },
+        "scale": 0.75
       },
       "timeline": {
         "isEditorActive": false,
@@ -1090,7 +1175,7 @@
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 1,
+  "flowZoom": 0.75,
   "implementationLanguage": "C",
-  "openDialogDefaultPath": "C:\\Users\\romeo\\Downloads\\ChatGPT Image 29 Ιουλ 2026, 10_03_41 μ.μ.png"
+  "openDialogDefaultPath": "C:\\Users\\romeo\\Downloads\\100\\E.jpg"
 }

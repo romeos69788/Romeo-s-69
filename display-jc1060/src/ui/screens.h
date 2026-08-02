@@ -7,14 +7,19 @@
 extern "C" {
 #endif
 
+#define SCREEN_COUNT 6
+
 enum ScreensEnum {
     SCREEN_ID_1 = 1,
-    SCREEN_ID_2 = 2
+    SCREEN_ID_2 = 2,
+    SCREEN_ID_3 = 3,
+    SCREEN_ID_4 = 4,
+    SCREEN_ID_5 = 5,
+    SCREEN_ID_6 = 6
 };
 
 typedef struct _objects_t {
-    lv_obj_t *screen_1;
-    lv_obj_t *screen_2;
+    lv_obj_t *screens[SCREEN_COUNT];
 } objects_t;
 
 extern objects_t objects;

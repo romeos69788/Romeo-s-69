@@ -3,10 +3,18 @@
 
 static int16_t current_screen = -1;
 
+int ui_current_screen_index(void)
+{
+    return (int)current_screen;
+}
+
 void loadScreen(enum ScreensEnum screenId)
 {
     const int idx = (int)screenId - 1;
-    lv_obj_t *target = (idx == 0) ? objects.screen_1 : objects.screen_2;
+    if (idx < 0 || idx >= SCREEN_COUNT) {
+        return;
+    }
+    lv_obj_t *target = objects.screens[idx];
     if (!target) {
         return;
     }
@@ -14,13 +22,13 @@ void loadScreen(enum ScreensEnum screenId)
     lv_scr_load_anim_t anim = LV_SCR_LOAD_ANIM_NONE;
     if (current_screen >= 0) {
         if (idx > current_screen) {
-            anim = LV_SCR_LOAD_ANIM_MOVE_LEFT;   // swipe LTR content → next
+            anim = LV_SCR_LOAD_ANIM_MOVE_LEFT;   // next (swipe L←)
         } else if (idx < current_screen) {
-            anim = LV_SCR_LOAD_ANIM_MOVE_RIGHT;  // back
+            anim = LV_SCR_LOAD_ANIM_MOVE_RIGHT;  // back (swipe →R)
         }
     }
 
-    current_screen = idx;
+    current_screen = (int16_t)idx;
     lv_scr_load_anim(target, anim, 280, 0, false);
 }
 

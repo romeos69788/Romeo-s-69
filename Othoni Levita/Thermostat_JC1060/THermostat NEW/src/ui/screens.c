@@ -22,39 +22,95 @@ lv_obj_t *tick_value_change_obj;
 // Screens
 //
 
-void create_screen_1() {
+void create_screen_1a() {
     lv_obj_t *obj = lv_obj_create(0);
-    objects.1 = obj;
+    objects.1a = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 1024, 600);
     lv_obj_set_style_bg_img_src(obj, &img_1, LV_PART_MAIN | LV_STATE_DEFAULT);
     
-    tick_screen_1();
+    tick_screen_1a();
 }
 
-void tick_screen_1() {
+void tick_screen_1a() {
 }
 
-void create_screen_2() {
+void create_screen_2a() {
     lv_obj_t *obj = lv_obj_create(0);
-    objects.2 = obj;
+    objects.2a = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 1024, 600);
     lv_obj_set_style_bg_img_src(obj, &img_2, LV_PART_MAIN | LV_STATE_DEFAULT);
     
-    tick_screen_2();
+    tick_screen_2a();
 }
 
-void tick_screen_2() {
+void tick_screen_2a() {
+}
+
+void create_screen_3a() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.3a = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 1024, 600);
+    lv_obj_set_style_bg_img_src(obj, &img_3, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    tick_screen_3a();
+}
+
+void tick_screen_3a() {
+}
+
+void create_screen_4a() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.4a = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 1024, 600);
+    lv_obj_set_style_bg_img_src(obj, &img_4, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    tick_screen_4a();
+}
+
+void tick_screen_4a() {
+}
+
+void create_screen_5a() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.5a = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 1024, 600);
+    lv_obj_set_style_bg_img_src(obj, &img_5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    tick_screen_5a();
+}
+
+void tick_screen_5a() {
+}
+
+void create_screen_6a() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.6a = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 1024, 600);
+    lv_obj_set_style_bg_img_src(obj, &img_6, LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    tick_screen_6a();
+}
+
+void tick_screen_6a() {
 }
 
 typedef void (*tick_screen_func_t)();
 tick_screen_func_t tick_screen_funcs[] = {
-    tick_screen_1,
-    tick_screen_2,
+    tick_screen_1a,
+    tick_screen_2a,
+    tick_screen_3a,
+    tick_screen_4a,
+    tick_screen_5a,
+    tick_screen_6a,
 };
 void tick_screen(int screen_index) {
-    if (screen_index >= 0 && screen_index < 2) {
+    if (screen_index >= 0 && screen_index < 6) {
         tick_screen_funcs[screen_index]();
     }
 }
@@ -151,6 +207,10 @@ void create_screens() {
     
     // Initialize screens
     // Create screens
-    create_screen_1();
-    create_screen_2();
+    create_screen_1a();
+    create_screen_2a();
+    create_screen_3a();
+    create_screen_4a();
+    create_screen_5a();
+    create_screen_6a();
 }

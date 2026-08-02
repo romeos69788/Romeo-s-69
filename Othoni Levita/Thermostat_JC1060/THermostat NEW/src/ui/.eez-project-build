@@ -13,6 +13,10 @@
     "ui.h",
     "ui_image_1.c",
     "ui_image_2.c",
+    "ui_image_3.c",
+    "ui_image_4.c",
+    "ui_image_5.c",
+    "ui_image_6.c",
     "vars.h"
   ]
 }
