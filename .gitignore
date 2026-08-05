@@ -51,3 +51,6 @@ display-jc1060/build_log.txt
 display-jc1060/upload_log.txt
 Othoni Levita/JC1060P470C_I_W_Y/factory_flash_backup/official_burn_bins/
 
+
+board-relay-bench/.pio/
+
