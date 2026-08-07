@@ -1,6 +1,6 @@
 # Alpha + Beta — σχέδια & φωτο bench
 
-**Φάκελος:** EasyEDA schematic/PCB + φωτο και των δύο πλακετών (2026-08-07/08).  
+**Φάκελος:** EasyEDA schematic/PCB + φωτο πλακετών + πίσω πλευρά Viewe panel.  
 Ώστε να μην ξαναανεβαίνουν στο chat κάθε φορά.
 
 | Αρχείο | Τι είναι |
@@ -10,29 +10,44 @@
 | `beta-v2-schematic-Bita-Mitriki.png` | Schematic **Bita Mitriki** (v2.0) |
 | `beta-v2-pcb-layout.png` | PCB layout **CONTROL BOARD v2.0** |
 | `photo-both-boards-bench-*.png` | Φωτο bench και οι δύο μαζί |
+| `viewe-panel-back-J2-pins.png` | Viewe πίσω · μπάρα **J2** (TX/RX/GND/…) |
+| `viewe-panel-back-J3-pins.png` | Viewe πίσω · μπάρα **J3** (LEDK/LEDA/…) |
 
 ---
 
 ## Κλέμες — σύνδεση (από σχέδια)
 
-### Viewe 7″ → **Alpha** κλέμα `7" SCREEN` (U3)
+### Viewe 7″ πίσω — μπάρες J2 / J3
 
-| Silk | Net | Σημείωση |
-|------|-----|----------|
-| GND | GND | |
-| 5V | 5V_ESP | τροφοδοσία οθόνης |
-| PANEL_TX | PANEL_TX | Alpha → Viewe RX |
-| PANEL_RX | PANEL_RX | Alpha ← Viewe TX |
+**J2** (από πάνω προς κάτω, χρήσιμα για UART προς Alpha):
 
-UART ~115200 · pins ESP πλευράς σχεδίου: δίπλα σε **IO25 / IO33** (επιβεβαίωση στο schematic nets).
+| Silk J2 | Χρήση για link Alpha |
+|---------|----------------------|
+| 3.3V | **Μην** γιατροφοδοτήσεις την οθόνη από εδώ για το 4-pin CN (η Alpha δίνει **5V**) |
+| … | GPIO / LCD (άσχετα με UART link) |
+| **TX** | TX της Viewe → πάει στο **PANEL_RX** της Alpha |
+| **RX** | RX της Viewe ← από **PANEL_TX** της Alpha |
+| **GND** | κοινό GND |
+
+**J3:** κυρίως numbered ESP pins + **LEDK** / **LEDA** (στη φωτο ήδη jumper μωβ/μπλε) · όχι το βασικό UART κλέμα για `7" SCREEN`.
+
+### Viewe ↔ **Alpha** κλέμα `7" SCREEN` (U3)
+
+| Alpha silk | ↔ | Viewe J2 |
+|------------|---|----------|
+| GND | — | GND |
+| 5V | → | **προσοχή:** Viewe συχνά θέλει 5V στο δικό της power path · αν η πλακέτα οθόνης παίρνει 5V από άλλο connector/USB, μην διπλοτροφοδοτείς · αλλιώς 5V στο κατάλληλο pad (όχι 3.3V του J2) |
+| PANEL_TX | → | **RX** |
+| PANEL_RX | ← | **TX** |
+
+UART ~115200 · σταυρωτά TX↔RX · κοινό GND.  
+ESP πλευράς Alpha: nets δίπλα σε **IO25 / IO33** (επιβεβαίωση στο schematic).
 
 ### Alpha `CN_BETA` (U5) ↔ Beta `CN_ALPHA` (U5)
 
 **Alpha CN_BETA:** GND · TX · RX · NC  
 
 **Beta CN_ALPHA:** NC · RX · TX · GND  
-
-Καλώδιο (όνομα με όνομα, σταυρωτά TX↔RX):
 
 | Alpha CN_BETA | ↔ | Beta CN_ALPHA |
 |---------------|---|----------------|
@@ -41,7 +56,7 @@ UART ~115200 · pins ESP πλευράς σχεδίου: δίπλα σε **IO25 /
 | RX | ← | TX |
 | NC | | NC |
 
-**Όχι 5V** σε αυτό το UART κλέμα (και στις δύο πλευρές NC/χωρίς 5V στο link). Κοινό GND υποχρεωτικό. Κάθε πλακέτα έχει δικό της 12→5.
+**Όχι 5V** σε αυτό το UART κλέμα. Κοινό GND υποχρεωτικό. Κάθε πλακέτα έχει δικό της 12→5.
 
 ### Beta — ρόλοι ρελέ (silk)
 
