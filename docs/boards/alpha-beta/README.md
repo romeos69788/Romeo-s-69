@@ -69,6 +69,15 @@ ESP πλευράς Alpha: nets δίπλα σε **IO25 / IO33** (επιβεβαί
 
 ---
 
+## Σημείωση παραγγελίας (2026-08-08)
+
+Η **φυσική Alpha v1** που ήρθε από fab ήταν από **παλιότερο Gerber** (χωρίς κλέμα `CN_BETA`) — ανέβηκε κατά λάθος αποθηκευμένο παλιό όνομα project πριν προστεθεί το κλέμα.  
+**Beta v2** OK. Νέα παραγγελία Alpha με το **τρέχον** EasyEDA (με `CN_BETA` δίπλα στο `7" SCREEN`) · συνέχεια ~Σεπτέμβριο μετά διακοπές.
+
+Πριν ξανα-upload: επιβεβαίωση στο Gerber preview ότι φαίνονται **και** `7" SCREEN` **και** `CN_BETA` (GND·TX·RX·NC).
+
+---
+
 ## Σχετικά
 
 - [`SESSION-2026-08-05-CONTROL-BOARD-BRINGUP.md`](../SESSION-2026-08-05-CONTROL-BOARD-BRINGUP.md) — power / zener / flash GPIO12  
