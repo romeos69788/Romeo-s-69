@@ -67,6 +67,30 @@ ESP πλευράς Alpha: nets δίπλα σε **IO25 / IO33** (επιβεβαί
 | REL 3 | K5 3-WAY · K6 HP |
 | REL 4 | K7 4kW · K8 ST-BY |
 
+### Beta — LED-K vs Songle (κλειδωμένο 2026-08-08)
+
+Schematic τώρα: `REL_Kx → R 1k → LED anode → cathode GND` → LED-K **active HIGH**.  
+Songle module IN: **active LOW** (οπλισμός = GPIO LOW).
+
+Αποτέλεσμα στο ίδιο net: οπλισμός → ψείρα module **ON**, LED-K **OFF** (ανάποδα).  
+Σωστή ένδειξη οπλισμού στο rev A: **ψείρα module**.
+
+**Επόμενο EasyEDA (πριν επόμενο fab):**
+
+1. Κυκλώμα LED: `5V_ESP → R 1k → LED anode → cathode → REL_Kx`  
+   (όχι `REL_Kx → R → LED → GND`).
+
+2. **Σταύρωμα silk επίτηδες** για οπτική ευθυγράμμιση με το διπλό module  
+   (αριστερό Songle ↔ αριστερό LED-K, δεξί ↔ δεξί), γιατί τα nets IN είναι ήδη σταυρωτά ως προς τη φυσική θέση:
+
+| Silk LED (θέση) | Net καθόδου |
+|-----------------|-------------|
+| LED-K1 (αριστερά) | REL_K2 |
+| LED-K2 (δεξιά) | REL_K1 |
+| (ίδιο pattern K3↔K4, K5↔K6, K7↔K8) | |
+
+Έτσι: οπλισμός αριστερού ρελέ → ανάβει LED-K1 + ψείρα αριστερά.
+
 ---
 
 ## Σημείωση παραγγελίας (2026-08-08)
@@ -80,6 +104,9 @@ ESP πλευράς Alpha: nets δίπλα σε **IO25 / IO33** (επιβεβαί
 
 ## Σχετικά
 
+- [`SESSION-2026-08-08-ALPHA-BETA-LINK-AND-PREORDER.md`](../SESSION-2026-08-08-ALPHA-BETA-LINK-AND-PREORDER.md) — bench link + EasyEDA πριν 3ο fab (pause 2026-08-09)
+- [`PRE-ORDER-CHECKLIST-v2.1.md`](./PRE-ORDER-CHECKLIST-v2.1.md) — Beta πριν 3ο fab  
+- [`PRE-ORDER-CHECKLIST-ALPHA.md`](./PRE-ORDER-CHECKLIST-ALPHA.md) — Alpha πριν fab (CN_BETA, DEFROST/GPIO12, DS18, UART)  
 - [`SESSION-2026-08-05-CONTROL-BOARD-BRINGUP.md`](../SESSION-2026-08-05-CONTROL-BOARD-BRINGUP.md) — power / zener / flash GPIO12  
 - [`DISPLAY-TWO-ROLES-2026-07-19.md`](../DISPLAY-TWO-ROLES-2026-07-19.md) — ρόλοι οθονών + Alpha/Beta  
 - CT: μόνο SCT-013 στο HP (`OPT1-CURRENT` στη Beta)
