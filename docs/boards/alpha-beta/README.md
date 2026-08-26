@@ -104,9 +104,11 @@ Songle module IN: **active LOW** (οπλισμός = GPIO LOW).
 
 ## Σχετικά
 
-- [`SESSION-2026-08-08-ALPHA-BETA-LINK-AND-PREORDER.md`](../SESSION-2026-08-08-ALPHA-BETA-LINK-AND-PREORDER.md) — bench link + EasyEDA πριν 3ο fab (pause 2026-08-09)
+- [`SESSION-2026-08-26-PREORDER-LOCK.md`](../SESSION-2026-08-26-PREORDER-LOCK.md) — τελικό pre-order lock (GO για fab μετά Gerber)
+- [`FINAL-PRE-ORDER-REVIEW-2026-08-26.md`](./FINAL-PRE-ORDER-REVIEW-2026-08-26.md) — έλεγχος συνδέσεων Alpha/Beta
+- [`SESSION-2026-08-08-ALPHA-BETA-LINK-AND-PREORDER.md`](../SESSION-2026-08-08-ALPHA-BETA-LINK-AND-PREORDER.md) — bench link + EasyEDA πριν 3ο fab
 - [`PRE-ORDER-CHECKLIST-v2.1.md`](./PRE-ORDER-CHECKLIST-v2.1.md) — Beta πριν 3ο fab  
-- [`PRE-ORDER-CHECKLIST-ALPHA.md`](./PRE-ORDER-CHECKLIST-ALPHA.md) — Alpha πριν fab (CN_BETA, DEFROST/GPIO12, DS18, UART)  
+- [`PRE-ORDER-CHECKLIST-ALPHA.md`](./PRE-ORDER-CHECKLIST-ALPHA.md) — Alpha πριν fab  
 - [`SESSION-2026-08-05-CONTROL-BOARD-BRINGUP.md`](../SESSION-2026-08-05-CONTROL-BOARD-BRINGUP.md) — power / zener / flash GPIO12  
 - [`DISPLAY-TWO-ROLES-2026-07-19.md`](../DISPLAY-TWO-ROLES-2026-07-19.md) — ρόλοι οθονών + Alpha/Beta  
 - CT: μόνο SCT-013 στο HP (`OPT1-CURRENT` στη Beta)

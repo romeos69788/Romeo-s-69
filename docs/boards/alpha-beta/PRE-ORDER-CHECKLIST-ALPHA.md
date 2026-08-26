@@ -16,36 +16,26 @@
 - Preview Gerber: δίπλα στο `7" SCREEN` όπως στο τρέχον PCB editor
 - Μην ανεβάσεις παλιό όνομα project
 
-### 2. `DEFROST_SIG` έξω από GPIO12 (ίδιο πρόβλημα με Beta K7)
-- Τώρα: H2 **IO12** = `DEFROST_SIG` (+ pull) → in-socket flash strap 1.8 V
-- **Fab fix:** μετακίνησε `DEFROST_SIG` σε **input-only** pin:
-  - **Πρόταση: GPIO34** (H2 · IO34) — ιδανικό για αισθητήρα
-  - Εναλλακτική: GPIO35 / 39 αν ελεύθερα
-- **GPIO12 = NC** (χωρίς net)
-- Pull: συνήθως **pull-up 4.7k → 3V3** για open-collector / dry contact (όχι pull-down, εκτός αν το θέλει ο αισθητήρας)
+### 2. `DEFROST_SIG` / GPIO strap
+- **Κλειστό 2026-08-26:** H2 pin-12 = **IO14** (όχι IO12) → **OK χωρίς μετακίνηση**
+- GPIO12 στο header: βεβαιώσου ότι **δεν** έχει άλλο κρίσιμο net (ιδανικά NC)
 
 ### 3. Zener (ίδιο με Beta)
-- BOM/silk: **5.6V** (όχι 8.2V στο part αν silk λέει 5.6)
-- **Γραμμή (κάθοδος) → +5V** · άνοδος → GND
+- BOM/silk: **5.6V** · **κάθοδος → +5V** · άνοδος → GND
 
-### 4. DS18 bus — όπως στη Beta
-- **Κράτα:** ένα pull-up **4.7k** (`R13` ή όπως ονομάζεται) `DS18_DATA` → 3V3
-- **Διαγραφή:** πυκνωτές **DATA → GND** (π.χ. C3, C22 στο schematic)
-- **Διαγραφή:** LED που κάθονται στο `DS18_DATA` (αν υπάρχουν)
-- Αν LED-1/2/3 είναι μόνο `3V3→R→LED→GND` (πάντα ON): **σβήστα** — αρκετό το LED-F1
+### 4. DS18 bus
+- **Κράτα:** pull-up **4.7k** (`R13`) `DS18_DATA` → 3V3
+- **Αφαιρέθηκαν 2026-08-26:** C11 / C22 / C3 100nF από DATA
+- Προαιρετικά: σβήσε LED-1/2/3 αν είναι μόνο 3V3 always-on
 
-### 5. UART pins — ευθυγράμμιση με firmware
-| Link | FW (`alpha_pins` / link-test) | Έλεγχος schematic |
-|------|-------------------------------|-------------------|
-| Alpha ↔ Beta | TX=**GPIO17**, RX=**GPIO16** | H1 IO17/IO16 = `BETA_TX`/`BETA_RX` (σταυρωτά στο καλώδιο προς Beta) |
-| Alpha ↔ Viewe `7" SCREEN` | TX=**GPIO25**, RX=**GPIO33** | H2 IO25/IO33 = `PANEL_TX`/`PANEL_RX` |
-
-Αν το sheet έχει PANEL σε λάθος IO (π.χ. 26), **διόρθωσε πριν fab**.
+### 5. UART pins — επιβεβαιωμένα 2026-08-26
+| Link | FW | PCB |
+|------|-----|-----|
+| Alpha ↔ Beta | TX=**17**, RX=**16** | `CN_BETA` GND·TX·RX·NC |
+| Alpha ↔ Viewe | TX=**25**, RX=**33** | `7" SCREEN` |
 
 ### 6. CT — όχι δεύτερο στην Alpha
-- **Μοναδικό CT** = SCT-013 στη **Beta** `OPT1-CURRENT` (γραμμή HP)
-- Alpha: **χωρίς** δεύτερο CT connector/ADC για boiler total ή 4kW
-- ADC GPIO35 στην Alpha μόνο αν **μεταφέρεις** το CT εδώ — αλλιώς άφησέ το NC / μην βάλεις OPT-CURRENT στην Alpha
+- Μόνο SCT-013 στη **Beta** `OPT1-CURRENT`
 
 ---
 
